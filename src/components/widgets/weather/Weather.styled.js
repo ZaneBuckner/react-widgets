@@ -1,7 +1,5 @@
 import styled from 'styled-components';
 
-// const transparentBg = '#ffffff36';
-
 const testBorder = (color = '#add8e64f') => `border: 0.1px solid ${color}`;
 const flexCenter = `
   display: flex;

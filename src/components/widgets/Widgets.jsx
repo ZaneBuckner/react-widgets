@@ -52,11 +52,3 @@ function Widgets() {
 }
 
 export default Widgets;
-
-// <div className='container'>
-// 	<Clock />
-// 	<Counter />
-// 	<User />
-// 	<Weather />
-// 	<Codewars />
-// </div>

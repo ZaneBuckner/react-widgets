@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import Card from '../../shared/Card';
 import { StyledUser } from './User.styled';
-import { StyledButton } from '../../shared/CustomButton';
+import Button from '../../shared/Button';
 
 import { Avatar } from '@material-ui/core';
 import AutorenewIcon from '@material-ui/icons/Autorenew';
@@ -48,9 +48,9 @@ function User() {
 						<LocationOnOutlinedIcon />
 						{user && <h2>{user.location}</h2>}
 					</div>
-					<StyledButton className='newUserBtn' onClick={() => fetchUser()}>
+					<Button className='newUserBtn' onClick={() => fetchUser()}>
 						<AutorenewIcon className='newUserIcon' />
-					</StyledButton>
+					</Button>
 				</div>
 			</StyledUser>
 		</Card>

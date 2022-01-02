@@ -1,7 +1,8 @@
 import { useState } from 'react';
+
 import Card from '../../shared/Card';
-import { StyledCounter } from './Counter.styled';
-import { StyledButton } from '../../shared/CustomButton';
+import Button from '../../shared/Button';
+import { StyledCounter, CountDisplay } from './Counter.styled';
 
 import AddIcon from '@material-ui/icons/Add';
 import RemoveIcon from '@material-ui/icons/Remove';
@@ -15,13 +16,13 @@ function Counter() {
 	return (
 		<Card>
 			<StyledCounter>
-				<StyledButton onClick={decrement}>
+				<Button onClick={decrement}>
 					<RemoveIcon />
-				</StyledButton>
-				<h1>{count}</h1>
-				<StyledButton onClick={increment}>
+				</Button>
+				<CountDisplay>{count}</CountDisplay>
+				<Button onClick={increment}>
 					<AddIcon />
-				</StyledButton>
+				</Button>
 			</StyledCounter>
 		</Card>
 	);

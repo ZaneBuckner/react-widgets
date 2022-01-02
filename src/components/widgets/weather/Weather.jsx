@@ -1,9 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Card from '../../shared/Card';
-import { StyledButton } from '../../shared/CustomButton';
 import { StyledWeather } from './Weather.styled';
-import { WiDayCloudyGusts } from 'react-icons/wi';
 
 import Button from '../../shared/Button';
 import RefreshIcon from '@material-ui/icons/Refresh';

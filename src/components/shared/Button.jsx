@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
 const testBorder = (color = '#add8e64f') => `border: 0.1px solid ${color}`;
 const flexCenter = `
@@ -21,10 +21,46 @@ const StyledButton = styled.button`
 	a {
 		${flexCenter};
 	}
+
+	svg {
+		color: #c3c3c3;
+	}
 `;
 
-function Button({ title, href, children }) {
-	return <StyledButton>{children}</StyledButton>;
+/* ${({ nano }) =>
+  nano &&
+  `
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 1.5rem;
+  height: 1.5rem;
+`}; */
+
+// const removeCardIcon = {
+// 	position: 'absolute',
+// 	top: '0px',
+// 	right: '0px',
+// 	width: '1.5rem',
+// 	height: '1.5rem',
+// 	margin: '0.25rem',
+// 	background: '#333333',
+// 	color: '#B3B3B3',
+// 	cursor: 'pointer',
+// };
+
+function Button({ className, children, ...buttonProps }) {
+	return (
+		<StyledButton className={className} {...buttonProps}>
+			{children}
+		</StyledButton>
+	);
 }
 
 export default Button;
+
+// ${({ test }) =>
+// 		test &&
+// 		`
+//     border-radius: 50%;
+// 	`};
