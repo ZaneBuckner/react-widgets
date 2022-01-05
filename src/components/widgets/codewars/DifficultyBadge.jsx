@@ -34,7 +34,7 @@ export const StyledDifficultyBadge = styled.div`
 		clip-path: polygon(15% 0, 85% 0, 100% 50%, 85% 100%, 15% 100%, 0 50%);
 	}
 
-	h1 {
+	p {
 		position: absolute;
 		font-family: 'Lato';
 		font-size: 0.8rem;
@@ -42,3 +42,13 @@ export const StyledDifficultyBadge = styled.div`
 		color: ${({ difficulty }) => handleDifficulty(difficulty)};
 	}
 `;
+
+function DifficultyBadge({ rankColor, rankName }) {
+	return (
+		<StyledDifficultyBadge difficulty={rankColor}>
+			<p>{rankName}</p>
+		</StyledDifficultyBadge>
+	);
+}
+
+export default DifficultyBadge;

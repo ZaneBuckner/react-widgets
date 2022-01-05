@@ -11,9 +11,9 @@ import CodewarsIcon from '../../Assets/CodewarsIcon';
 import { MdTimer as TimerIcon } from 'react-icons/md';
 import { BsCalendarDate as CalendarIcon } from 'react-icons/bs';
 import { BsClock as ClockIcon } from 'react-icons/bs';
-import { MdOutlineChecklistRtl as TodoIcon } from 'react-icons/md';
-import { AiOutlineFontColors as FontIcon } from 'react-icons/ai';
-import { AiOutlineBgColors as ColorIcon } from 'react-icons/ai';
+// import { MdOutlineChecklistRtl as TodoIcon } from 'react-icons/md';
+// import { AiOutlineFontColors as FontIcon } from 'react-icons/ai';
+// import { AiOutlineBgColors as ColorIcon } from 'react-icons/ai';
 
 const widgets = [
 	{

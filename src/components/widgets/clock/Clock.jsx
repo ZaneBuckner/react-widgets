@@ -1,19 +1,19 @@
 import { useState, useEffect } from 'react';
+import ClockProgressWheel from './ClockProgressWheel';
+import ClockFace from './ClockFace';
+
 import Card from '../../shared/Card';
 import { StyledClock } from './Clock.styled';
-
-// import ClockTime from './ClockTime';
-// import ClockDate from './ClockDate';
-// import ClockProgress from './ClockProgress';
-
-import ClockFace from './ClockFace';
+import { BsClock as ClockIcon } from 'react-icons/bs';
 
 function Clock() {
 	const [clockData, setClockData] = useState([]);
+	const [seconds, setSeconds] = useState(null);
 
 	const getClockData = () => {
 		let date = new Date();
 
+		setSeconds(date.getSeconds());
 		setClockData({
 			date: {
 				weekday: date.getDay(),
@@ -24,7 +24,6 @@ function Clock() {
 			time: {
 				hours: date.getHours(),
 				minutes: date.getMinutes(),
-				seconds: date.getSeconds(),
 				meridian: date.getHours() < 12 ? 'AM' : 'PM',
 			},
 		});
@@ -35,8 +34,9 @@ function Clock() {
 	}, []);
 
 	return (
-		<Card>
+		<Card widgetName='Analogue Clock' icon={<ClockIcon />}>
 			<StyledClock>
+				<ClockProgressWheel seconds={seconds} />
 				<ClockFace time={clockData.time} date={clockData.date} />
 			</StyledClock>
 		</Card>
@@ -44,17 +44,3 @@ function Clock() {
 }
 
 export default Clock;
-
-// const data = {
-// 	date: {
-// 		day: date.getDate(),
-// 		month: months[date.getMonth()],
-// 		year: date.getFullYear(),
-// 	},
-// 	time: {
-// 		hours: (date.getHours() + 24) % 12 || 12,
-// 		minutes: formatPadStart(date.getMinutes()),
-// 		seconds: formatPadStart(date.getSeconds()),
-// 		meridian: getMeridian(),
-// 	},
-// };

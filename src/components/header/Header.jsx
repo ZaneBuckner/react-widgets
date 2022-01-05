@@ -1,5 +1,5 @@
 import { Container } from '../../globalStyles';
-import { StyledHeader, Title } from './Header.styled';
+import { StyledHeader } from './Header.styled';
 import Logo from '../logo/Logo';
 import Navigation from './Nav';
 

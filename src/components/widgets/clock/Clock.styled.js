@@ -1,35 +1,32 @@
 import styled from 'styled-components';
 
-const testBorder = 'border: 0.1px solid #add8e64f';
-const fonts = ['DM Sans', 'Raleway', 'Karla', 'Lato', 'El Messiri', 'Josefin Sans', 'Poiret One', 'Roboto'];
-
 export const StyledClock = styled.div`
+	position: relative;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 
-	.clock-face {
-		position: relative;
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
-		width: 12rem;
-		height: 12rem;
-		border-radius: 50%;
-
-		font-family: 'Roboto', serif;
-		color: #b3b3b3;
-
-		.CircularProgressbar {
-			position: absolute;
-			width: 100%;
-			vertical-align: middle;
-		}
+	.CircularProgressbar {
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		vertical-align: middle;
 	}
 `;
 
-export const ClockTimeDisplay = styled.div`
+export const StyledClockFace = styled.div`
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	width: 12rem;
+	height: 12rem;
+
+	font-family: 'Roboto', serif;
+	color: #b3b3b3;
+`;
+
+export const TimeDisplay = styled.div`
 	position: relative;
 	display: flex;
 
@@ -59,7 +56,7 @@ export const ClockTimeDisplay = styled.div`
 	}
 `;
 
-export const ClockDateDisplay = styled.div`
+export const DateDisplay = styled.div`
 	position: absolute;
 	bottom: 1.5rem;
 	display: flex;

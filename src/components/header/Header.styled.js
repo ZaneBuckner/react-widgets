@@ -1,19 +1,5 @@
 import styled from 'styled-components';
 
-const testBorder = (color = '#add8e64f') => `border: 0.1px solid ${color}`;
-const flexCenter = `
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-const colors = {
-	light: '#DFC780',
-	medium: '#DAB55D',
-	dark: '#B69037',
-	veryDark: '#AA8733',
-	grey: '#B3B3B3',
-};
-
 export const StyledHeader = styled.header`
 	display: flex;
 	align-items: center;

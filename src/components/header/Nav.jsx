@@ -16,13 +16,6 @@ const urls = {
 	linkedInProfile: 'https://www.linkedin.com/in/ZaneBuckner/',
 };
 
-// const navItems = [
-//   {
-//     title: '',
-//     href: '',
-//   }
-// ];
-
 function Navigation() {
 	return (
 		<Nav>

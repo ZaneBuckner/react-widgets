@@ -1,56 +1,72 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
+import styled from 'styled-components';
 
-import Button from './Button';
-import { AiOutlineClose as CloseIcon } from 'react-icons/ai';
+import { MdOutlineClose as CloseIcon } from 'react-icons/md';
 
-function Card({ children, small }) {
+const StyledCard = styled.div`
+	position: relative;
+	padding: 1rem;
+	background-color: #353535;
+	border-radius: 10px;
+	box-shadow: 2px 6px 13px -4px rgba(0, 0, 0, 0.57);
+`;
+
+const StyledCardHeader = styled.div`
+	display: flex;
+	align-items: center;
+	width: 100%;
+	height: 1rem;
+	opacity: 70%;
+
+	svg {
+		width: auto;
+		height: 100%;
+		fill: #dab55d;
+		cursor: pointer;
+	}
+
+	h1 {
+		margin-left: 0.5rem;
+		font-family: 'Roboto', serif;
+		font-size: 0.8rem;
+		font-weight: 300;
+		/* color: #c3c3c3; */
+		color: #dab55d;
+	}
+
+	.header-actions {
+		display: flex;
+		align-items: center;
+		width: auto;
+		height: 1.5rem;
+		margin-left: auto;
+	}
+`;
+
+function Card({ widgetName, icon, children }) {
 	const [hovered, setHovered] = useState(false);
 
-	const cardStyle = {
-		position: 'relative',
-		padding: '1rem',
-		background: '#353535',
-		borderRadius: '10px',
-		boxShadow: '2px 6px 13px -4px rgba(0, 0, 0, 0.57)',
-	};
-
-	const removeWidgetButton = {
-		position: 'absolute',
-		top: '0px',
-		right: '0px',
-		width: '1.2rem',
-		height: '1.2rem',
-		margin: '0.25rem',
-		cursor: 'pointer',
-	};
-
-	const removeWidgetIcon = {
-		color: '#C3C3C3',
-		width: '100%',
-		height: '100%',
-	};
-
-	const handleRemoveWidget = () => {
+	const removeWidget = () => {
 		console.log('Widget Removed');
 	};
 
-	const removeButton = () => {
-		return (
-			<motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-				<button style={removeWidgetButton} onClick={handleRemoveWidget}>
-					<CloseIcon style={removeWidgetIcon} />
-				</button>
-			</motion.div>
-		);
+	const removeWidgetButton = () => {
+		return <CloseIcon onClick={removeWidget} />;
 	};
 
 	return (
-		<div style={cardStyle} onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}>
-			{hovered && removeButton()}
+		<StyledCard onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}>
+			<StyledCardHeader>
+				{icon}
+				<h1>{widgetName}</h1>
+				<motion.div className='header-actions' initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+					{hovered && removeWidgetButton()}
+				</motion.div>
+			</StyledCardHeader>
 			{children}
-		</div>
+		</StyledCard>
 	);
 }
 

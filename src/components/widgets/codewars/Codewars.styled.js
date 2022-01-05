@@ -1,102 +1,96 @@
 import styled from 'styled-components';
 
-const kyu = {
-	white: '#E6E6E6',
-	yellow: '#ECB614',
-	blue: '#3C7EBB',
-	purple: '#866CC7',
-	background: '#181919',
-};
-
-export const CodewarsStyled = styled.div`
+export const StyledDashboard = styled.div`
 	display: flex;
 	align-items: center;
-	justify-content: space-between;
+	justify-content: space-around;
 	width: 100%;
 	height: 10rem;
 
-	font-family: 'Karla';
-	font-size: 1rem;
-	color: #b3b3b3;
+	font-family: 'Roboto', serif;
+	color: #c3c3c3;
 
 	img {
 		width: auto;
 		height: 7rem;
 	}
+`;
 
-	.codewars-user {
-		border: 1px solid magenta;
-		height: 100%;
-	}
+export const StyledUserProfile = styled.div`
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	width: 30%;
+	height: 100%;
 
-	.challenges-list {
-		border: 1px solid magenta;
+	.user-header {
 		display: flex;
-		/* width: 25rem; */
-		width: 60%;
-		height: 100%;
-		line-height: 1.5rem;
-		overflow-y: auto;
-		cursor: pointer;
-
-		.title {
-			cursor: pointer;
-		}
-
-		.challenge-item:hover {
-			color: #b03226;
-		}
-
-		.date-completed {
-			width: 2.5rem;
-			font-size: 0.6rem;
-			opacity: 70%;
-			text-transform: uppercase;
-		}
-	}
-
-	.challenge-details {
-		border: 0.1px solid magenta;
-		display: flex;
-		flex-direction: column;
 		align-items: center;
-		width: 10rem;
-
-		p {
-			font-size: 0.8rem;
-			line-height: 1rem;
-			max-width: 100%;
-			overflow-y: scroll;
-		}
-	}
-
-	/* .hexagon {
-		position: relative;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		width: 4em;
-		height: 4em;
-		margin: 1rem;
-		background: ${kyu.yellow};
-		clip-path: polygon(15% 25%, 85% 25%, 100% 50%, 85% 75%, 15% 75%, 0 50%);
-
-		font-size: 11.5px;
-
-		::before {
-			content: '';
-			width: 3em;
-			height: 3.5em;
-			background: #333333;
-			clip-path: polygon(15% 25%, 85% 25%, 100% 50%, 85% 75%, 15% 75%, 0 50%);
-		}
+		flex-wrap: wrap;
+		width: 100%;
 
 		h1 {
-			position: absolute;
-			font-family: 'Lato';
-			font-size: 1em;
-			font-weight: 500;
-			color: white;
+			font-size: 1.2rem;
+			font-weight: 300;
 		}
-	} */
+
+		div {
+			margin-left: auto;
+		}
+	}
+
+	.item {
+		display: flex;
+		align-items: baseline;
+		justify-content: space-between;
+		width: 100%;
+
+		h2 {
+			font-size: 0.9rem;
+			opacity: 70%;
+		}
+
+		p {
+			font-size: 1rem;
+			font-weight: 400;
+		}
+	}
+`;
+
+export const StyledChallengesCompleted = styled.ul`
+	display: flex;
+	flex-direction: column;
+	max-height: 10rem;
+	overflow: scroll;
+	width: 30%;
+
+	li {
+		font-size: 0.8rem;
+		font-weight: 400;
+		text-align: center;
+		white-space: nowrap;
+		user-select: none;
+
+		&:hover {
+			cursor: pointer;
+			color: #b03226;
+		}
+	}
+`;
+
+export const StyledChallengeDescription = styled.div`
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-evenly;
+	width: 30%;
+	height: 100%;
+
+	h1 {
+		font-size: 1rem;
+		font-weight: 400;
+		text-align: center;
+		line-height: 1.1rem;
+	}
 `;

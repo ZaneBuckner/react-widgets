@@ -1,55 +1,41 @@
 import { useState, useEffect } from 'react';
-import { CodewarsStyled } from './Codewars.styled';
+import axios from 'axios';
+
+import UserProfile from './UserProfile';
+import ChallengesCompleted from './ChallengesCompleted';
+import ChallengeDescription from './ChallengeDescription';
+
 import Card from '../../shared/Card';
-import CodewarsUser from './CodewarsUser';
-import ChallengeList from './ChallengeList';
-import ChallengeDetails from './ChallengeDetails';
+import { StyledDashboard } from './Codewars.styled';
+import CodewarsIcon from '../../../Assets/CodewarsIcon';
 
 function Codewars() {
-	// const [user, setUser] = useState([]);
 	const [challenges, setChallenges] = useState([]);
-
-	const api = {
-		key: 'qM7RP4NU2jBCdGsBKsKi',
-		base: 'https://www.codewars.com/api/v1/users/Zaniac/',
-		challenges: 'code-challenges/completed/',
-	};
-
-	// async function fetchUser() {
-	// 	const response = await fetch(`${api.base}`);
-	// 	const data = await response.json();
-	// 	setUser({
-	// 		username: data.username,
-	// 		honor: data.honor,
-	// 		leaderboard: data.leaderboardPosition,
-	// 		ranks: {
-	// 			rank: data.ranks.overall.rank,
-	// 			name: data.ranks.overall.name,
-	// 			color: data.ranks.overall.color,
-	// 			score: data.ranks.overall.score,
-	// 		},
-	// 	});
-	// }
-
-	async function fetchChallenges() {
-		const response = await fetch(`${api.base}${api.challenges}`);
-		const data = await response.json();
-		setChallenges(data.data);
-	}
+	const [selectedChallenge, setSelectedChallenge] = useState(null);
+	const userName = 'Zaniac';
 
 	useEffect(() => {
-		// fetchUser();
 		fetchChallenges();
 	}, []);
 
+	const fetchChallenges = async () => {
+		try {
+			const res = await axios.get(`https://www.codewars.com/api/v1/users/${userName}/code-challenges/completed/`);
+			setChallenges(res.data.data);
+		} catch (err) {
+			console.log(err.res.data);
+			console.log(err.res.status);
+			console.log(err.res.headers);
+		}
+	};
+
 	return (
-		<Card>
-			<CodewarsStyled>
-				<img src='https://dev.codewars.com/images/logo-220ae435.png' alt='Codewars Logo' />
-				<CodewarsUser />
-				{challenges && <ChallengeList challenges={challenges} />}
-				{/* {challenges && <ChallengeDetails challenges={ } />} */}
-			</CodewarsStyled>
+		<Card widgetName='Codewars Dashboard' icon={<CodewarsIcon />}>
+			<StyledDashboard>
+				<UserProfile userName={userName} />
+				<ChallengesCompleted challenges={challenges} setSelectedChallenge={setSelectedChallenge} />
+				{selectedChallenge ? <ChallengeDescription selectedChallenge={selectedChallenge} /> : <p>Select a challenge for details.</p>}
+			</StyledDashboard>
 		</Card>
 	);
 }

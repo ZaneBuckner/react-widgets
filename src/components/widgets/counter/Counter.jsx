@@ -4,6 +4,7 @@ import Card from '../../shared/Card';
 import Button from '../../shared/Button';
 import { StyledCounter, CountDisplay } from './Counter.styled';
 
+import CounterIcon from '../../../Assets/CounterIcon';
 import AddIcon from '@material-ui/icons/Add';
 import RemoveIcon from '@material-ui/icons/Remove';
 
@@ -14,7 +15,7 @@ function Counter() {
 	const increment = () => setCount(count + 1);
 
 	return (
-		<Card>
+		<Card widgetName='Counter' icon={<CounterIcon />}>
 			<StyledCounter>
 				<Button onClick={decrement}>
 					<RemoveIcon />

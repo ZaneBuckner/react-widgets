@@ -40,11 +40,11 @@ function Widgets() {
 				<Grid item xs={12} sm={6} md={4}>
 					<Counter />
 				</Grid>
-				<Grid item xs={12} sm={12} md={6}>
-					<User />
-				</Grid>
 				<Grid item xs={12} sm={12} md={12}>
 					<Codewars />
+				</Grid>
+				<Grid item xs={12} sm={12} md={6}>
+					<User />
 				</Grid>
 			</Grid>
 		</Container>

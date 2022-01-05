@@ -29,6 +29,97 @@ export const StyledWeather = styled.div`
 	}
 `;
 
+export const StyledWeatherToolbar = styled.div`
+	${testBorder()};
+	display: flex;
+	align-items: center;
+	width: 100%;
+	height: auto;
+`;
+
+export const StyledUserInput = styled.input`
+	height: 2rem;
+	width: 60%;
+
+	background-color: rgba(255, 255, 255, 0.1);
+	border-radius: 10px;
+`;
+
+export const StyledWeatherCurrent = styled.div`
+	${testBorder()};
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	width: 100%;
+	height: 10rem;
+
+	color: #c3c3c3;
+`;
+
+export const CurrentConditions = styled.div`
+	display: flex;
+	align-items: center;
+
+	h2 {
+		font-size: 1rem;
+		opacity: 70%;
+	}
+`;
+
+export const SunData = styled.div`
+	${testBorder()};
+	display: flex;
+
+	div {
+		display: flex;
+		align-items: center;
+		margin: 0 0.5rem;
+
+		p {
+			margin-left: 0.25rem;
+			opacity: 70%;
+		}
+
+		svg {
+			font-size: 1.5rem;
+		}
+	}
+`;
+
+export const AdditionalInfo = styled.div`
+	${testBorder()};
+	display: flex;
+	align-items: center;
+
+	width: 100%;
+	height: 4rem;
+
+	p {
+		font-size: 0.7rem;
+	}
+
+	.info-wrapper {
+		svg {
+		}
+		p {
+		}
+	}
+`;
+
+export const WeatherFooter = styled.div`
+	display: flex;
+	align-items: baseline;
+	justify-content: space-between;
+	width: 100%;
+	height: auto;
+	padding: 0 1rem;
+
+	font-size: 0.7rem;
+	font-weight: 300;
+	color: #c3c3c3;
+	opacity: 70%;
+`;
+
 // export const StyledWeather = styled.div`
 // 	width: 100%;
 // 	height: auto;
