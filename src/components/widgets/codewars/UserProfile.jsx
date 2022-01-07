@@ -1,54 +1,43 @@
-import { useState, useEffect } from 'react';
-import axios from 'axios';
+import useAxios from 'hooks/useAxios';
 
 import { StyledUserProfile } from './Codewars.styled';
 import DifficultyBadge from './DifficultyBadge';
 
-function CodewarsUser({ userName }) {
-	const [userProfile, setUserProfile] = useState([]);
+function UserProfile({ user }) {
+	const url = `https://www.codewars.com/api/v1/users/${user}/`;
+	const { data, loading, error } = useAxios(url);
 
-	useEffect(() => {
-		const fetchUserProfile = async userName => {
-			try {
-				const res = await axios.get(`https://www.codewars.com/api/v1/users/${userName}/`);
-				setUserProfile({
-					username: res.data.username,
-					leaderboard: res.data.leaderboardPosition,
-					honor: res.data.honor,
-					rank: res.data.ranks.overall.name,
-					color: res.data.ranks.overall.color,
-					score: res.data.ranks.overall.score,
-					completedCount: res.data.codeChallenges.totalCompleted,
-				});
-			} catch (err) {
-				console.log(err.res.data);
-				console.log(err.res.status);
-				console.log(err.res.headers);
-			}
-		};
-		fetchUserProfile(userName);
-	}, [userName]);
+	const details = (title, value) => {
+		return (
+			<div className='item'>
+				<h2>{title}</h2>
+				<p>{value}</p>
+			</div>
+		);
+	};
 
+	const preRender = {
+		loading: <p className='user-message'>Loading Profile...</p>,
+		error: (
+			<p className='user-message'>
+				Unable to find user: <span>{user}</span>
+			</p>
+		),
+	};
+
+	if (loading) return preRender.loading;
+	if (error) return preRender.error;
 	return (
 		<StyledUserProfile>
 			<div className='user-header'>
-				<h1>{userProfile.username}</h1>
-				<DifficultyBadge rankColor={userProfile.color} rankName={userProfile.rank} />
+				<h1>{data.username}</h1>
+				<DifficultyBadge rankColor={data.ranks.overall.color} rankName={data.ranks.overall.name} />
 			</div>
-			<div className='item'>
-				<h2>Honor</h2>
-				<p>{userProfile.honor}</p>
-			</div>
-			<div className='item'>
-				<h2>Completed</h2>
-				<p>{userProfile.completedCount}</p>
-			</div>
-			<div className='item'>
-				<h2>Position</h2>
-				<p>{userProfile.leaderboard}</p>
-			</div>
+			{details('Honor', data.honor)}
+			{details('Completed', data.codeChallenges.totalCompleted)}
+			{details('Position', data.leaderboardPosition)}
 		</StyledUserProfile>
 	);
 }
 
-export default CodewarsUser;
+export default UserProfile;
