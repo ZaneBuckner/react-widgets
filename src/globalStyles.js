@@ -14,4 +14,10 @@ export const Container = styled.div`
 		max-width: none;
 		box-shadow: 2px 6px 13px -4px rgb(0 0 0 / 48%);
 	`};
+
+	${({ toolbar }) =>
+		toolbar &&
+		`
+    padding: 0 30px;
+	`};
 `;
