@@ -1,5 +1,8 @@
 import styled from 'styled-components';
 
+import InfoIcon from '@material-ui/icons/Info';
+import CancelIcon from '@material-ui/icons/Cancel';
+
 const StyledCardHeader = styled.div`
 	display: flex;
 	align-items: center;
@@ -49,12 +52,26 @@ const StyledCardHeader = styled.div`
 	}
 `;
 
-function CardHeader({ widgetName, icon, children }) {
+function CardHeader({ name, icon, placeholder, setUserInput, setShowModal, setShowWidget }) {
+	const userInput = e => e.key === 'Enter' && setUserInput(e.target.value);
+
 	return (
 		<StyledCardHeader>
 			{icon}
-			<h1>{widgetName}</h1>
-			{children}
+			<h1>{name}</h1>
+			{setUserInput && (
+				<input type='text' placeholder={placeholder} spellCheck='false' onKeyPress={userInput} />
+			)}
+			<InfoIcon
+				className='header-icon'
+				aria-label='Open Widget Modal'
+				onClick={() => setShowModal(prev => !prev)}
+			/>
+			<CancelIcon
+				className='header-icon'
+				aria-label='Close Widget'
+				onClick={() => setShowWidget(prev => !prev)}
+			/>
 		</StyledCardHeader>
 	);
 }
