@@ -9,7 +9,27 @@ export const StyledContainer = styled.div`
 	box-shadow: inset 0 6px 13px -4px rgb(0 0 0 / 48%), inset 0 -6px 13px -4px rgb(0 0 0 / 48%);
 `;
 
-export const StyledNav = styled.div`
+export const StyledToolbar = styled.div`
+	position: relative;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	width: 100%;
+	height: auto;
+	padding: 1rem;
+	margin-bottom: 2rem;
+
+	overflow-x: scroll;
+
+	/* Removes Scroll Bar Default Styling */
+	scrollbar-width: none;
+	-ms-overflow-style: none;
+	::-webkit-scrollbar {
+		display: none;
+	}
+`;
+
+export const StyledToolbarNav = styled.div`
 	.nav-left,
 	.nav-right {
 		background-color: rgba(51, 51, 51, 0.9);
@@ -37,26 +57,6 @@ export const StyledNav = styled.div`
 	}
 `;
 
-export const StyledToolbar = styled.div`
-	position: relative;
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	width: 100%;
-	height: auto;
-	margin: 1rem 0;
-	padding: 1rem 0.5rem;
-
-	overflow-x: scroll;
-
-	/* Removes Scroll Bar Default Styling */
-	scrollbar-width: none;
-	-ms-overflow-style: none;
-	::-webkit-scrollbar {
-		display: none;
-	}
-`;
-
 export const StyledWidgetWrapper = styled.div`
 	display: flex;
 	flex-direction: column;
@@ -72,6 +72,7 @@ export const StyledWidgetWrapper = styled.div`
 		svg {
 			width: 100%;
 			height: 100%;
+			fill: #c3c3c3;
 		}
 	}
 
