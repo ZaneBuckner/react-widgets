@@ -70,11 +70,11 @@ export const WidgetContextProvider = ({ children }) => {
 		},
 	]);
 
-	const toggleDisplay = input => {
+	const toggleDisplay = ref => {
 		// Create shallow copy. Define target widget index. Toggle widget display property. Set new widgets object.
 		let updatedWidgets = [...widgets];
-		let index = updatedWidgets.findIndex(widget => widget.ref === input.ref);
-		updatedWidgets[index] = { ...input, display: !input.display };
+		let index = updatedWidgets.findIndex(widget => widget.ref === ref);
+		updatedWidgets[index] = { ...updatedWidgets[index], display: !updatedWidgets[index].display };
 		setWidgets(updatedWidgets);
 	};
 
