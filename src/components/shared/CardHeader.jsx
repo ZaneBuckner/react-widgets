@@ -1,3 +1,5 @@
+import { useContext } from 'react';
+import { WidgetContext } from 'context/WidgetContext';
 import styled from 'styled-components';
 
 import InfoIcon from '@material-ui/icons/Info';
@@ -52,7 +54,8 @@ const StyledCardHeader = styled.div`
 	}
 `;
 
-function CardHeader({ name, icon, placeholder, setUserInput, setShowModal, setShowWidget }) {
+function CardHeader({ name, icon, placeholder, widgetRef, setUserInput, setShowModal }) {
+	const { toggleDisplay } = useContext(WidgetContext);
 	const userInput = e => e.key === 'Enter' && setUserInput(e.target.value);
 
 	return (
@@ -70,7 +73,7 @@ function CardHeader({ name, icon, placeholder, setUserInput, setShowModal, setSh
 			<CancelIcon
 				className='header-icon'
 				aria-label='Close Widget'
-				onClick={() => setShowWidget(prev => !prev)}
+				onClick={() => toggleDisplay(widgetRef)}
 			/>
 		</StyledCardHeader>
 	);
