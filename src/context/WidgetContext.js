@@ -3,7 +3,6 @@ import { v4 as uuidv4 } from 'uuid';
 
 import CodewarsIcon from 'Assets/CodewarsIcon';
 import CounterIcon from 'Assets/CounterIcon';
-import { AiOutlineBgColors as ColorIcon, AiOutlineFontColors as FontIcon } from 'react-icons/ai';
 import { BsCalendarDate as CalendarIcon, BsClock as ClockIcon } from 'react-icons/bs';
 import { FaRegAddressCard as UserProfileIcon } from 'react-icons/fa';
 import { MdOutlineChecklistRtl as TodoIcon, MdTimer as TimerIcon } from 'react-icons/md';
@@ -11,79 +10,87 @@ import { TiWeatherPartlySunny as WeatherIcon } from 'react-icons/ti';
 
 export const WidgetContext = createContext();
 
-export const WidgetProvider = ({ children }) => {
+export const WidgetContextProvider = ({ children }) => {
 	const [widgets, setWidgets] = useState([
 		{
 			id: uuidv4(),
 			name: 'Calendar',
 			icon: <CalendarIcon />,
 			ref: 'calendar',
-			state: false,
+			display: true,
 		},
 		{
 			id: uuidv4(),
 			name: 'Clock',
 			icon: <ClockIcon />,
 			ref: 'clock',
-			state: false,
+			display: true,
 		},
 		{
 			id: uuidv4(),
 			name: 'CodeWars',
 			icon: <CodewarsIcon />,
 			ref: 'codewars',
-			state: false,
+			display: true,
 		},
 		{
 			id: uuidv4(),
 			name: 'Counter',
 			icon: <CounterIcon />,
 			ref: 'counter',
-			state: false,
+			display: true,
 		},
 		{
 			id: uuidv4(),
 			name: 'Timer',
 			icon: <TimerIcon />,
 			ref: 'timer',
-			state: false,
+			display: true,
 		},
 		{
 			id: uuidv4(),
 			name: 'User Profile',
 			icon: <UserProfileIcon />,
-			ref: 'userProfile',
-			state: false,
+			ref: 'userprofile',
+			display: true,
 		},
 		{
 			id: uuidv4(),
 			name: 'Weather',
 			icon: <WeatherIcon />,
 			ref: 'weather',
-			state: false,
+			display: true,
 		},
 		{
 			id: uuidv4(),
 			name: 'To-Do',
 			icon: <TodoIcon />,
 			ref: 'todo',
-			state: false,
-		},
-		{
-			id: uuidv4(),
-			name: 'Color Editor',
-			icon: <ColorIcon />,
-			ref: 'colorEditor',
-			state: false,
-		},
-		{
-			id: uuidv4(),
-			name: 'Font Editor',
-			icon: <FontIcon />,
-			ref: 'fontEditor',
-			state: false,
+			display: true,
 		},
 	]);
 
-	return <WidgetContext.Provider value={[widgets, setWidgets]}>{children}</WidgetContext.Provider>;
+	const toggleDisplay = input => {
+		// Create shallow copy. Define target widget index. Toggle widget display property. Set new widgets object.
+		let updatedWidgets = [...widgets];
+		let index = updatedWidgets.findIndex(widget => widget.ref === input.ref);
+		updatedWidgets[index] = { ...input, display: !input.display };
+		setWidgets(updatedWidgets);
+	};
+
+	const currentDisplay = ref => {
+		return widgets.filter(widget => widget.ref === ref)[0].display;
+	};
+
+	return (
+		<WidgetContext.Provider
+			value={{
+				widgets,
+				toggleDisplay,
+				currentDisplay,
+			}}
+		>
+			{children}
+		</WidgetContext.Provider>
+	);
 };

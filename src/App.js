@@ -1,4 +1,4 @@
-import { WidgetProvider } from 'context/WidgetContext';
+import { WidgetContextProvider } from 'context/WidgetContext';
 
 import Header from './components/header/Header';
 import Toolbar from './components/toolbar/Toolbar';
@@ -8,10 +8,10 @@ function App() {
 	return (
 		<>
 			<Header />
-			<WidgetProvider>
+			<WidgetContextProvider>
 				<Toolbar />
 				<Widgets />
-			</WidgetProvider>
+			</WidgetContextProvider>
 		</>
 	);
 }
