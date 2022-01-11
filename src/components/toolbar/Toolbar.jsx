@@ -11,11 +11,7 @@ import {
 } from './Toolbar.styled';
 
 function Toolbar() {
-	const [widgets, setWidgets] = useContext(WidgetContext);
-
-	const handleWidgetClick = widget => {
-		console.log(widget);
-	};
+	const { widgets, toggleDisplay } = useContext(WidgetContext);
 
 	return (
 		<StyledContainer>
@@ -25,7 +21,7 @@ function Toolbar() {
 			<StyledToolbar>
 				{widgets.map(widget => (
 					<StyledWidgetWrapper key={widget.id}>
-						<Button onClick={() => handleWidgetClick(widget)}>{widget.icon}</Button>
+						<Button onClick={() => toggleDisplay(widget)}>{widget.icon}</Button>
 						<h1>{widget.name}</h1>
 					</StyledWidgetWrapper>
 				))}
