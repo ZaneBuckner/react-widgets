@@ -1,65 +1,94 @@
-import { useState } from 'react';
+import useAxios from 'hooks/useAxios';
+import { formatUnixTime } from 'utils/util';
 
-import { StyledWeatherCurrent, CurrentConditions, SunData, AdditionalInfo } from './Weather.styled';
+import { StyledWeatherCurrent } from './Weather.styled';
 
-import { WiSunrise as SunriseIcon } from 'react-icons/wi';
-import { WiSunset as SunsetIcon } from 'react-icons/wi';
-import { WiFahrenheit as DegFIcon } from 'react-icons/wi';
-import { FiWind as WindIcon } from 'react-icons/fi';
-import { WiRaindrop as HumidityIcon } from 'react-icons/wi';
 import { MdVisibility as VisibilityIcon } from 'react-icons/md';
-// import * as weatherIcons from 'react-icons/wi';
+import {
+	WiRaindrop as HumidityIcon,
+	WiStrongWind as WindSpeedIcon,
+	WiSunrise as SunriseIcon,
+	WiSunset as SunsetIcon,
+} from 'react-icons/wi';
 
-function WeatherCurrent({ currentWeather }) {
-	// currentWeather && console.log(currentWeather);
+function WeatherCurrent({ url, userInput, units, unitValues }) {
+	const { data, loading, error } = useAxios(url);
 
-	const getFormattedTime = unixTime => {
-		let date = new Date(unixTime * 1000);
-		let hours = (date.getHours() + 24) % 12 || 12;
-		let minutes = date.getMinutes();
-		let meridian = date.getHours() < 12 ? 'AM' : 'PM';
-		return `${hours}:${minutes} ${meridian}`;
+	const getDayLength = (sunrise, sunset) => {
+		return (
+			<>
+				<div className='sunrise'>
+					<SunriseIcon />
+					<p>{formatUnixTime(sunrise)}</p>
+				</div>
+				<div className='sunset'>
+					<SunsetIcon />
+					<p>{formatUnixTime(sunset)}</p>
+				</div>
+			</>
+		);
 	};
 
-	const weatherIconSrc = data => `http://openweathermap.org/img/w/${data}.png`;
+	const getCurrentConditions = () => {
+		const formatDescritpion = str => {
+			return str
+				.split(' ')
+				.map(word => `${word[0].toUpperCase()}${word.substring(1)}`)
+				.join(' ');
+		};
 
+		return (
+			<>
+				<img
+					src={`http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`}
+					alt='Weather Icon'
+				/>
+				<p>{formatDescritpion(data.weather[0].description)}</p>
+				<p className='temp'>
+					{Math.round(data.main.temp)} <span className='units'>{unitValues[units].temp}</span>
+				</p>
+			</>
+		);
+	};
+
+	const additionalConditions = (type, icon, value, input) => {
+		let unit = unitValues[units][input];
+
+		return (
+			<div className='condition-wrapper'>
+				<h2>{type}</h2>
+				<div className='details'>
+					{icon}
+					<p>
+						{value} <span className='units'>{unit}</span>
+					</p>
+				</div>
+			</div>
+		);
+	};
+
+	const preRender = {
+		loading: <p className='user-message'>Loading Current Weather...</p>,
+		error: (
+			<p className='user-message'>
+				Unable to find weather data for <span>{userInput}</span>.<br /> Please check your spelling
+				or limit your search to a <span>City Name</span> or a <span>ZIP code</span>.
+			</p>
+		),
+	};
+
+	if (loading) return preRender.loading;
+	if (error) return preRender.error;
 	return (
 		<StyledWeatherCurrent>
-			<h1>Hammond, US</h1>
-			<CurrentConditions>
-				<img src={weatherIconSrc(currentWeather.weather[0].icon)} alt='Current Weather Icon' />
-				<h2>{currentWeather.weather[0].description}</h2>
-			</CurrentConditions>
-			<SunData>
-				<div>
-					<SunriseIcon />
-					<p>{getFormattedTime(currentWeather.sunrise)}</p>
-				</div>
-				<div>
-					<SunsetIcon />
-					<p>{getFormattedTime(currentWeather.sunset)}</p>
-				</div>
-			</SunData>
-			<AdditionalInfo>
-				<div className='info-wrapper'>
-					<p>Wind Speed</p>
-					<div>
-						<WindIcon />
-					</div>
-				</div>
-				<div className='info-wrapper'>
-					<p>Humidity</p>
-					<div>
-						<HumidityIcon />
-					</div>
-				</div>
-				<div className='info-wrapper'>
-					<p>Visibility</p>
-					<div>
-						<VisibilityIcon />
-					</div>
-				</div>
-			</AdditionalInfo>
+			<h1 className='city'>{data.name}</h1>
+			<div className='current-conditions'>{getCurrentConditions()}</div>
+			<div className='day-length'>{getDayLength(data.sys.sunrise, data.sys.sunset)}</div>
+			<div className='additional-conditions'>
+				{additionalConditions('Wind Speed', <WindSpeedIcon />, data.wind.speed, 'speed')}
+				{additionalConditions('Humidity', <HumidityIcon />, data.main.humidity, 'percent')}
+				{additionalConditions('Visibility', <VisibilityIcon />, data.visibility, 'distance')}
+			</div>
 		</StyledWeatherCurrent>
 	);
 }
