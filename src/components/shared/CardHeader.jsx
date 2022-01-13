@@ -33,6 +33,7 @@ const StyledCardHeader = styled.div`
 		align-items: center;
 		padding: 0.2rem 0.5rem;
 		margin-left: auto;
+		width: 40%;
 
 		background-color: rgba(255, 255, 255, 0.1);
 		border-radius: 5px;
