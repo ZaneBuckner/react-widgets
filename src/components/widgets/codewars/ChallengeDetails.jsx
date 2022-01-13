@@ -51,10 +51,12 @@ function ChallengeDetails({ selectedChallenge }) {
 	if (error) return preRender.error;
 	return (
 		<StyledChallengeDetails>
-			<a href={data.url} target='_blank' rel='noopener noreferrer'>
-				<h1>{data.name}</h1>
-			</a>
-			<DifficultyBadge rankColor={data.rank.color} rankName={data.rank.name} />
+			<div className='details-header'>
+				<a href={data.url} target='_blank' rel='noopener noreferrer'>
+					<h1>{data.name}</h1>
+				</a>
+				<DifficultyBadge rankColor={data.rank.color} rankName={data.rank.name} />
+			</div>
 			{details('Completed', convertDate(selectedChallenge.completedAt))}
 			{details('Completion Rate', completionRate())}
 		</StyledChallengeDetails>

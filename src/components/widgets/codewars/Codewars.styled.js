@@ -86,16 +86,12 @@ export const StyledDashboard = styled.div`
 `;
 
 export const StyledUserProfile = styled.div`
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
 	width: 30%;
+	height: 100%;
 
 	.user-header {
 		display: flex;
 		align-items: center;
-		flex-wrap: wrap;
 		width: 100%;
 		margin: 0.5rem 0;
 
@@ -113,16 +109,34 @@ export const StyledUserProfile = styled.div`
 		display: flex;
 		align-items: baseline;
 		justify-content: space-between;
+		flex-wrap: wrap;
 		width: 100%;
 
 		h2 {
 			font-size: 0.9rem;
+			font-weight: 400;
 			opacity: 70%;
 		}
 
 		p {
 			font-size: 1rem;
 			font-weight: 400;
+		}
+	}
+
+	@media (max-width: 600px) {
+		.user-header {
+			flex-direction: column;
+			align-items: center;
+
+			div {
+				margin-left: 0;
+			}
+		}
+
+		.item {
+			flex-direction: column;
+			align-items: center;
 		}
 	}
 `;
@@ -143,44 +157,60 @@ export const StyledChallengesList = styled.ul`
 
 		&:hover {
 			cursor: pointer;
-			color: #b03226;
+			color: #dab55d;
 		}
 	}
 `;
 
 export const StyledChallengeDetails = styled.div`
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
 	width: 30%;
 	height: 100%;
 
-	h1 {
-		margin-bottom: 0.5rem;
+	.details-header {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		width: 100%;
+		margin: 0.5rem 0;
 
-		font-size: 1.1rem;
-		font-weight: 400;
-		text-align: center;
-		line-height: 1.2rem;
+		h1 {
+			margin-bottom: 0.5rem;
+
+			font-size: 1.1rem;
+			font-weight: 400;
+			text-align: center;
+			line-height: 1.2rem;
+
+			&:hover {
+				cursor: pointer;
+				color: #dab55d;
+			}
+		}
 	}
 
 	.item {
 		display: flex;
 		align-items: baseline;
 		justify-content: space-between;
-		flex-wrap: wrap;
 		width: 100%;
 
 		h2 {
 			font-size: 0.9rem;
+			font-weight: 400;
 			opacity: 70%;
 		}
 
 		p {
 			font-size: 1rem;
 			font-weight: 400;
-			color: 100%;
+		}
+	}
+
+	@media (max-width: 650px) {
+		.item {
+			flex-direction: column;
+			align-items: center;
 		}
 	}
 `;
