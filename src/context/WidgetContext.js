@@ -4,7 +4,6 @@ import { v4 as uuidv4 } from 'uuid';
 import CodewarsIcon from 'Assets/CodewarsIcon';
 import CounterIcon from 'Assets/CounterIcon';
 import { BsCalendarDate as CalendarIcon, BsClock as ClockIcon } from 'react-icons/bs';
-import { FaRegAddressCard as UserProfileIcon } from 'react-icons/fa';
 import { MdOutlineChecklistRtl as TodoIcon, MdTimer as TimerIcon } from 'react-icons/md';
 import { TiWeatherPartlySunny as WeatherIcon } from 'react-icons/ti';
 
@@ -45,13 +44,6 @@ export const WidgetContextProvider = ({ children }) => {
 			name: 'Timer',
 			icon: <TimerIcon />,
 			ref: 'timer',
-			display: true,
-		},
-		{
-			id: uuidv4(),
-			name: 'User Profile',
-			icon: <UserProfileIcon />,
-			ref: 'userprofile',
 			display: true,
 		},
 		{

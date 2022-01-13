@@ -5,7 +5,6 @@ import { Container } from 'globalStyles';
 import { Grid } from '@material-ui/core';
 
 import Counter from './counter/Counter';
-import User from './user/User';
 import Weather from './weather/Weather';
 import Codewars from './codewars/Codewars';
 import Clock from './clock/Clock';
@@ -42,11 +41,6 @@ function Widgets() {
 				{currentDisplay('counter') && (
 					<Grid item xs={12} sm={6} md={4}>
 						<Counter />
-					</Grid>
-				)}
-				{currentDisplay('userprofile') && (
-					<Grid item xs={12} sm={12} md={6}>
-						<User />
 					</Grid>
 				)}
 			</Grid>
