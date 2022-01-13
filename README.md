@@ -1,6 +1,8 @@
 # React Widgets
 
-What better way to learn React than to build an application full of small, independent and reusable widgets.
+[![Badge](https://7mt2lr9efha5.runkit.sh)](https://react-widgets-hub.netlify.app/)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/8a8189d3-e6bb-4017-9986-51c227fdc294/deploy-status)](https://app.netlify.com/sites/react-widgets-hub/deploys)<br>
+Application full of small, independent, and reusable applications - widgets.
 
 ### Featured Widgets
 
@@ -9,7 +11,6 @@ What better way to learn React than to build an application full of small, indep
 - CodeWars UI Dashboard
 - Counter
 - Timer
-- User Profile UI
 - Weather UI
 - To-Do List
 - Color Editor
@@ -21,12 +22,16 @@ What better way to learn React than to build an application full of small, indep
 ### Concepts Covered
 
 ```
-JSX & Props
-useState()
-useEffect()
-Asynchronous HTTP Requests with Axios
-Thinking In React:
-  Building reusable components
-Styling components with the styled-components library
-Responsive grid with Material UI Grid Layout
+JSX
+Handling Props
+Managing Component State
+  useState() & useEffect() Hooks
+Managing global state
+  Creating, using, & providing state with the Context API
+Managing Data
+  Asynchronous HTTP GET Requests with Axios
+  Custom hook to fetch data and handle loading/error states
+Building Reusable Components
+Styling With Styled-Components Library
+Responsive UI With Material UI Grid Layout
 ```
