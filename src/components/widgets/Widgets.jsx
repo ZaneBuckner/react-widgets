@@ -8,6 +8,8 @@ import Counter from './counter/Counter';
 import Weather from './weather/Weather';
 import Codewars from './codewars/Codewars';
 import Clock from './clock/Clock';
+import Todo from './todo/Todo';
+import Timer from './timer/Timer';
 
 const widgetGridStyles = {
 	alignItems: 'center',
@@ -28,9 +30,19 @@ function Widgets() {
 						<Weather />
 					</Grid>
 				)}
+				{currentDisplay('todo') && (
+					<Grid item xs={12} sm={6} md={4}>
+						<Todo />
+					</Grid>
+				)}
 				{currentDisplay('clock') && (
 					<Grid item xs={12} sm={6} md={4}>
 						<Clock />
+					</Grid>
+				)}
+				{currentDisplay('timer') && (
+					<Grid item xs={12} sm={6} md={4}>
+						<Timer />
 					</Grid>
 				)}
 				{currentDisplay('codewars') && (
