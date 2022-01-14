@@ -10,10 +10,12 @@ export const StyledContainer = styled.div`
 `;
 
 export const StyledToolbar = styled.div`
-	position: relative;
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
+	display: grid;
+	grid-template-columns: repeat(7, 1fr);
+	grid-template-rows: 1fr;
+	grid-column-gap: 2rem;
+	grid-row-gap: 0px;
+
 	width: 100%;
 	height: auto;
 	padding: 1rem 2rem;
@@ -63,7 +65,6 @@ export const StyledWidgetWrapper = styled.div`
 	justify-content: space-between;
 	align-items: center;
 	height: 100%;
-	margin: 0 1rem;
 
 	button {
 		width: 3rem;
