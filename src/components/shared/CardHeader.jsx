@@ -48,10 +48,14 @@ const StyledCardHeader = styled.div`
 		}
 	}
 
-	.header-icon {
+	.header-icons {
 		height: 100%;
 		margin-left: 0.3rem;
 		cursor: pointer;
+	}
+
+	.info {
+		margin-left: auto;
 	}
 `;
 
@@ -66,13 +70,15 @@ function CardHeader({ name, icon, placeholder, widgetRef, setUserInput, setShowM
 			{setUserInput && (
 				<input type='text' placeholder={placeholder} spellCheck='false' onKeyPress={userInput} />
 			)}
-			<InfoIcon
-				className='header-icon'
-				aria-label='Open Widget Modal'
-				onClick={() => setShowModal(prev => !prev)}
-			/>
+			{setShowModal && (
+				<InfoIcon
+					className='header-icons info'
+					aria-label='Open Widget Modal'
+					onClick={() => setShowModal(prev => !prev)}
+				/>
+			)}
 			<CancelIcon
-				className='header-icon'
+				className='header-icons close'
 				aria-label='Close Widget'
 				onClick={() => toggleDisplay(widgetRef)}
 			/>
