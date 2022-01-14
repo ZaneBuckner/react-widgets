@@ -16,7 +16,7 @@ export const StyledToolbar = styled.div`
 	align-items: center;
 	width: 100%;
 	height: auto;
-	padding: 1rem;
+	padding: 1rem 2rem;
 	margin-bottom: 2rem;
 
 	overflow-x: scroll;
