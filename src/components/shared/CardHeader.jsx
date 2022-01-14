@@ -52,6 +52,10 @@ const StyledCardHeader = styled.div`
 		height: 100%;
 		margin-left: 0.3rem;
 		cursor: pointer;
+
+		@media (max-width: 500px) {
+			height: 150%;
+		}
 	}
 
 	.info {
