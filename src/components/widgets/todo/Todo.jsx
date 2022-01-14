@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
-import { StyledTodo } from './Todo.Styled';
+import { StyledTodo, StyledInput } from './Todo.Styled';
 
 import Card from 'components/shared/Card';
 import CardHeader from 'components/shared/CardHeader';
@@ -14,12 +14,17 @@ function Todo() {
 	return (
 		<Card>
 			<CardHeader
-				name='ToDo App'
+				name='Todo Tracker'
 				icon={<TodoIcon />}
 				widgetRef='todo'
 				setShowModal={setShowModal}
 			/>
-			<StyledTodo></StyledTodo>
+			<Modal showModal={showModal} setShowModal={setShowModal}>
+				<h1>Coming Soon...</h1>
+			</Modal>
+			<StyledTodo>
+				<StyledInput type='text' autoComplete='false' />
+			</StyledTodo>
 		</Card>
 	);
 }
