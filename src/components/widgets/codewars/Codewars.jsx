@@ -18,7 +18,11 @@ function Codewars() {
 	const [selectedChallenge, setSelectedChallenge] = useState(null);
 
 	const challegeDetails = <ChallengeDetails selectedChallenge={selectedChallenge} />;
-	const awaitChallengeDetails = <p className='user-message'>Select a challenge for details.</p>;
+	const awaitChallengeDetails = (
+		<div className='pre-details-wrapper'>
+			<p className='user-message'>Select a challenge for details.</p>
+		</div>
+	);
 
 	return (
 		<Card>
