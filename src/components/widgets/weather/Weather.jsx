@@ -44,7 +44,7 @@ const unitValues = {
 };
 
 function Weather() {
-	const [userInput, setUserInput] = useState('Hammond');
+	const [userInput, setUserInput] = useState(70401);
 	const [units, setUnits] = useState('imperial');
 	const [currentURL, setCurrentURL] = useState('');
 	const [forecastURL, setForecastURL] = useState('');
