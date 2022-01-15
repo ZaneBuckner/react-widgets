@@ -1,6 +1,5 @@
 import { useContext } from 'react';
 import { WidgetContext } from 'context/WidgetContext';
-import { motion, AnimatePresence } from 'framer-motion';
 import styled from 'styled-components';
 
 import InfoIcon from '@material-ui/icons/Info';
