@@ -141,6 +141,13 @@ export const StyledChallengesList = styled.div`
 	overflow: hidden;
 	overflow-y: scroll;
 
+	/* REMOVE SCROLL BAR DEFAULT STYLING */
+	::-webkit-scrollbar {
+		display: none;
+		-ms-overflow-style: none;
+		scrollbar-width: none;
+	}
+
 	li {
 		font-size: 0.8rem;
 		font-weight: 400;
