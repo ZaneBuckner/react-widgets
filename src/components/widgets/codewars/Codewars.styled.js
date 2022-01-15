@@ -137,6 +137,9 @@ export const StyledUserProfile = styled.div`
 export const StyledChallengesList = styled.div`
 	height: 100%;
 
+	overflow: hidden;
+	overflow-y: scroll;
+
 	/* REMOVE SCROLL BAR DEFAULT STYLING */
 	::-webkit-scrollbar {
 		display: none;
@@ -146,8 +149,6 @@ export const StyledChallengesList = styled.div`
 
 	ul {
 		height: 13rem;
-		overflow: hidden;
-		overflow-y: scroll;
 
 		li {
 			font-size: 0.8rem;
