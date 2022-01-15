@@ -139,6 +139,7 @@ export const StyledChallengesList = styled.div`
 	height: 13rem;
 
 	overflow: hidden;
+	overflow-x: auto;
 	overflow-y: scroll;
 
 	/* REMOVE SCROLL BAR DEFAULT STYLING */
