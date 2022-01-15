@@ -58,7 +58,7 @@ export const StyledCodewars = styled.div`
 	grid-column-gap: 0.5rem;
 	align-items: center;
 	width: 100%;
-	height: 100%;
+	/* height: 100%; */
 
 	font-family: 'Roboto', serif;
 	color: #c3c3c3;
