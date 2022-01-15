@@ -58,7 +58,7 @@ function ChallengeDetails({ selectedChallenge }) {
 				<DifficultyBadge rankColor={data.rank.color} rankName={data.rank.name} />
 			</div>
 			{details('Completed', convertDate(selectedChallenge.completedAt))}
-			{details('Completion Rate', completionRate())}
+			{details('Pass Rate', completionRate())}
 		</StyledChallengeDetails>
 	);
 }
