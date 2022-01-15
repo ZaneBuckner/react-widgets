@@ -22,15 +22,14 @@ export const StyledWeather = styled.div`
 	flex-direction: column;
 	align-items: center;
 	width: 100%;
-	height: auto;
+	height: 100%;
 
 	font-family: 'Roboto', serif;
 	color: #c3c3c3;
 
 	.user-message {
 		width: 100%;
-		padding: 0.5rem;
-		margin: 0.5rem;
+		padding: 0.2rem;
 
 		border: 1px solid #c3c3c380;
 		border-radius: 5px;
@@ -39,9 +38,6 @@ export const StyledWeather = styled.div`
 		font-size: 0.8rem;
 
 		span {
-			/* margin: 0 0.2rem; */
-
-			display: inline-block;
 			font-weight: 600;
 			color: #dab55d;
 		}
