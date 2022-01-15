@@ -55,11 +55,8 @@ export const StyledCodewarsModal = styled.div`
 export const StyledCodewars = styled.div`
 	display: grid;
 	grid-template-columns: 2fr 3fr 2fr;
-	grid-template-rows: 1fr;
 	grid-column-gap: 0.5rem;
 	align-items: center;
-	min-height: 0;
-	min-width: 0;
 	width: 100%;
 	height: 100%;
 
@@ -138,6 +135,7 @@ export const StyledUserProfile = styled.div`
 `;
 
 export const StyledChallengesList = styled.div`
+	max-width: 100%;
 	height: 13rem;
 
 	overflow: hidden;
