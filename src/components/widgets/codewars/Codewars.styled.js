@@ -55,10 +55,11 @@ export const StyledCodewarsModal = styled.div`
 export const StyledCodewars = styled.div`
 	display: grid;
 	grid-template-columns: 2fr 3fr 2fr;
+	grid-template-rows: 1fr;
 	grid-column-gap: 0.5rem;
 	align-items: center;
 	width: 100%;
-	/* height: 100%; */
+	height: 100%;
 
 	font-family: 'Roboto', serif;
 	color: #c3c3c3;
@@ -141,11 +142,11 @@ export const StyledChallengesList = styled.div`
 	overflow-y: scroll;
 
 	/* REMOVE SCROLL BAR DEFAULT STYLING */
-	/* ::-webkit-scrollbar {
+	::-webkit-scrollbar {
 		display: none;
 		-ms-overflow-style: none;
 		scrollbar-width: none;
-	} */
+	}
 
 	li {
 		font-size: 0.8rem;
