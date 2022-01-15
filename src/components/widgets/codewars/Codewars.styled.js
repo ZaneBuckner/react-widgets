@@ -58,6 +58,8 @@ export const StyledCodewars = styled.div`
 	grid-template-rows: 1fr;
 	grid-column-gap: 0.5rem;
 	align-items: center;
+	min-height: 0;
+	min-width: 0;
 	width: 100%;
 	height: 100%;
 
