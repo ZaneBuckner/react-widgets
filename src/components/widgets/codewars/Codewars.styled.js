@@ -135,6 +135,7 @@ export const StyledUserProfile = styled.div`
 `;
 
 export const StyledChallengesList = styled.div`
+	min-height: 0;
 	height: 13rem;
 
 	overflow: hidden;
