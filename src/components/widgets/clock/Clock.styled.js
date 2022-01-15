@@ -50,7 +50,7 @@ export const TimeDisplay = styled.div`
 
 		h1 {
 			font-size: 0.8rem;
-			opacity: 50%;
+			font-weight: 300;
 			margin-left: 10px;
 		}
 	}
@@ -59,13 +59,16 @@ export const TimeDisplay = styled.div`
 export const DateDisplay = styled.div`
 	position: absolute;
 	bottom: 2rem;
-	display: flex;
+	/* display: flex;
 	align-items: center;
-	justify-content: space-between;
-	width: 5rem;
-	opacity: 80%;
+	justify-content: space-between; */
+	display: grid;
+	grid-template-columns: 1fr 2fr 1fr;
+	align-items: center;
+	width: 45%;
 
 	h2 {
+		/* border: 0.1px dotted lightblue; */
 		font-size: 0.9rem;
 		text-align: center;
 		text-transform: uppercase;
