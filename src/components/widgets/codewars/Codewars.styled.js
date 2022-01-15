@@ -135,12 +135,7 @@ export const StyledUserProfile = styled.div`
 `;
 
 export const StyledChallengesList = styled.div`
-	min-height: 0;
-	height: 13rem;
-
-	overflow: hidden;
-	overflow-x: auto;
-	overflow-y: scroll;
+	height: 100%;
 
 	/* REMOVE SCROLL BAR DEFAULT STYLING */
 	::-webkit-scrollbar {
@@ -149,15 +144,21 @@ export const StyledChallengesList = styled.div`
 		scrollbar-width: none;
 	}
 
-	li {
-		font-size: 0.8rem;
-		font-weight: 400;
-		white-space: nowrap;
-		user-select: none;
+	ul {
+		height: 13rem;
+		overflow: hidden;
+		overflow-y: scroll;
 
-		&:hover {
-			cursor: pointer;
-			color: #dab55d;
+		li {
+			font-size: 0.8rem;
+			font-weight: 400;
+			white-space: nowrap;
+			user-select: none;
+
+			&:hover {
+				cursor: pointer;
+				color: #dab55d;
+			}
 		}
 	}
 `;

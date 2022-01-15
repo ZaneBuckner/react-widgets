@@ -14,11 +14,13 @@ function ChallengesList({ user, setSelectedChallenge }) {
 	if (error) return preRender.error;
 	return (
 		<StyledChallengesList>
-			{data.data.map(challenge => (
-				<li key={challenge.id} onClick={() => setSelectedChallenge(challenge)}>
-					{challenge.name}
-				</li>
-			))}
+			<ul>
+				{data.data.map(challenge => (
+					<li key={challenge.id} onClick={() => setSelectedChallenge(challenge)}>
+						{challenge.name}
+					</li>
+				))}
+			</ul>
 		</StyledChallengesList>
 	);
 }
