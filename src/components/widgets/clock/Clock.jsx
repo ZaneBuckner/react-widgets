@@ -2,7 +2,8 @@ import { useState, useEffect } from 'react';
 import ClockProgressWheel from './ClockProgressWheel';
 import ClockFace from './ClockFace';
 
-import Card from '../../shared/Card';
+import Card from 'components/shared/Card';
+import CardHeader from 'components/shared/CardHeader';
 import { StyledClock } from './Clock.styled';
 import { BsClock as ClockIcon } from 'react-icons/bs';
 
@@ -34,7 +35,8 @@ function Clock() {
 	}, []);
 
 	return (
-		<Card widgetName='Analogue Clock' icon={<ClockIcon />}>
+		<Card>
+			<CardHeader name='Clock' icon={<ClockIcon />} widgetRef='clock' />
 			<StyledClock>
 				<ClockProgressWheel seconds={seconds} />
 				<ClockFace time={clockData.time} date={clockData.date} />
