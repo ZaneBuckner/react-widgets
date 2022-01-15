@@ -135,8 +135,7 @@ export const StyledUserProfile = styled.div`
 `;
 
 export const StyledChallengesList = styled.div`
-	height: 100%;
-	max-height: 13rem;
+	height: 13rem;
 
 	overflow: hidden;
 	overflow-y: scroll;
