@@ -52,22 +52,20 @@ export const StyledCodewarsModal = styled.div`
 	}
 `;
 
-export const StyledDashboard = styled.div`
-	position: relative;
-	display: flex;
+export const StyledCodewars = styled.div`
+	display: grid;
+	grid-template-columns: 2fr 3fr 2fr;
+	grid-column-gap: 0.5rem;
 	align-items: center;
-	justify-content: space-around;
 	width: 100%;
-	height: auto;
+	height: 100%;
 
 	font-family: 'Roboto', serif;
 	color: #c3c3c3;
 
 	.user-message {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		padding: 0.5rem;
+		width: 100%;
+		padding: 0.2rem;
 
 		border: 1px solid #c3c3c380;
 		border-radius: 5px;
@@ -76,9 +74,6 @@ export const StyledDashboard = styled.div`
 		font-size: 0.8rem;
 
 		span {
-			margin: 0 0.2rem;
-
-			display: inline-block;
 			font-weight: 600;
 			color: #dab55d;
 		}
@@ -86,7 +81,6 @@ export const StyledDashboard = styled.div`
 `;
 
 export const StyledUserProfile = styled.div`
-	width: 30%;
 	height: 100%;
 
 	.user-header {
@@ -114,12 +108,11 @@ export const StyledUserProfile = styled.div`
 
 		h2 {
 			font-size: 0.9rem;
-			font-weight: 400;
-			opacity: 70%;
+			font-weight: 300;
 		}
 
 		p {
-			font-size: 1rem;
+			font-size: 0.9rem;
 			font-weight: 400;
 		}
 	}
@@ -141,17 +134,16 @@ export const StyledUserProfile = styled.div`
 	}
 `;
 
-export const StyledChallengesList = styled.ul`
-	display: flex;
-	flex-direction: column;
-	max-height: 10rem;
-	overflow: scroll;
-	width: 30%;
+export const StyledChallengesList = styled.div`
+	height: 100%;
+	max-height: 13rem;
+
+	overflow: hidden;
+	overflow-y: scroll;
 
 	li {
 		font-size: 0.8rem;
 		font-weight: 400;
-		text-align: center;
 		white-space: nowrap;
 		user-select: none;
 
@@ -163,7 +155,6 @@ export const StyledChallengesList = styled.ul`
 `;
 
 export const StyledChallengeDetails = styled.div`
-	width: 30%;
 	height: 100%;
 
 	.details-header {
@@ -177,8 +168,8 @@ export const StyledChallengeDetails = styled.div`
 		h1 {
 			margin-bottom: 0.5rem;
 
-			font-size: 1.1rem;
-			font-weight: 400;
+			font-size: 0.9rem;
+			font-weight: 500;
 			text-align: center;
 			line-height: 1.2rem;
 
@@ -197,17 +188,16 @@ export const StyledChallengeDetails = styled.div`
 
 		h2 {
 			font-size: 0.9rem;
-			font-weight: 400;
-			opacity: 70%;
+			font-weight: 300;
 		}
 
 		p {
-			font-size: 1rem;
+			font-size: 0.9rem;
 			font-weight: 400;
 		}
 	}
 
-	@media (max-width: 650px) {
+	@media (max-width: 600px) {
 		.item {
 			flex-direction: column;
 			align-items: center;

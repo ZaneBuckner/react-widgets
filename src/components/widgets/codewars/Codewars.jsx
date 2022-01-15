@@ -1,13 +1,15 @@
 import { useState } from 'react';
+
+import Card from 'components/shared/Card';
+import CardHeader from 'components/shared/CardHeader';
 import Modal from 'components/shared/Modal';
+
 import CodewarsModal from './CodewarsModal';
 import UserProfile from './UserProfile';
 import ChallengesList from './ChallengesList';
 import ChallengeDetails from './ChallengeDetails';
 
-import Card from 'components/shared/Card';
-import CardHeader from 'components/shared/CardHeader';
-import { StyledDashboard } from './Codewars.styled';
+import { StyledCodewars } from './Codewars.styled';
 import CodewarsIcon from 'Assets/CodewarsIcon';
 
 function Codewars() {
@@ -31,11 +33,11 @@ function Codewars() {
 			<Modal showModal={showModal} setShowModal={setShowModal}>
 				<CodewarsModal />
 			</Modal>
-			<StyledDashboard>
+			<StyledCodewars>
 				<UserProfile user={userInput} />
 				<ChallengesList user={userInput} setSelectedChallenge={setSelectedChallenge} />
 				{selectedChallenge ? challegeDetails : awaitChallengeDetails}
-			</StyledDashboard>
+			</StyledCodewars>
 		</Card>
 	);
 }
