@@ -135,7 +135,6 @@ export const StyledUserProfile = styled.div`
 `;
 
 export const StyledChallengesList = styled.div`
-	max-width: 100%;
 	height: 13rem;
 
 	overflow: hidden;
