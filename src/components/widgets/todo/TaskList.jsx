@@ -1,14 +1,14 @@
 import Task from './Task';
 
-import { StyledTodoTasks } from './Todo.Styled';
+import { StyledTaskList } from './Todo.Styled';
 
-function TodoTasks({ tasks }) {
+function TodoTasks({ tasks, onDelete, onToggle }) {
 	return (
-		<StyledTodoTasks>
+		<StyledTaskList>
 			{tasks.map(task => (
-				<Task key={task.id} task={task} />
+				<Task key={task.id} task={task} onDelete={onDelete} onToggle={onToggle} />
 			))}
-		</StyledTodoTasks>
+		</StyledTaskList>
 	);
 }
 
