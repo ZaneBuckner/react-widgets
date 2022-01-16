@@ -12,12 +12,12 @@ function Header() {
 			<StyledHeader>
 				<Logo strokeWidth={3} height={50} />
 				<StyledNav>
-					<Button>
+					<Button animate>
 						<a title='Website' href='https://zaniac.io/' target='_blank' rel='noopener noreferrer'>
 							<LogoIcon />
 						</a>
 					</Button>
-					<Button>
+					<Button animate>
 						<a
 							title='GitHub Profile'
 							href='https://github.com/ZaneBuckner/'
@@ -27,7 +27,7 @@ function Header() {
 							<FaGithubSquare />
 						</a>
 					</Button>
-					<Button>
+					<Button animate>
 						<a
 							title='LinkedIn Profile'
 							href='https://www.linkedin.com/in/ZaneBuckner/'
