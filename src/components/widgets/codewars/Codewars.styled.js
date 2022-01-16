@@ -56,7 +56,8 @@ export const StyledCodewars = styled.div`
 	display: grid;
 	grid-template-columns: 2fr 3fr 2fr;
 	grid-column-gap: 0.5rem;
-	align-items: center;
+	/* align-items: center; */
+
 	width: 100%;
 	height: 100%;
 
@@ -166,6 +167,13 @@ export const StyledChallengesList = styled.div`
 
 export const StyledChallengeDetails = styled.div`
 	height: 100%;
+
+	p {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		height: 100%;
+	}
 
 	.details-header {
 		display: flex;
