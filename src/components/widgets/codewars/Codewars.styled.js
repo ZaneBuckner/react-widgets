@@ -167,13 +167,6 @@ export const StyledChallengesList = styled.div`
 export const StyledChallengeDetails = styled.div`
 	height: 100%;
 
-	.user-message {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		height: 100%;
-	}
-
 	.details-header {
 		display: flex;
 		flex-direction: column;
