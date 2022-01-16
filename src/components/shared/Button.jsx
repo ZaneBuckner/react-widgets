@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { motion } from 'framer-motion';
 
 const flexCenter = `
   display: flex;
@@ -29,7 +30,16 @@ const StyledButton = styled.button`
 	}
 `;
 
-function Button({ className, children, ...buttonProps }) {
+function Button({ animate, className, children, ...buttonProps }) {
+	if (animate) {
+		return (
+			<motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
+				<StyledButton className={className} {...buttonProps}>
+					{children}
+				</StyledButton>
+			</motion.div>
+		);
+	}
 	return (
 		<StyledButton className={className} {...buttonProps}>
 			{children}
