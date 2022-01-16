@@ -63,13 +63,6 @@ export const StyledCodewars = styled.div`
 	font-family: 'Roboto', serif;
 	color: #c3c3c3;
 
-	.pre-details-wrapper {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		height: 100%;
-	}
-
 	.user-message {
 		width: 100%;
 		padding: 0.2rem;

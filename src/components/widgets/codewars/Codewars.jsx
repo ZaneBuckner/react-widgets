@@ -9,7 +9,7 @@ import UserProfile from './UserProfile';
 import ChallengesList from './ChallengesList';
 import ChallengeDetails from './ChallengeDetails';
 
-import { StyledCodewars } from './Codewars.styled';
+import { StyledCodewars, StyledChallengeDetails } from './Codewars.styled';
 import CodewarsIcon from 'Assets/CodewarsIcon';
 
 function Codewars() {
@@ -19,9 +19,9 @@ function Codewars() {
 
 	const challegeDetails = <ChallengeDetails selectedChallenge={selectedChallenge} />;
 	const awaitChallengeDetails = (
-		<div className='pre-details-wrapper'>
+		<StyledChallengeDetails>
 			<p className='user-message'>Select a challenge for details.</p>
-		</div>
+		</StyledChallengeDetails>
 	);
 
 	return (
