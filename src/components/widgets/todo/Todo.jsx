@@ -1,29 +1,40 @@
-import { useState } from 'react';
-
-import { StyledTodo, StyledInput } from './Todo.Styled';
+import { v4 as uuidv4 } from 'uuid';
 
 import Card from 'components/shared/Card';
 import CardHeader from 'components/shared/CardHeader';
-import Modal from 'components/shared/Modal';
+import TaskList from './TaskList';
+
+import { StyledTodo } from './Todo.Styled';
 
 import { MdOutlineChecklistRtl as TodoIcon } from 'react-icons/md';
 
-function Todo() {
-	const [showModal, setShowModal] = useState(false);
+const tasks = [
+	{
+		id: uuidv4(),
+		title: 'Task 1',
+		date: 'MMM DDth @ 9:30am',
+		reminder: false,
+	},
+	{
+		id: uuidv4(),
+		title: 'Task 2',
+		date: 'MMM DDth @ 4:20pm',
+		reminder: false,
+	},
+	{
+		id: uuidv4(),
+		title: 'Task 3',
+		date: 'MMM DDth @ 1:30pm',
+		reminder: false,
+	},
+];
 
+function Todo() {
 	return (
 		<Card>
-			<CardHeader
-				name='Todo Tracker'
-				icon={<TodoIcon />}
-				widgetRef='todo'
-				setShowModal={setShowModal}
-			/>
-			<Modal showModal={showModal} setShowModal={setShowModal}>
-				<h1>Coming Soon...</h1>
-			</Modal>
+			<CardHeader name='Todo Tracker' icon={<TodoIcon />} widgetRef='todo' />
 			<StyledTodo>
-				<StyledInput type='text' autoComplete='false' />
+				<TaskList tasks={tasks} />
 			</StyledTodo>
 		</Card>
 	);
