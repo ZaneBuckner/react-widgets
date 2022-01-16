@@ -6,8 +6,16 @@ function ChallengesList({ user, setSelectedChallenge }) {
 	const { data, loading, error } = useAxios(url);
 
 	const preRender = {
-		loading: <p className='user-message'>Loading Challenges...</p>,
-		error: <p className='user-message'>Unable to find completed challenges.</p>,
+		loading: (
+			<StyledChallengesList>
+				<p className='user-message'>Loading Challenges...</p>
+			</StyledChallengesList>
+		),
+		error: (
+			<StyledChallengesList>
+				<p className='user-message'>Unable to find completed challenges.</p>
+			</StyledChallengesList>
+		),
 	};
 
 	if (loading) return preRender.loading;

@@ -17,11 +17,17 @@ function UserProfile({ user }) {
 	};
 
 	const preRender = {
-		loading: <p className='user-message'>Loading Profile...</p>,
+		loading: (
+			<StyledUserProfile>
+				<p className='user-message'>Loading Profile...</p>
+			</StyledUserProfile>
+		),
 		error: (
-			<p className='user-message'>
-				Unable to find user: <span>{user}</span>
-			</p>
+			<StyledUserProfile>
+				<p className='user-message'>
+					Unable to find user: <span>{user}</span>
+				</p>
+			</StyledUserProfile>
 		),
 	};
 

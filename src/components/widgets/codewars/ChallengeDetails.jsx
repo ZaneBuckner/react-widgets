@@ -43,8 +43,16 @@ function ChallengeDetails({ selectedChallenge }) {
 	};
 
 	const preRender = {
-		loading: <p className='user-message'>Loading Details...</p>,
-		error: <p className='user-message'>Unable to find challenge details.</p>,
+		loading: (
+			<StyledChallengeDetails>
+				<p className='user-message'>Loading Details...</p>
+			</StyledChallengeDetails>
+		),
+		error: (
+			<StyledChallengeDetails>
+				<p className='user-message'>Unable to find challenge details.</p>
+			</StyledChallengeDetails>
+		),
 	};
 
 	if (loading) return preRender.loading;
