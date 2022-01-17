@@ -7,12 +7,24 @@ const colors = {
 
 function Logo({ height, strokeWidth }) {
 	return (
-		<svg xmlns='http://www.w3.org/2000/svg' width={height} height={height} fill='none' viewBox='0 0 104 104'>
+		<svg
+			xmlns='http://www.w3.org/2000/svg'
+			width={height}
+			height={height}
+			fill='none'
+			viewBox='0 0 104 104'
+		>
 			<linearGradient id='goldGradient' gradientTransform='rotate(90)'>
 				<stop offset='0%' stopColor={colors.light} />
 				<stop offset='100%' stopColor={colors.dark} />
 			</linearGradient>
-			<path stroke={colors.gradient} strokeLinecap='round' strokeLinejoin='round' strokeWidth={strokeWidth} d='M2 2l14.655 10.337 53.448 4.307L102 2H2z'></path>
+			<path
+				stroke={colors.gradient}
+				strokeLinecap='round'
+				strokeLinejoin='round'
+				strokeWidth={strokeWidth}
+				d='M2 2l14.655 10.337 53.448 4.307L102 2H2z'
+			></path>
 			<path
 				stroke={colors.gradient}
 				strokeLinecap='round'
