@@ -39,10 +39,7 @@ function Todo() {
 	const toggleReminder = id => {
 		const updatedTasks = tasks.map(task => {
 			if (task.id !== id) return task;
-			return {
-				...task,
-				reminder: !task.reminder,
-			};
+			return { ...task, reminder: !task.reminder };
 		});
 
 		setTasks(updatedTasks);
