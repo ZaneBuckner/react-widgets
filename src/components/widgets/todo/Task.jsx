@@ -5,7 +5,7 @@ import { GoThreeBars as DragIcon } from 'react-icons/go';
 
 function Task({ task, onDelete, onToggle }) {
 	return (
-		<StyledTask onDoubleClick={() => onToggle(task.id)}>
+		<StyledTask isReminder={task.reminder} onDoubleClick={() => onToggle(task.id)}>
 			<div className='info-wrapper'>
 				<h1 className='title'>{task.title}</h1>
 				<h2 className='date'>{task.date}</h2>
