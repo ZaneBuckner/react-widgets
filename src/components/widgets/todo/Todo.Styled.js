@@ -9,9 +9,25 @@ export const StyledTodo = styled.div`
 
 	font-family: 'Roboto', serif;
 	color: #c3c3c3;
+
+	.user-message {
+		width: 100%;
+		padding: 0.2rem;
+
+		border: 1px solid #c3c3c380;
+		border-radius: 5px;
+		text-align: center;
+
+		font-size: 0.8rem;
+
+		span {
+			font-weight: 600;
+			color: #dab55d;
+		}
+	}
 `;
 
-export const StyledTodoTasks = styled.div`
+export const StyledTaskList = styled.div`
 	width: 100%;
 
 	.task-item {
@@ -25,14 +41,18 @@ export const StyledTask = styled.div`
 	margin: 1rem 0;
 	padding: 0.5rem;
 
+	border-left: ${({ isReminder }) => isReminder && '5px solid #dab55d;'};
 	border-radius: 5px;
 	background-color: rgba(255, 255, 255, 0.1);
+
+	cursor: pointer;
 
 	.info-wrapper {
 		display: flex;
 		flex-direction: column;
 
 		line-height: 1.1rem;
+		user-select: none;
 
 		.title {
 			font-size: 1rem;
@@ -45,9 +65,19 @@ export const StyledTask = styled.div`
 		}
 	}
 
-	svg {
+	.actions-wrapper {
+		display: flex;
 		margin-left: auto;
-		cursor: pointer;
+
+		svg {
+			height: 100%;
+			margin-left: 0.5rem;
+			cursor: pointer;
+
+			@media (max-width: 500px) {
+				font-size: 1.5rem;
+			}
+		}
 	}
 `;
 
