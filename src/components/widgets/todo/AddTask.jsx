@@ -6,28 +6,38 @@ import { StyledAddTask, StyledInput, StyledCheckbox } from './Todo.Styled';
 import { BsCheck as CheckmarkIcon } from 'react-icons/bs';
 
 function AddTask({ onAdd }) {
-	const [textInput, setTextInput] = useState('');
-	const [dateInput, setDateInput] = useState('');
+	const [title, setTitle] = useState('');
+	const [date, setDate] = useState('');
 	const [reminder, setReminder] = useState(false);
+
+	const handleFormSubmit = e => {
+		e.preventDefault();
+		!title && alert('Task Name Cannot Be Empty');
+
+		onAdd({ title, date, reminder });
+		setTitle('');
+		setDate('');
+		setReminder(false);
+	};
 
 	const toggleReminder = () => setReminder(!reminder);
 
 	return (
 		<StyledAddTask>
-			<form>
+			<form onSubmit={handleFormSubmit}>
 				<StyledInput
 					type='text'
 					className='form-input'
 					placeholder='Add Task'
-					value={textInput}
-					onChange={e => setTextInput(e.target.value)}
+					value={title}
+					onChange={e => setTitle(e.target.value)}
 				/>
 				<StyledInput
 					type='text'
 					className='form-input'
 					placeholder='Set Date & Time'
-					value={dateInput}
-					onChange={e => setDateInput(e.target.value)}
+					value={date}
+					onChange={e => setDate(e.target.value)}
 				/>
 				<div className='form-checkbox-wrapper'>
 					<label>Set Reminder</label>
