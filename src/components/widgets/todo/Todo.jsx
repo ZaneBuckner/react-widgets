@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 import Card from 'components/shared/Card';
 import CardHeader from 'components/shared/CardHeader';
+import AddTask from './AddTask';
 import TaskList from './TaskList';
 
 import { StyledTodo } from './Todo.Styled';
@@ -31,6 +32,10 @@ function Todo() {
 		},
 	]);
 
+	const addTask = newTask => {
+		console.log(newTask);
+	};
+
 	const deleteTask = id => {
 		const filteredTasks = tasks.filter(task => task.id !== id);
 		setTasks(filteredTasks);
@@ -51,6 +56,7 @@ function Todo() {
 		<Card>
 			<CardHeader name='Todo Tracker' icon={<TodoIcon />} widgetRef='todo' />
 			<StyledTodo>
+				<AddTask onAdd={addTask} />
 				{tasks.length > 0 ? (
 					<TaskList tasks={tasks} onDelete={deleteTask} onToggle={toggleReminder} />
 				) : (
