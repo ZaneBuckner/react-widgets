@@ -27,6 +27,48 @@ export const StyledTodo = styled.div`
 	}
 `;
 
+export const StyledAddTask = styled.div`
+	form {
+		.form-input {
+			margin: 0.5rem 0;
+			width: 100%;
+		}
+
+		.form-checkbox-wrapper {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			width: 100%;
+			padding: 0 0.5rem;
+
+			font-size: 0.9rem;
+
+			.checkbox-wrapper {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+
+				svg {
+					position: absolute;
+					font-size: 1.5rem;
+					color: #363636;
+					cursor: pointer;
+				}
+			}
+		}
+
+		button {
+			width: 100%;
+			height: 1.5rem;
+			margin-top: 1rem;
+			border-radius: 5px;
+
+			font-size: 0.8rem;
+			text-transform: uppercase;
+		}
+	}
+`;
+
 export const StyledTaskList = styled.div`
 	width: 100%;
 
@@ -94,8 +136,23 @@ export const StyledInput = styled.input`
 	color: #c3c3c3;
 
 	::placeholder {
-		font: inherit;
 		color: #c3c3c3;
-		opacity: 80%;
+		opacity: 50%;
+		font-size: 0.9rem;
 	}
+`;
+
+export const StyledCheckbox = styled.input`
+	width: 1.2rem;
+	height: 1.2rem;
+	border: 1px solid #c3c3c3;
+	border-radius: 3px;
+	cursor: pointer;
+
+	${({ value }) =>
+		value &&
+		`
+    background-color: #dab55d;
+    border: transparent;
+  `}
 `;
