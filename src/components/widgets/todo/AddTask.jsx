@@ -12,7 +12,7 @@ function AddTask({ onAdd }) {
 
 	const handleFormSubmit = e => {
 		e.preventDefault();
-		!title && alert('Task Name Cannot Be Empty');
+		if (!title) return alert('Task Name Cannot Be Empty');
 
 		onAdd({ title, date, reminder });
 		setTitle('');
