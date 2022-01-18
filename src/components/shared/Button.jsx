@@ -9,8 +9,8 @@ const flexCenter = `
 
 const StyledButton = styled.button`
 	${flexCenter};
-	min-width: 3rem;
-	min-height: 3rem;
+	width: 3rem;
+	height: 3rem;
 	padding: 0.5rem;
 
 	border: 1px solid #2525255e;
