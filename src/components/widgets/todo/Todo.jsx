@@ -33,7 +33,9 @@ function Todo() {
 	]);
 
 	const addTask = newTask => {
-		console.log(newTask);
+		const addNewTask = { ...newTask, id: uuidv4() };
+		setTasks([...tasks, addNewTask]);
+		console.log(tasks);
 	};
 
 	const deleteTask = id => {
