@@ -60,7 +60,7 @@ export const StyledAddTask = styled.div`
 
 		button {
 			width: 100%;
-			height: 1.5rem;
+			height: 1.8rem;
 			margin-top: 1rem;
 			border-radius: 5px;
 
@@ -115,11 +115,11 @@ export const StyledTask = styled.div`
 
 		svg {
 			height: 100%;
-			margin-left: 0.5rem;
+			margin-left: 0.8rem;
 			cursor: pointer;
 
 			@media (max-width: 500px) {
-				font-size: 1.5rem;
+				font-size: 1.8rem;
 			}
 		}
 	}
@@ -145,6 +145,10 @@ export const StyledInput = styled.input`
 
 	svg {
 		color: #c3c3c3;
+	}
+
+	@media (max-width: 500px) {
+		height: 1.8rem;
 	}
 `;
 
