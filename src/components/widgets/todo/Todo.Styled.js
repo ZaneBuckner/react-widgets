@@ -71,6 +71,9 @@ export const StyledAddTask = styled.div`
 
 export const StyledTaskList = styled.div`
 	width: 100%;
+	height: 11rem;
+
+	overflow-y: scroll;
 
 	.task-item {
 	}
