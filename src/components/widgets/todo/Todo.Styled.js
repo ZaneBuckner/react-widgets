@@ -13,6 +13,7 @@ export const StyledTodo = styled.div`
 	.user-message {
 		width: 100%;
 		padding: 0.2rem;
+		margin-top: 1rem;
 
 		border: 1px solid #c3c3c380;
 		border-radius: 5px;
@@ -71,12 +72,10 @@ export const StyledAddTask = styled.div`
 
 export const StyledTaskList = styled.div`
 	width: 100%;
-	height: 11rem;
+	height: 13rem;
+	margin-top: 1rem;
 
 	overflow-y: scroll;
-
-	.task-item {
-	}
 `;
 
 export const StyledTask = styled.div`
@@ -142,6 +141,10 @@ export const StyledInput = styled.input`
 		color: #c3c3c3;
 		opacity: 50%;
 		font-size: 0.9rem;
+	}
+
+	svg {
+		color: #c3c3c3;
 	}
 `;
 
