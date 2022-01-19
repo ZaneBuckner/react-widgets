@@ -68,12 +68,31 @@ export const StyledModal = styled.div`
 		margin-top: 1rem;
 		font-size: 0.8rem;
 		font-weight: 400;
-		font-style: italic;
 		text-align: center;
 
 		svg {
 			vertical-align: middle;
 			font-size: 1.5rem;
+		}
+
+		a {
+			&:hover {
+				color: #dab55d;
+			}
+		}
+	}
+
+	.modal-footer {
+		position: absolute;
+		bottom: 1rem;
+
+		font-size: 0.8rem;
+		text-align: center;
+
+		a {
+			&:hover {
+				color: #dab55d;
+			}
 		}
 	}
 `;
