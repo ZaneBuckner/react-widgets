@@ -53,16 +53,27 @@ export const StyledModal = styled.div`
 	}
 
 	.modal-title {
+		font-size: 1.5rem;
 		font-weight: 300;
 		color: #dab55d;
 	}
 
 	.modal-description {
+		font-size: 1rem;
 		font-weight: 400;
+		text-align: center;
+	}
+
+	.modal-usage {
+		margin-top: 1rem;
+		font-size: 0.8rem;
+		font-weight: 400;
+		font-style: italic;
 		text-align: center;
 
 		svg {
 			vertical-align: middle;
+			font-size: 1.5rem;
 		}
 	}
 `;
