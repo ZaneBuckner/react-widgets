@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { getFormatedDate } from 'utils/util';
 
 import Button from 'components/shared/Button';
 import { StyledAddTask, StyledInput, StyledCheckbox } from './Todo.Styled';
@@ -7,7 +8,7 @@ import { BsCheck as CheckmarkIcon } from 'react-icons/bs';
 
 function AddTask({ onAdd }) {
 	const [title, setTitle] = useState('');
-	const [date, setDate] = useState('');
+	const [date, setDate] = useState(getFormatedDate());
 	const [reminder, setReminder] = useState(false);
 
 	const handleFormSubmit = e => {
