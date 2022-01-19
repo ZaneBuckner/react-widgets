@@ -29,9 +29,13 @@ export const StyledTodo = styled.div`
 `;
 
 export const StyledAddTask = styled.div`
+	width: 100%;
+	height: 100%;
+	margin: 2rem 0;
+
 	form {
 		.form-input {
-			margin: 0.5rem 0;
+			margin: 1rem 0;
 			width: 100%;
 		}
 
@@ -63,6 +67,7 @@ export const StyledAddTask = styled.div`
 			height: 1.8rem;
 			margin-top: 1rem;
 			border-radius: 5px;
+			background-color: #333333;
 
 			font-size: 0.8rem;
 			text-transform: uppercase;
@@ -72,8 +77,7 @@ export const StyledAddTask = styled.div`
 
 export const StyledTaskList = styled.div`
 	width: 100%;
-	height: 13rem;
-	margin-top: 1rem;
+	height: 100%;
 
 	overflow-y: scroll;
 `;
@@ -128,11 +132,12 @@ export const StyledTask = styled.div`
 export const StyledInput = styled.input`
 	display: flex;
 	align-items: center;
-	height: 1.5rem;
+	height: 1.8rem;
 	padding: 0.2rem 0.5rem;
 
 	background-color: rgba(255, 255, 255, 0.1);
 	border-radius: 5px;
+	overflow: wrap;
 
 	font-family: 'Roboto', serif;
 	color: #c3c3c3;
