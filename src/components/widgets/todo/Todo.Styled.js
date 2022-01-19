@@ -5,7 +5,7 @@ export const StyledTodo = styled.div`
 	flex-direction: column;
 	justify-content: center;
 	width: 100%;
-	height: 100%;
+	height: 20rem;
 
 	font-family: 'Roboto', serif;
 	color: #c3c3c3;
