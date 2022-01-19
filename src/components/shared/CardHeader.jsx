@@ -69,39 +69,63 @@ const StyledCardHeaderActions = styled.div`
 	}
 `;
 
-function CardHeader({ name, icon, placeholder, widgetRef, setUserInput, setShowModal }) {
+function CardHeader({
+	name,
+	icon,
+	placeholder,
+	widgetRef,
+	setUserInput,
+	setShowModal,
+	utilityModal,
+}) {
 	const { toggleDisplay } = useContext(WidgetContext);
-	const userInput = e => e.key === 'Enter' && setUserInput(e.target.value);
+
+	const handleUserInput = e => e.key === 'Enter' && setUserInput(e.target.value);
+
+	// OPTIONAL: GIVES WIDGET SEARCH INPUT
+	const widgetActionInput = () => {
+		return (
+			<input
+				className='action-input'
+				type='text'
+				placeholder={placeholder}
+				spellCheck='false'
+				onKeyPress={handleUserInput}
+			/>
+		);
+	};
+
+	// OPTIONAL: GIVES WIDGET A DEFAULT POPUP MODAL
+	const widgetActionModal = () => {
+		return (
+			<InfoIcon
+				className='action-icons'
+				aria-label='Open Widget Modal'
+				onClick={() => setShowModal(prev => !prev)}
+			/>
+		);
+	};
+
+	// REQUIRED: CLOSES WIDGET
+	const widgetActionClose = () => {
+		return (
+			<CancelIcon
+				className='action-icons'
+				aria-label='Close Widget'
+				onClick={() => toggleDisplay(widgetRef)}
+			/>
+		);
+	};
 
 	return (
 		<StyledCardHeader>
 			{icon}
 			<h1 className='widget-title'>{name}</h1>
 			<StyledCardHeaderActions>
-				{/* OPTIONAL: GIVES WIDGET SEARCH INPUT */}
-				{setUserInput && (
-					<input
-						className='action-input'
-						type='text'
-						placeholder={placeholder}
-						spellCheck='false'
-						onKeyPress={userInput}
-					/>
-				)}
-				{/* OPTIONAL: GIVES WIDGET A POPUP MODAL */}
-				{setShowModal && (
-					<InfoIcon
-						className='action-icons'
-						aria-label='Open Widget Modal'
-						onClick={() => setShowModal(prev => !prev)}
-					/>
-				)}
-				{/* REQUIRED: CLOSES WIDGET */}
-				<CancelIcon
-					className='action-icons'
-					aria-label='Close Widget'
-					onClick={() => toggleDisplay(widgetRef)}
-				/>
+				{setUserInput && widgetActionInput()}
+				{utilityModal}
+				{setShowModal && widgetActionModal()}
+				{widgetActionClose()}
 			</StyledCardHeaderActions>
 		</StyledCardHeader>
 	);
