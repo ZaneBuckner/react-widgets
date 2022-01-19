@@ -5,3 +5,27 @@ export const formatUnixTime = unixTime => {
 	let meridian = date.getHours() < 12 ? 'AM' : 'PM';
 	return `${hours}:${minutes} ${meridian}`;
 };
+
+export const getFormatedDate = () => {
+	const monthList = [
+		'Jan',
+		'Feb',
+		'Mar',
+		'Apr',
+		'May',
+		'Jun',
+		'Jul',
+		'Aug',
+		'Sep',
+		'Oct',
+		'Nov',
+		'Dec',
+	];
+	const weekdayList = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+	const date = new Date();
+	let day = date.getDate();
+	let week = date.getDay();
+	let month = date.getMonth() + 1;
+	let time = formatUnixTime(date / 1000);
+	return `${weekdayList[week]} ${monthList[month]} ${day} @ ${time}`;
+};
