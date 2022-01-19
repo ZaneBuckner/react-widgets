@@ -22,7 +22,7 @@ export const StyledWeather = styled.div`
 	flex-direction: column;
 	align-items: center;
 	width: 100%;
-	height: 100%;
+	height: 20rem;
 
 	font-family: 'Roboto', serif;
 	color: #c3c3c3;
