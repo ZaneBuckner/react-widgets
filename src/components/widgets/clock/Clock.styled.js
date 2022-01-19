@@ -5,6 +5,8 @@ export const StyledClock = styled.div`
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	width: 100%;
+	height: 20rem;
 
 	.CircularProgressbar {
 		position: absolute;
@@ -15,6 +17,7 @@ export const StyledClock = styled.div`
 `;
 
 export const StyledClockFace = styled.div`
+	position: relative;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -59,16 +62,12 @@ export const TimeDisplay = styled.div`
 export const DateDisplay = styled.div`
 	position: absolute;
 	bottom: 2rem;
-	/* display: flex;
-	align-items: center;
-	justify-content: space-between; */
 	display: grid;
 	grid-template-columns: 1fr 2fr 1fr;
 	align-items: center;
-	width: 45%;
+	width: 60%;
 
 	h2 {
-		/* border: 0.1px dotted lightblue; */
 		font-size: 0.9rem;
 		text-align: center;
 		text-transform: uppercase;
