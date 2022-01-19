@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import useAxios from 'hooks/useAxios';
 import { formatUnixTime } from 'utils/util';
 
@@ -11,8 +12,12 @@ import {
 	WiSunset as SunsetIcon,
 } from 'react-icons/wi';
 
-function WeatherCurrent({ url, userInput, units, unitValues }) {
+function WeatherCurrent({ url, userInput, units, unitValues, setFetchedTime }) {
 	const { data, loading, error } = useAxios(url);
+
+	useEffect(() => {
+		data && setFetchedTime(formatUnixTime(data.dt));
+	}, [data]);
 
 	const getDayLength = (sunrise, sunset) => {
 		return (

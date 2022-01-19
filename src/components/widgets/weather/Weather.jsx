@@ -3,12 +3,14 @@ import { useState, useEffect } from 'react';
 import Card from 'components/shared/Card';
 import CardHeader from 'components/shared/CardHeader';
 import Modal from 'components/shared/Modal';
+import UtilityModal from 'components/shared/UtilityModal';
 import WeatherModal from './WeatherModal';
 import WeatherCurrent from './WeatherCurrent';
 import WeatherForecast from './WeatherForecast';
 
 import { StyledWeather } from './Weather.styled';
 import { TiWeatherPartlySunny as WeatherIcon } from 'react-icons/ti';
+import { IoMdSettings as SettingsIcon } from 'react-icons/io';
 
 const api = {
 	key: `&appid=ca83fef2c9a6797b8aa86d8ff2304488`,
@@ -44,11 +46,13 @@ const unitValues = {
 };
 
 function Weather() {
-	const [userInput, setUserInput] = useState(70401);
-	const [units, setUnits] = useState('imperial');
 	const [currentURL, setCurrentURL] = useState('');
 	const [forecastURL, setForecastURL] = useState('');
+	const [userInput, setUserInput] = useState(70401);
+	const [fetchedTime, setFetchedTime] = useState('');
+	const [units, setUnits] = useState('imperial');
 	const [showModal, setShowModal] = useState(false);
+	const [showUtilityModal, setShowUtilityModal] = useState(false);
 
 	useEffect(() => {
 		if (isNaN(userInput)) {
@@ -73,10 +77,37 @@ function Weather() {
 				widgetRef='weather'
 				setUserInput={setUserInput}
 				setShowModal={setShowModal}
+				utilityModal={
+					<SettingsIcon
+						title='Add New Task'
+						className='action-icons'
+						aria-label='Open Widget Modal'
+						onClick={() => setShowUtilityModal(!showUtilityModal)}
+					/>
+				}
 			/>
 			<Modal showModal={showModal} setShowModal={setShowModal}>
-				<WeatherModal setUnits={setUnits} />
+				<WeatherIcon />
+				<h1 className='modal-title'>Weather Dashboard</h1>
+				<h2 className='modal-description'>Rainy Weather && Hacking</h2>
+				<p className='modal-usage'>
+					To change units, select the {<SettingsIcon />} icon.
+					<br />
+					Weather data provided by OpenWeather APIs
+				</p>
+				{fetchedTime && (
+					<p className='modal-footer'>
+						Last Updated: {fetchedTime}
+						<br />
+						<a href='https://openweathermap.org/' target='_blank' rel='noopener noreferrer'>
+							https://openweathermap.org/
+						</a>
+					</p>
+				)}
 			</Modal>
+			<UtilityModal showUtilityModal={showUtilityModal} setShowUtilityModal={setShowUtilityModal}>
+				<WeatherModal setUnits={setUnits} />
+			</UtilityModal>
 			<StyledWeather>
 				{currentURL && (
 					<WeatherCurrent
@@ -84,6 +115,7 @@ function Weather() {
 						userInput={userInput}
 						units={units}
 						unitValues={unitValues}
+						setFetchedTime={setFetchedTime}
 					/>
 				)}
 				{forecastURL && <WeatherForecast url={forecastURL} units={units} unitValues={unitValues} />}
