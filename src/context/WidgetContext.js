@@ -3,8 +3,9 @@ import { v4 as uuidv4 } from 'uuid';
 
 import CodewarsIcon from 'Assets/CodewarsIcon';
 import CounterIcon from 'Assets/CounterIcon';
-import { BsCalendarDate as CalendarIcon, BsClock as ClockIcon } from 'react-icons/bs';
-import { MdOutlineChecklistRtl as TodoIcon, MdTimer as TimerIcon } from 'react-icons/md';
+import BobRossIcon from 'Assets/BobRossIcon';
+import { BsClock as ClockIcon } from 'react-icons/bs';
+import { MdOutlineChecklistRtl as TaskIcon } from 'react-icons/md';
 import { TiWeatherPartlySunny as WeatherIcon } from 'react-icons/ti';
 
 export const WidgetContext = createContext();
@@ -13,9 +14,9 @@ export const WidgetContextProvider = ({ children }) => {
 	const [widgets, setWidgets] = useState([
 		{
 			id: uuidv4(),
-			name: 'Calendar',
-			icon: <CalendarIcon />,
-			ref: 'calendar',
+			name: 'Bob Ross',
+			icon: <BobRossIcon />,
+			ref: 'bobross',
 			display: true,
 		},
 		{
@@ -41,13 +42,6 @@ export const WidgetContextProvider = ({ children }) => {
 		},
 		{
 			id: uuidv4(),
-			name: 'Timer',
-			icon: <TimerIcon />,
-			ref: 'timer',
-			display: true,
-		},
-		{
-			id: uuidv4(),
 			name: 'Weather',
 			icon: <WeatherIcon />,
 			ref: 'weather',
@@ -55,9 +49,9 @@ export const WidgetContextProvider = ({ children }) => {
 		},
 		{
 			id: uuidv4(),
-			name: 'To-Do',
-			icon: <TodoIcon />,
-			ref: 'todo',
+			name: 'Task Tracker',
+			icon: <TaskIcon />,
+			ref: 'task',
 			display: true,
 		},
 	]);
