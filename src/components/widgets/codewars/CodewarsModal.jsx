@@ -25,14 +25,10 @@ function CodewarsModal() {
 		<StyledCodewarsModal>
 			<div className='kyu-wrapper'>{kyuBadges()}</div>
 			<div className='key-wrapper'>
-				<div className='hardest'></div>
-				<h1>Hardest</h1>
-				<div className='hard'></div>
-				<h1>Hard</h1>
-				<div className='medium'></div>
-				<h1>Medium</h1>
-				<div className='easy'></div>
-				<h1>Easy</h1>
+				<h1 className='hardest'>Hardest</h1>
+				<h1 className='hard'>Hard</h1>
+				<h1 className='medium'>Medium</h1>
+				<h1 className='easy'>Easy</h1>
 			</div>
 		</StyledCodewarsModal>
 	);
