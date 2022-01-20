@@ -1,4 +1,4 @@
-import { StyledTask } from './Todo.Styled';
+import { StyledTask } from './TaskTracker.Styled';
 
 import { RiDeleteBinLine as DeleteIcon } from 'react-icons/ri';
 import { GoThreeBars as DragIcon } from 'react-icons/go';

@@ -8,12 +8,12 @@ import UtilityModal from 'components/shared/UtilityModal';
 import AddTask from './AddTask';
 import TaskList from './TaskList';
 
-import { StyledTodo } from './Todo.Styled';
+import { StyledTaskTracker } from './TaskTracker.Styled';
 
-import { MdOutlineChecklistRtl as TodoIcon } from 'react-icons/md';
+import { MdOutlineChecklistRtl as TaskIcon } from 'react-icons/md';
 import { MdPlaylistAdd as AddElementIcon } from 'react-icons/md';
 
-function Todo() {
+function TaskTracker() {
 	const [showModal, setShowModal] = useState(false);
 	const [showUtilityModal, setShowUtilityModal] = useState(false);
 	const [tasks, setTasks] = useState([
@@ -66,9 +66,9 @@ function Todo() {
 	return (
 		<Card>
 			<CardHeader
-				name='Todo Tracker'
-				icon={<TodoIcon />}
-				widgetRef='todo'
+				name='Task Tracker'
+				icon={<TaskIcon />}
+				widgetRef='task'
 				setShowModal={setShowModal}
 				utilityModal={
 					<AddElementIcon
@@ -80,8 +80,8 @@ function Todo() {
 				}
 			/>
 			<Modal showModal={showModal} setShowModal={setShowModal}>
-				<TodoIcon />
-				<h1 className='modal-title'>Todo Tracker</h1>
+				<TaskIcon />
+				<h1 className='modal-title'>Task Tracker</h1>
 				<h2 className='modal-description'>
 					Take control and organize your day-to-day tasks with this efficient Task Tracker.
 				</h2>
@@ -94,15 +94,15 @@ function Todo() {
 			<UtilityModal showUtilityModal={showUtilityModal} setShowUtilityModal={setShowUtilityModal}>
 				<AddTask onAdd={addTask} />
 			</UtilityModal>
-			<StyledTodo>
+			<StyledTaskTracker>
 				{tasks.length > 0 ? (
 					<TaskList tasks={tasks} onDelete={deleteTask} onToggle={toggleReminder} />
 				) : (
 					messageTasksCompleted
 				)}
-			</StyledTodo>
+			</StyledTaskTracker>
 		</Card>
 	);
 }
 
-export default Todo;
+export default TaskTracker;

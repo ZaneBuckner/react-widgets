@@ -2,8 +2,7 @@ import { useState } from 'react';
 import { getFormatedDate } from 'utils/util';
 
 import Button from 'components/shared/Button';
-import { StyledAddTask, StyledInput, StyledCheckbox } from './Todo.Styled';
-
+import { StyledAddTask, StyledInput, StyledCheckbox } from './TaskTracker.Styled';
 import { BsCheck as CheckmarkIcon } from 'react-icons/bs';
 
 function AddTask({ onAdd }) {

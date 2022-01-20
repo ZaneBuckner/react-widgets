@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const StyledTodo = styled.div`
+export const StyledTaskTracker = styled.div`
 	display: flex;
 	flex-direction: column;
 	justify-content: center;

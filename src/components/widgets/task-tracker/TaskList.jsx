@@ -1,8 +1,8 @@
 import Task from './Task';
 
-import { StyledTaskList } from './Todo.Styled';
+import { StyledTaskList } from './TaskTracker.Styled';
 
-function TodoTasks({ tasks, onDelete, onToggle }) {
+function TaskList({ tasks, onDelete, onToggle }) {
 	return (
 		<StyledTaskList>
 			{tasks.map(task => (
@@ -12,4 +12,4 @@ function TodoTasks({ tasks, onDelete, onToggle }) {
 	);
 }
 
-export default TodoTasks;
+export default TaskList;
