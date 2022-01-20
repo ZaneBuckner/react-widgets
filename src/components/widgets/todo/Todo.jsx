@@ -56,6 +56,11 @@ function Todo() {
 		setTasks(updatedTasks);
 	};
 
+	const handleModalAddTask = () => {
+		setShowModal(!showModal);
+		setShowUtilityModal(!showUtilityModal);
+	};
+
 	const messageTasksCompleted = <h1 className='user-message'>All Tasks Completed</h1>;
 
 	return (
@@ -81,7 +86,7 @@ function Todo() {
 					Take control and organize your day-to-day tasks with this efficient Task Tracker.
 				</h2>
 				<p className='modal-usage'>
-					To add a task, select the {<AddElementIcon />} icon.
+					To add a task, select the {<AddElementIcon onClick={handleModalAddTask} />} icon.
 					<br />
 					Only a Task Name is required.
 				</p>

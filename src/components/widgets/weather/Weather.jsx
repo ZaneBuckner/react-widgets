@@ -68,6 +68,11 @@ function Weather() {
 		}
 	}, [userInput, units]);
 
+	const handleModalSettings = () => {
+		setShowModal(!showModal);
+		setShowUtilityModal(!showUtilityModal);
+	};
+
 	return (
 		<Card>
 			<CardHeader
@@ -91,7 +96,7 @@ function Weather() {
 				<h1 className='modal-title'>Weather Dashboard</h1>
 				<h2 className='modal-description'>Rainy Weather && Hacking</h2>
 				<p className='modal-usage'>
-					To change units, select the {<SettingsIcon />} icon.
+					To change units, select the {<SettingsIcon onClick={handleModalSettings} />} icon.
 					<br />
 					Weather data provided by OpenWeather APIs
 				</p>

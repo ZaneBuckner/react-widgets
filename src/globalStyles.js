@@ -73,6 +73,7 @@ export const StyledModal = styled.div`
 		svg {
 			vertical-align: middle;
 			font-size: 1.5rem;
+			cursor: pointer;
 		}
 
 		a {
