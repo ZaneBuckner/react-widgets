@@ -36,6 +36,10 @@ export const StyledModal = styled.div`
 	border-radius: 10px;
 	backdrop-filter: blur(6px);
 
+	a:hover {
+		color: #dab55d;
+	}
+
 	.close-modal-icon {
 		position: absolute;
 		top: 0;
@@ -49,13 +53,19 @@ export const StyledModal = styled.div`
 
 	svg {
 		font-size: 2rem;
+		height: 2rem;
 		color: #dab55d;
+		fill: #dab55d;
 	}
 
 	.modal-title {
 		font-size: 1.5rem;
 		font-weight: 300;
 		color: #dab55d;
+
+		@media (max-width: 450px) {
+			font-size: 1rem;
+		}
 	}
 
 	.modal-description {
