@@ -10,8 +10,8 @@ import Counter from './counter/Counter';
 import Weather from './weather/Weather';
 import Codewars from './codewars/Codewars';
 import Clock from './clock/Clock';
-import Todo from './todo/Todo';
-import Timer from './timer/Timer';
+import TaskTracker from './task-tracker/TaskTracker';
+import BobRossPaintings from './bobross/BobRossPaintings';
 
 const useStyles = makeStyles(theme => ({
 	grid: {
@@ -36,10 +36,10 @@ function Widgets() {
 		},
 		{
 			id: uuidv4(),
-			ref: 'todo',
-			component: <Todo />,
+			ref: 'task',
+			component: <TaskTracker />,
 			columns: { xs: 12, sm: 6, md: 4 },
-			isVisible: currentDisplay('todo'),
+			isVisible: currentDisplay('task'),
 		},
 		{
 			id: uuidv4(),
@@ -50,17 +50,17 @@ function Widgets() {
 		},
 		{
 			id: uuidv4(),
+			ref: 'bobross',
+			component: <BobRossPaintings />,
+			columns: { xs: 12, sm: 6, md: 4 },
+			isVisible: currentDisplay('bobross'),
+		},
+		{
+			id: uuidv4(),
 			ref: 'codewars',
 			component: <Codewars />,
 			columns: { xs: 12, sm: 12, md: 12 },
 			isVisible: currentDisplay('codewars'),
-		},
-		{
-			id: uuidv4(),
-			ref: 'timer',
-			component: <Timer />,
-			columns: { xs: 12, sm: 6, md: 4 },
-			isVisible: currentDisplay('timer'),
 		},
 		{
 			id: uuidv4(),
