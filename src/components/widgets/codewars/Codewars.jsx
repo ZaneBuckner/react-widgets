@@ -35,6 +35,16 @@ function Codewars() {
 				setShowModal={setShowModal}
 			/>
 			<Modal showModal={showModal} setShowModal={setShowModal}>
+				<CodewarsIcon />
+				<h1 className='modal-title'>Codewars Dashboard</h1>
+				<p className='modal-usage'>
+					<a href='https://www.codewars.com/dashboard' target='_blank' rel='noopener noreferrer'>
+						Codewars
+					</a>
+					&nbsp;is a platform where developers can improve their coding prowess by solving
+					challenges at various difficulty levels.
+				</p>
+				{/* <p className='modal-usage'>For a new painting, select the {<RefreshIcon />} icon.</p> */}
 				<CodewarsModal />
 			</Modal>
 			<StyledCodewars>
