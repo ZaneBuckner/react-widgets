@@ -63,7 +63,7 @@ function BobRossPaintings() {
 				</p>
 			</Modal>
 			<StyledBobRossPaintings>
-				<Painting painting={painting} />
+				<Painting painting={painting} icon={<BobRossIcon />} />
 			</StyledBobRossPaintings>
 		</Card>
 	);
