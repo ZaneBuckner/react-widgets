@@ -100,6 +100,13 @@ export const StyledModal = styled.div`
 		font-size: 0.8rem;
 		text-align: center;
 
+		svg {
+			margin-left: 1rem;
+			vertical-align: middle;
+			font-size: 1.5rem;
+			cursor: pointer;
+		}
+
 		a {
 			&:hover {
 				color: #dab55d;
