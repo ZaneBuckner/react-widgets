@@ -11,6 +11,7 @@ import { StyledBobRossPaintings } from './BobRossPaintings.Styed';
 import BobRossIcon from 'Assets/BobRossIcon';
 import { BiRefresh as RefreshIcon } from 'react-icons/bi';
 import { BsYoutube as YoutubeIcon } from 'react-icons/bs';
+import { HiCursorClick as ClickIcon } from 'react-icons/hi';
 
 function BobRossPaintings() {
 	const [painting, setPainting] = useState([]);
@@ -52,6 +53,8 @@ function BobRossPaintings() {
 				</h2>
 				<p className='modal-usage'>
 					For a random painting, select the {<RefreshIcon onClick={() => fetchPainting()} />} icon.
+					<br />
+					Or double {<ClickIcon />} the image.
 				</p>
 				<p className='modal-footer'>
 					{painting.title}
@@ -62,7 +65,7 @@ function BobRossPaintings() {
 					</a>
 				</p>
 			</Modal>
-			<StyledBobRossPaintings>
+			<StyledBobRossPaintings onDoubleClick={() => fetchPainting()}>
 				<Painting painting={painting} icon={<BobRossIcon />} />
 			</StyledBobRossPaintings>
 		</Card>
