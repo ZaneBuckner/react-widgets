@@ -1,31 +1,37 @@
 import { useState, useEffect } from 'react';
+import BobRossPaintingsData from 'components/widgets/bobross/BobRossPaintingsData';
 
 import Card from 'components/shared/Card';
 import CardHeader from 'components/shared/CardHeader';
 import Modal from 'components/shared/Modal';
+import Painting from './Painting';
+
 import { StyledBobRossPaintings } from './BobRossPaintings.Styed';
-import bronzeFrame from 'Assets/Images/bronze-frame.png';
 
 import BobRossIcon from 'Assets/BobRossIcon';
 import { BiRefresh as RefreshIcon } from 'react-icons/bi';
+import { BsYoutube as YoutubeIcon } from 'react-icons/bs';
 
 function BobRossPaintings() {
-	const [painting, setPainting] = useState('');
+	const [painting, setPainting] = useState([]);
 	const [showModal, setShowModal] = useState(false);
 
-	const getPaintingURL = () => {
-		let rand = Math.floor(Math.random() * 282);
-		setPainting(`https://www.twoinchbrush.com/images/painting${rand}.png`);
+	const fetchPainting = () => {
+		if (BobRossPaintingsData) {
+			const random = Math.floor(Math.random() * 403);
+			setPainting(BobRossPaintingsData[random]);
+		}
 	};
 
 	useEffect(() => {
-		getPaintingURL();
+		fetchPainting();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	return (
 		<Card>
 			<CardHeader
-				name='Bob Ross Paintings'
+				name={painting.title}
 				icon={<BobRossIcon />}
 				widgetRef='bobross'
 				setShowModal={setShowModal}
@@ -34,7 +40,7 @@ function BobRossPaintings() {
 						title='New Painting'
 						className='action-icons'
 						aria-label='Open Widget Modal'
-						onClick={() => getPaintingURL()}
+						onClick={() => fetchPainting()}
 					/>
 				}
 			/>
@@ -44,13 +50,20 @@ function BobRossPaintings() {
 				<h2 className='modal-description'>
 					"We don't make mistakes, just happy little accidents."
 				</h2>
-				<p className='modal-usage'>For a new painting, select the {<RefreshIcon />} icon.</p>
+				<p className='modal-usage'>
+					For a random painting, select the {<RefreshIcon onClick={() => fetchPainting()} />} icon.
+				</p>
+				<p className='modal-footer'>
+					{painting.title}
+					<br />
+					Season {painting.season} Episode {painting.episode}
+					<a href={painting.youtube_src} target='_blank' rel='noopener noreferrer'>
+						<YoutubeIcon />
+					</a>
+				</p>
 			</Modal>
 			<StyledBobRossPaintings>
-				<div className='painting-wrapper'>
-					<img className='painting-frame' src={bronzeFrame} alt='' />
-					{painting && <img className='painting-image' src={painting} alt='' />}
-				</div>
+				<Painting painting={painting} />
 			</StyledBobRossPaintings>
 		</Card>
 	);

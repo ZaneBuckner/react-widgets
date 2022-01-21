@@ -4,28 +4,31 @@ export const StyledBobRossPaintings = styled.div`
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
+	align-items: center;
 	width: 100%;
 	height: 20rem;
+`;
 
-	font-family: 'Roboto', serif;
-	color: #c3c3c3;
+export const StyledPainting = styled.div`
+	position: relative;
+	width: 100%;
+	height: auto;
+	max-height: 19rem;
+	background-repeat: no-repeat;
+	background-size: contain;
 
-	.painting-wrapper {
-		position: relative;
+	@media (max-width: 600px) {
+		max-width: 25rem;
+	}
+
+	.painting-frame {
+		position: absolute;
 		width: 100%;
-		height: auto;
-		background-repeat: no-repeat;
-		background-size: contain;
+		height: 100%;
+	}
 
-		.painting-frame {
-			position: absolute;
-			width: 100%;
-			height: 100%;
-		}
-
-		.painting-image {
-			width: 100%;
-			height: 100%;
-		}
+	.painting-image {
+		width: 100%;
+		height: 100%;
 	}
 `;
