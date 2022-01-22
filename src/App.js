@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { WidgetContextProvider } from 'context/WidgetContext';
 
 import Home from 'components/home/Home';
-import AuthModal from 'components/shared/AuthModal';
+import SignupModal from 'components/signup/Signup';
 import Header from './components/header/Header';
 import Toolbar from './components/toolbar/Toolbar';
 import Widgets from './components/widgets/Widgets';
@@ -22,7 +22,7 @@ function App() {
 						</WidgetContextProvider>
 					}
 				/>
-				<Route path='/signup' element={<AuthModal />} />
+				<Route path='/signup' element={<SignupModal />} />
 			</Routes>
 		</Router>
 	);
