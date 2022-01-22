@@ -14,7 +14,7 @@ export const StyledNav = styled.nav`
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	width: 12rem;
+	width: 20rem;
 	margin-left: auto;
 
 	button {
