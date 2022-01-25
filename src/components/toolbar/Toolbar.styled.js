@@ -1,69 +1,71 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
+
+const pulse = keyframes`
+  0% { opacity: 1; }
+  50% { opacity: 0; }
+  100% { opacity: 1; }
+`;
 
 export const StyledContainer = styled.div`
 	position: relative;
 	width: 100%;
 	max-width: 1200px;
+	height: 7rem;
 	margin: 0 auto;
 
 	box-shadow: inset 0 6px 13px -4px rgb(0 0 0 / 48%), inset 0 -6px 13px -4px rgb(0 0 0 / 48%);
+
+	.nav-icon {
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		margin: auto;
+
+		font-size: 1.5rem;
+		color: #c3c3c3;
+
+		animation: ${pulse} 10s ease-in-out infinite;
+
+		@media (min-width: 700px) {
+			display: none;
+		}
+	}
+
+	.left {
+		left: 0;
+	}
+
+	.right {
+		right: 0;
+	}
 `;
 
 export const StyledToolbar = styled.div`
 	display: grid;
-	grid-template-columns: repeat(7, 1fr);
+	grid-template-columns: repeat(6, 1fr);
 	grid-template-rows: 1fr;
-	grid-column-gap: 2rem;
-	grid-row-gap: 0px;
-
+	grid-column-gap: 3rem;
+	align-items: center;
 	width: 100%;
-	height: auto;
-	padding: 1rem 2rem;
-	margin-bottom: 2rem;
+	height: 100%;
+	padding: 0 3rem;
 
 	overflow-x: scroll;
 
-	/* Removes Scroll Bar Default Styling */
-	scrollbar-width: none;
-	-ms-overflow-style: none;
+	/* HIDE SCROLLBAR | KEEP FUNCTIONALITY */
+	scrollbar-width: none; /* Firefox */
+	-ms-overflow-style: none; /* IE Edge */
 	::-webkit-scrollbar {
-		display: none;
-	}
-`;
-
-export const StyledToolbarNav = styled.div`
-	.nav-left,
-	.nav-right {
-		background-color: rgba(51, 51, 51, 0.9);
-		position: absolute;
-		z-index: 1;
-		top: 0;
-		bottom: 0;
-		margin: auto;
-		height: 100%;
-
-		font-size: 1.5rem;
-		color: #c3c3c3;
-	}
-
-	.nav-left {
-		left: 0;
-	}
-
-	.nav-right {
-		right: 0;
-	}
-
-	@media (min-width: 800px) {
-		display: none;
+		display: none; /* Chrome Safari Opera */
 	}
 `;
 
 export const StyledWidgetWrapper = styled.div`
 	display: flex;
 	flex-direction: column;
-	justify-content: space-between;
+	justify-content: center;
 	align-items: center;
+	min-width: 4rem;
 	height: 100%;
 
 	button {

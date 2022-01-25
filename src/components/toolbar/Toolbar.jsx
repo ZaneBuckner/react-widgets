@@ -3,21 +3,14 @@ import { WidgetContext } from 'context/WidgetContext';
 
 import Button from 'components/shared/Button';
 import { BsChevronCompactLeft as NavLeft, BsChevronCompactRight as NavRight } from 'react-icons/bs';
-import {
-	StyledContainer,
-	StyledToolbarNav,
-	StyledToolbar,
-	StyledWidgetWrapper,
-} from './Toolbar.styled';
+import { StyledContainer, StyledToolbar, StyledWidgetWrapper } from './Toolbar.styled';
 
 function Toolbar() {
 	const { widgets, toggleDisplay } = useContext(WidgetContext);
 
 	return (
 		<StyledContainer>
-			<StyledToolbarNav>
-				<NavLeft className='nav-left' />
-			</StyledToolbarNav>
+			<NavLeft className='nav-icon left' />
 			<StyledToolbar>
 				{widgets.map(widget => (
 					<StyledWidgetWrapper key={widget.id}>
@@ -28,9 +21,7 @@ function Toolbar() {
 					</StyledWidgetWrapper>
 				))}
 			</StyledToolbar>
-			<StyledToolbarNav>
-				<NavRight className='nav-right' />
-			</StyledToolbarNav>
+			<NavRight className='nav-icon right' />
 		</StyledContainer>
 	);
 }
