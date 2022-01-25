@@ -1,12 +1,10 @@
 import { Link } from 'react-router-dom';
 
 import Button from 'components/shared/Button';
-import Logo from 'components/logo/Logo';
-import LogoIcon from 'components/logo/LogoIcon';
+import Logo from 'Assets/Logo';
 
-import { Container } from '../../globalStyles';
+import { Container } from 'globalStyles';
 import { StyledHeader, StyledNav } from './Header.styled';
-import { FaGithubSquare, FaLinkedin } from 'react-icons/fa';
 import { FaUserCircle as UserIcon } from 'react-icons/fa';
 import { MdDashboard as WidgetsDashboardIcon } from 'react-icons/md';
 
@@ -19,37 +17,12 @@ function Header() {
 				</Link>
 				<StyledNav>
 					<Button animate>
-						<a title='Website' href='https://zaniac.io/' target='_blank' rel='noopener noreferrer'>
-							<LogoIcon />
-						</a>
-					</Button>
-					<Button animate>
-						<a
-							title='GitHub Profile'
-							href='https://github.com/ZaneBuckner/'
-							target='_blank'
-							rel='noopener noreferrer'
-						>
-							<FaGithubSquare />
-						</a>
-					</Button>
-					<Button animate>
-						<a
-							title='LinkedIn Profile'
-							href='https://www.linkedin.com/in/ZaneBuckner/'
-							target='_blank'
-							rel='noopener noreferrer'
-						>
-							<FaLinkedin />
-						</a>
-					</Button>
-					<Button animate>
 						<Link to='/widgets-dashboard'>
 							<WidgetsDashboardIcon />
 						</Link>
 					</Button>
 					<Button animate>
-						<Link to='/signup'>
+						<Link to='/login'>
 							<UserIcon />
 						</Link>
 					</Button>
