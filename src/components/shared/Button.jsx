@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 
@@ -16,7 +17,8 @@ const StyledButton = styled.button`
 	border: 1px solid #2525255e;
 	border-radius: 10px;
 	background-color: transparent;
-	box-shadow: 2px 2px 3px #1e1e1e;
+	box-shadow: ${({ isClicked }) =>
+		!isClicked ? '2px 2px 3px #1e1e1e' : 'inset 2px 2px 3px #1e1e1e'};
 	white-space: nowrap;
 
 	color: #c3c3c3;
@@ -30,11 +32,11 @@ const StyledButton = styled.button`
 	}
 `;
 
-function Button({ animate, className, children, ...buttonProps }) {
+function Button({ isClicked, displayed, animate, className, children, ...buttonProps }) {
 	if (animate) {
 		return (
-			<motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
-				<StyledButton className={className} {...buttonProps}>
+			<motion.div whileHover={{ scale: 1 }} whileTap={{ scale: 0.9 }}>
+				<StyledButton isClicked={isClicked} className={className} {...buttonProps}>
 					{children}
 				</StyledButton>
 			</motion.div>
