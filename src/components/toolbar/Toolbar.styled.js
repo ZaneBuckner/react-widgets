@@ -9,9 +9,7 @@ const pulse = keyframes`
 export const StyledContainer = styled.div`
 	position: relative;
 	width: 100%;
-	max-width: 1200px;
 	height: 7rem;
-	margin: 0 auto;
 
 	box-shadow: inset 0 6px 13px -4px rgb(0 0 0 / 48%), inset 0 -6px 13px -4px rgb(0 0 0 / 48%);
 
@@ -47,7 +45,9 @@ export const StyledToolbar = styled.div`
 	grid-column-gap: 3rem;
 	align-items: center;
 	width: 100%;
+	max-width: 1200px;
 	height: 100%;
+	margin: 0 auto;
 	padding: 0 3rem;
 
 	overflow-x: scroll;
