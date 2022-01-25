@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
-import { motion, AnimatePresence } from 'framer-motion';
+import CardAnimation from 'components/shared/CardAnimation';
 
 import Counter from './counter/Counter';
 import Weather from './weather/Weather';
@@ -13,14 +13,14 @@ import Clock from './clock/Clock';
 import TaskTracker from './task-tracker/TaskTracker';
 import BobRossPaintings from './bobross/BobRossPaintings';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles({
 	grid: {
 		width: '100%',
 		maxWidth: '1200px',
-		margin: '0 auto',
+		margin: '2rem auto',
 		padding: '0 20px',
 	},
-}));
+});
 
 function Widgets() {
 	const { currentDisplay } = useContext(WidgetContext);
@@ -50,17 +50,17 @@ function Widgets() {
 		},
 		{
 			id: uuidv4(),
-			ref: 'bobross',
-			component: <BobRossPaintings />,
-			columns: { xs: 12, sm: 6, md: 4 },
-			isVisible: currentDisplay('bobross'),
-		},
-		{
-			id: uuidv4(),
 			ref: 'codewars',
 			component: <Codewars />,
 			columns: { xs: 12, sm: 12, md: 12 },
 			isVisible: currentDisplay('codewars'),
+		},
+		{
+			id: uuidv4(),
+			ref: 'bobross',
+			component: <BobRossPaintings />,
+			columns: { xs: 12, sm: 6, md: 4 },
+			isVisible: currentDisplay('bobross'),
 		},
 		{
 			id: uuidv4(),
@@ -84,17 +84,7 @@ function Widgets() {
 							sm={widget.columns.sm}
 							md={widget.columns.md}
 						>
-							<AnimatePresence>
-								<motion.div
-									initial={{ opacity: 0, borderRadius: '10px' }}
-									animate={{ opacity: 1 }}
-									exit={{ opacity: 0 }}
-									transition={{ ease: 'easeOut', duration: 0.5 }}
-									whileHover={{ boxShadow: '4px 8px 13px -4px rgba(0, 0, 0, 0.30)' }}
-								>
-									{widget.component}
-								</motion.div>
-							</AnimatePresence>
+							<CardAnimation children={widget.component} />
 						</Grid>
 					),
 			)}
