@@ -12,15 +12,14 @@ export const StyledHeader = styled.header`
 
 export const StyledNav = styled.nav`
 	display: flex;
-	justify-content: space-between;
 	align-items: center;
-	width: 20rem;
 	margin-left: auto;
 
 	button {
 		width: 3rem;
 		height: 3rem;
 		padding: 0.7rem;
+		margin-left: 1rem;
 
 		svg {
 			width: 100%;
