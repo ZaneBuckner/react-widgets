@@ -1,6 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
 import { Link } from 'react-router-dom';
-import styled from 'styled-components';
 
 import { Container } from 'globalStyles';
 import Card from 'components/shared/Card';
