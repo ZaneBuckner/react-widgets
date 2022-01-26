@@ -122,7 +122,7 @@ export const StyledTask = styled.div`
 			margin-left: 0.8rem;
 			cursor: pointer;
 
-			@media (max-width: 500px) {
+			@media only screen and (max-width: 500px) {
 				font-size: 1.8rem;
 			}
 		}
@@ -152,7 +152,7 @@ export const StyledInput = styled.input`
 		color: #c3c3c3;
 	}
 
-	@media (max-width: 500px) {
+	@media only screen and (max-width: 500px) {
 		height: 1.8rem;
 	}
 `;

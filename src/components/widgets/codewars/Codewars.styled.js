@@ -5,7 +5,7 @@ export const StyledCodewarsModal = styled.div`
 	align-items: center;
 	justify-content: center;
 
-	@media (max-width: 450px) {
+	@media only screen and (max-width: 450px) {
 		flex-direction: column;
 	}
 
@@ -17,7 +17,7 @@ export const StyledCodewarsModal = styled.div`
 		grid-row-gap: 0.5rem;
 		margin: 0.5rem;
 
-		@media (max-width: 400px) {
+		@media only screen and (max-width: 400px) {
 			div {
 				width: 2rem;
 				height: 1rem;
@@ -37,7 +37,7 @@ export const StyledCodewarsModal = styled.div`
 		grid-row-gap: 0.3rem;
 		justify-items: center;
 
-		@media (max-width: 450px) {
+		@media only screen and (max-width: 450px) {
 			grid-template-columns: repeat(4, 1fr);
 			grid-template-rows: repeat(1, 1fr);
 		}
@@ -131,7 +131,7 @@ export const StyledUserProfile = styled.div`
 		}
 	}
 
-	@media (max-width: 600px) {
+	@media only screen and (max-width: 600px) {
 		.user-header {
 			flex-direction: column;
 			align-items: center;
@@ -221,7 +221,7 @@ export const StyledChallengeDetails = styled.div`
 		}
 	}
 
-	@media (max-width: 600px) {
+	@media only screen and (max-width: 600px) {
 		.item {
 			flex-direction: column;
 			align-items: center;

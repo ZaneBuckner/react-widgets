@@ -17,7 +17,7 @@ export const StyledPainting = styled.div`
 	background-repeat: no-repeat;
 	background-size: contain;
 
-	@media (max-width: 600px) {
+	@media only screen and (max-width: 600px) {
 		max-width: 25rem;
 	}
 

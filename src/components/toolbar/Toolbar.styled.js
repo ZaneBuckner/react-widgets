@@ -24,7 +24,7 @@ export const StyledContainer = styled.div`
 
 		animation: ${pulse} 10s ease-in-out infinite;
 
-		@media (min-width: 700px) {
+		@media only screen and (min-width: 700px) {
 			display: none;
 		}
 	}

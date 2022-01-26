@@ -56,7 +56,7 @@ export const StyledSiteLinks = styled.div`
 		}
 	}
 
-	@media (max-width: 750px) {
+	@media only screen and (max-width: 750px) {
 		display: grid;
 		grid-template-columns: repeat(4, 1fr);
 		grid-template-rows: repeat(2, 1fr);
@@ -70,7 +70,7 @@ export const StyledSiteLinks = styled.div`
 		}
 	}
 
-	@media (max-width: 550px) {
+	@media only screen and (max-width: 550px) {
 		display: flex;
 		flex-direction: column;
 		align-items: center;
@@ -97,7 +97,7 @@ export const StyledFooterIcons = styled.div`
 		}
 	}
 
-	@media (max-width: 450px) {
+	@media only screen and (max-width: 450px) {
 		flex-direction: column;
 		width: 30%;
 		height: 11rem;
