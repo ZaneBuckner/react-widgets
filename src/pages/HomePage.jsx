@@ -15,7 +15,7 @@ const StyledHome = styled.div`
 	color: #c3c3c3;
 `;
 
-function Home() {
+function HomePage() {
 	return (
 		<Container>
 			<CardAnimation>
@@ -29,4 +29,4 @@ function Home() {
 	);
 }
 
-export default Home;
+export default HomePage;
