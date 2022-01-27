@@ -31,11 +31,12 @@ const StyledButton = styled.button`
 	}
 `;
 
-function Button({ isClicked, displayed, animate, className, children, ...buttonProps }) {
+function Button({ isClicked, displayed, animate, text, className, children, ...buttonProps }) {
 	if (animate) {
 		return (
 			<motion.div whileHover={{ scale: 1 }} whileTap={{ scale: 0.9 }}>
 				<StyledButton isClicked={isClicked} className={className} {...buttonProps}>
+					{text}
 					{children}
 				</StyledButton>
 			</motion.div>
@@ -43,6 +44,7 @@ function Button({ isClicked, displayed, animate, className, children, ...buttonP
 	}
 	return (
 		<StyledButton className={className} {...buttonProps}>
+			{text}
 			{children}
 		</StyledButton>
 	);
