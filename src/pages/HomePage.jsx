@@ -5,7 +5,7 @@ import { Container } from 'globalStyles';
 import Card from 'components/shared/Card';
 import CardAnimation from 'components/shared/CardAnimation';
 import Button from 'components/shared/Button';
-import { StyledHomePage, StyledHeader, StyledContent } from './HomePage.Styled';
+import { StyledHomePage, StyledHomeHeader, StyledHomeContent } from './Pages.Styled';
 
 import {
 	BsGoogle as GoogleIcon,
@@ -14,6 +14,14 @@ import {
 } from 'react-icons/bs';
 
 function HomePage() {
+	const createButtonLink = (path, text) => {
+		return (
+			<Link to={path}>
+				<Button>{text}</Button>
+			</Link>
+		);
+	};
+
 	const getSignInMethods = () => {
 		let methods = [
 			{
@@ -57,7 +65,7 @@ function HomePage() {
 			<CardAnimation>
 				<Card>
 					<StyledHomePage>
-						<StyledHeader>
+						<StyledHomeHeader>
 							<h1 className='title'>Welcome To React Widgets</h1>
 							<p className='message'>
 								React is a popular open source technology developed by Facebook to build complex
@@ -65,18 +73,17 @@ function HomePage() {
 								small applications - widgets.
 							</p>
 							<div className='links'>
-								<Button>Sign In</Button>
-								<Button>Create Account</Button>
+								{createButtonLink('/login', 'Sign In')}
+								{createButtonLink('/register', 'Create Account')}
 							</div>
-						</StyledHeader>
-
-						<StyledContent>
+						</StyledHomeHeader>
+						<StyledHomeContent>
 							<div className='signin-methods'>
 								{getSignInMethods()}
 								<h2>Sign in with another account</h2>
 							</div>
 							{redirectMessage}
-						</StyledContent>
+						</StyledHomeContent>
 					</StyledHomePage>
 				</Card>
 			</CardAnimation>
