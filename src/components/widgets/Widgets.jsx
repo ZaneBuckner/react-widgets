@@ -2,8 +2,8 @@ import { useContext } from 'react';
 import { WidgetContext } from 'context/WidgetContext';
 import { v4 as uuidv4 } from 'uuid';
 
-import { Grid } from '@material-ui/core';
-import { makeStyles } from '@material-ui/styles';
+import { Grid } from '@mui/material';
+import { makeStyles } from '@mui/styles';
 import CardAnimation from 'components/shared/CardAnimation';
 
 import Counter from './counter/Counter';

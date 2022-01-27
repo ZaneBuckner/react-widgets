@@ -7,8 +7,7 @@ import Button from '../../shared/Button';
 import { StyledCounter, CountDisplay } from './Counter.styled';
 
 import CounterIcon from '../../../Assets/CounterIcon';
-import AddIcon from '@material-ui/icons/Add';
-import RemoveIcon from '@material-ui/icons/Remove';
+import { GrAdd as AddIcon, GrSubtract as RemoveIcon } from 'react-icons/gr';
 
 function Counter() {
 	const [count, setCount] = useState(0);

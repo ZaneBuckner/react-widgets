@@ -2,8 +2,7 @@ import { useContext } from 'react';
 import { WidgetContext } from 'context/WidgetContext';
 import styled from 'styled-components';
 
-import InfoIcon from '@material-ui/icons/Info';
-import CancelIcon from '@material-ui/icons/Cancel';
+import { AiFillInfoCircle as InfoIcon, AiFillCloseCircle as CancelIcon } from 'react-icons/ai';
 
 const StyledCardHeader = styled.div`
 	display: flex;
