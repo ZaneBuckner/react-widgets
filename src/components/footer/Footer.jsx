@@ -28,12 +28,12 @@ function Footer() {
 			{
 				id: uuidv4(),
 				path: '/login',
-				text: 'Login',
+				text: 'Sign In',
 			},
 			{
 				id: uuidv4(),
-				path: '/signup',
-				text: 'Signup',
+				path: '/register',
+				text: 'Join',
 			},
 		];
 
