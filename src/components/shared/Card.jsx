@@ -9,15 +9,15 @@ const StyledCard = styled.div`
 	align-items: center;
 	width: 100%;
 	height: 100%;
-	padding: 1rem;
+	padding: ${({ isPage }) => (isPage ? '3rem' : '1rem')};
 
 	background-color: #353535;
 	border-radius: 10px;
 	box-shadow: 2px 6px 13px -4px rgba(0, 0, 0, 0.57);
 `;
 
-function Card({ children }) {
-	return <StyledCard>{children}</StyledCard>;
+function Card({ isPage, children }) {
+	return <StyledCard isPage={isPage}>{children}</StyledCard>;
 }
 
 Card.defaultProps = {
