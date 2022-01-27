@@ -6,6 +6,17 @@ export const StyledCounter = styled.div`
 	align-items: center;
 	margin: auto;
 	height: 20rem;
+
+	button {
+		width: 3rem;
+		height: 3rem;
+
+		svg {
+			width: 100%;
+			height: 100%;
+			fill: #c3c3c3;
+		}
+	}
 `;
 
 export const CountDisplay = styled.h1`

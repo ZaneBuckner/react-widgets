@@ -1,13 +1,13 @@
 import { useState } from 'react';
 
-import Card from '../../shared/Card';
+import Card from 'components/shared/Card';
 import CardHeader from 'components/shared/CardHeader';
 import Modal from 'components/shared/Modal';
-import Button from '../../shared/Button';
+import Button from 'components/shared/Button';
 import { StyledCounter, CountDisplay } from './Counter.styled';
 
-import CounterIcon from '../../../Assets/CounterIcon';
-import { GrAdd as AddIcon, GrSubtract as RemoveIcon } from 'react-icons/gr';
+import CounterIcon from 'Assets/CounterIcon';
+import { FiPlus as AddIcon, FiMinus as RemoveIcon } from 'react-icons/fi';
 
 function Counter() {
 	const [count, setCount] = useState(0);
