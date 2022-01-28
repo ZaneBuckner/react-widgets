@@ -4,45 +4,38 @@ import styled from 'styled-components';
 export const StyledHomePage = styled.div`
 	display: grid;
 	grid-template-columns: repeat(2, 1fr);
-	grid-template-rows: 1fr;
-	grid-column-gap: 1rem;
+	grid-template-rows: repeat(4, 1fr);
+	grid-column-gap: 0px;
+	grid-row-gap: 0px;
+	place-items: center;
 	width: 100%;
-	height: 100%;
+	height: 50vh;
 	padding: 1rem;
 
 	font-family: 'Roboto', serif;
 	color: #c3c3c3;
 
-	@media only screen and (max-width: 800px) {
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-	}
-`;
-
-export const StyledHomeHeader = styled.div`
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-
 	.title {
+		grid-area: 1 / 1 / 2 / 3;
 		font-size: 2rem;
+
 		font-weight: 300;
 		color: #dab55d;
 		white-space: nowrap;
+		max-width: 100%;
 	}
 
 	.message {
+		grid-area: 2 / 1 / 3 / 3;
 		max-width: 75ch;
 		height: auto;
 		font-size: 1rem;
 		font-weight: 300;
-		text-align: justify;
+		/* text-align: justify; */
 	}
 
 	.links {
+		grid-area: 3 / 1 / 4 / 4;
 		display: flex;
 		justify-content: space-around;
 		align-items: center;
@@ -55,49 +48,36 @@ export const StyledHomeHeader = styled.div`
 			color: #dab55d;
 		}
 	}
-`;
 
-export const StyledHomeContent = styled.div`
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
+	.redirect {
+		grid-area: 4 / 1 / 5 / 3;
+		margin-top: auto;
 
-	.signin-methods {
-		display: grid;
-		grid-template-columns: repeat(3, 1fr);
-		grid-template-rows: repeat(2, 1fr);
-		grid-column-gap: 0px;
-		grid-row-gap: 0px;
-		place-items: center;
-		width: 100%;
-		height: auto;
-		margin: auto 0;
-
-		button {
-			svg {
-				width: 80%;
-				height: 80%;
-			}
-		}
-
-		h2 {
-			grid-column: 1 / 4;
-			grid-row: 2 / 3;
-
-			font-size: 1rem;
-			font-weight: 400;
+		.link {
+			color: #dab55d;
 		}
 	}
 
-	.redirect {
-		margin-top: auto;
-		font-size: 0.9rem;
-		font-weight: 400;
-		white-space: nowrap;
+	@media only screen and (max-width: 550px) {
+		.title {
+			font-size: 1.5rem;
+		}
 
-		span {
-			color: #dab55d;
+		.links {
+			flex-direction: column;
+			button {
+				margin: 0.5rem;
+			}
+		}
+	}
+
+	@media only screen and (max-width: 400px) {
+		.title {
+			font-size: 1rem;
+		}
+
+		.message {
+			font-size: 0.8rem;
 		}
 	}
 `;
