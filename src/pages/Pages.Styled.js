@@ -82,6 +82,15 @@ export const StyledHomePage = styled.div`
 	}
 `;
 
+// PROFILE PAGE STYLES
+export const StyledProfilePage = styled.div`
+	width: 100%;
+	height: 50vh;
+
+	font-family: 'Roboto', serif;
+	color: #c3c3c3;
+`;
+
 // LOGIN PAGE STYLES
 export const StyledLoginPage = styled.div`
 	display: flex;
