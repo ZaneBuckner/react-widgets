@@ -1,45 +1,79 @@
+import { useState, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { Link } from 'react-router-dom';
-
-import Button from 'components/shared/Button';
-import Logo from 'Assets/Logo';
+import { useAuthContext } from 'context/AuthContext';
 
 import { Container } from 'globalStyles';
+import Button from 'components/shared/Button';
 import { StyledHeader, StyledNav } from './Header.styled';
-import { FaUserCircle as UserIcon } from 'react-icons/fa';
+
+import Logo from 'Assets/Logo';
 import { MdDashboard as DashboardIcon } from 'react-icons/md';
+import {
+	FaHome as HomeIcon,
+	FaUserCircle as ProfileIcon,
+	FaSignInAlt as SignInIcon,
+	FaSignOutAlt as LogOutIcon,
+} from 'react-icons/fa';
 
 function Header() {
-	const getNavLinks = () => {
-		const links = [
-			{
-				id: uuidv4(),
+	const { currentUser, onLogout } = useAuthContext();
+	const [navLinks, setNavLinks] = useState();
+
+	useEffect(() => {
+		const linksRef = {
+			widgets: {
+				title: 'Widgets',
 				path: '/widgets-dashboard',
 				icon: <DashboardIcon />,
+				clickEvent: null,
 			},
-			{
-				id: uuidv4(),
+			home: {
+				title: 'Home',
+				path: '/',
+				icon: <HomeIcon />,
+				clickEvent: null,
+			},
+			signin: {
+				title: 'Sign In',
 				path: '/login',
-				icon: <UserIcon />,
+				icon: <SignInIcon />,
+				clickEvent: null,
 			},
-		];
+			profile: {
+				title: 'Profile',
+				path: '/',
+				icon: <ProfileIcon />,
+				clickEvent: null,
+			},
+			logout: {
+				title: 'Log Out',
+				path: '/',
+				icon: <LogOutIcon />,
+				clickEvent: () => onLogout(),
+			},
+		};
 
-		return links.map(link => (
-			<Button animate key={link.id}>
-				<Link to={link.path}>{link.icon}</Link>
-			</Button>
-		));
-	};
+		const getNavLinks = () => {
+			let links = currentUser
+				? [linksRef.widgets, linksRef.profile, linksRef.logout]
+				: [linksRef.widgets, linksRef.home, linksRef.signin];
 
-	// const isLoggedIn = false;
+			return links.map(link => (
+				<Button animate key={uuidv4()} onClick={link.clickEvent}>
+					<Link title={link.title} to={link.path} children={link.icon} />
+				</Button>
+			));
+		};
+
+		setNavLinks(getNavLinks());
+	}, [currentUser, onLogout]);
 
 	return (
 		<Container header>
 			<StyledHeader>
-				<Link to='/'>
-					<Logo strokeWidth={3} height={50} />
-				</Link>
-				<StyledNav>{getNavLinks()}</StyledNav>
+				<Link to='/' children={<Logo strokeWidth={3} height={50} />} />
+				<StyledNav>{navLinks}</StyledNav>
 			</StyledHeader>
 		</Container>
 	);
