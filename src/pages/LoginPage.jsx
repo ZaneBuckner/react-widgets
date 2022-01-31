@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { useState } from 'react';
 import { useAuthContext } from 'context/AuthContext';
+import { Link, useNavigate } from 'react-router-dom';
 
 import { Container } from 'globalStyles';
 import Card from 'components/shared/Card';
@@ -9,36 +9,41 @@ import Button from 'components/shared/Button';
 import InputField from 'components/shared/InputField';
 
 import { StyledLoginPage, StyledLoginForm } from './Pages.Styled';
-
 import { MdEmail as EmailIcon, MdLock as PasswordIcon } from 'react-icons/md';
 
 function LoginPage() {
-	const { currentUser, userForgotPassword, onLogIn } = useAuthContext();
+	const { currentUser, onLogin, onPasswordReset } = useAuthContext();
+	const [error, setError] = useState('');
+	const [loading, setLoading] = useState(false);
+
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
-	const [showPassword, updateShowPassword] = useState(false);
+	const [emailError, setEmailError] = useState(false);
+	const [passwordError, setPasswordError] = useState(false);
+	const navigate = useNavigate();
 
-	const handleUserSubmit = e => {
+	const handleSubmitClick = async e => {
 		e.preventDefault();
 
-		if (!email) {
-			return alert('Please enter an email.');
-		} else if (!password) {
-			return alert('Please enter a password.');
-		}
+		setEmailError(false);
+		setPasswordError(false);
+		email || setEmailError('Please enter an email address.');
+		password || setPasswordError('Please enter a password.');
 
-		onLogIn(email, password);
-		setEmail('');
-		setPassword('');
+		try {
+			setError('');
+			setLoading(true);
+			await onLogin(email, password);
+		} catch (err) {
+			setError('Failed to create account');
+			console.log(err.message);
+		} finally {
+			setLoading(false);
+			setEmail('');
+			setPassword('');
+			navigate('/');
+		}
 	};
-
-	useEffect(() => {
-		if (currentUser) {
-			console.log('User logged in', currentUser);
-		} else {
-			console.log('no user');
-		}
-	}, [currentUser]);
 
 	return (
 		<Container centerJustify>
@@ -46,38 +51,38 @@ function LoginPage() {
 				<Card page>
 					<StyledLoginPage>
 						<h1>Welcome Back</h1>
-						<StyledLoginForm>
+						{currentUser && <h2>{currentUser.email}</h2>}
+						<StyledLoginForm autoComplete='off'>
 							<InputField
 								required
-								type='text'
-								title='Email'
+								type='email'
 								label='Email'
 								icon={<EmailIcon />}
 								value={email}
+								error={emailError}
+								helperText={emailError}
 								onChange={e => setEmail(e.target.value)}
 							/>
 							<InputField
 								required
-								showPassword={showPassword}
-								updateShowPassword={updateShowPassword}
 								type='password'
-								title='Password'
-								icon={<PasswordIcon />}
 								label='Password'
+								icon={<PasswordIcon />}
 								value={password}
-								onChange={e => setPassword(e.target.value)}
 								autoComplete='new-password'
+								error={passwordError}
+								helperText={passwordError}
+								onChange={e => setPassword(e.target.value)}
 							/>
 							<Button
 								type='submit'
 								className='submit-btn'
-								text='Log In'
-								onClick={handleUserSubmit}
+								children='Log In'
+								onClick={handleSubmitClick}
+								disabled={loading}
 							/>
 						</StyledLoginForm>
-						<Link className='user-forgets' to=''>
-							Forgot your password?
-						</Link>
+						<Link className='user-forgets' to='' children='Forgot your password?' />
 					</StyledLoginPage>
 				</Card>
 			</CardAnimation>
