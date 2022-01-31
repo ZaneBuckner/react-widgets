@@ -18,60 +18,33 @@ export const useAuthContext = () => useContext(AuthContext);
 
 export const AuthContextProvider = ({ children }) => {
 	const [currentUser, setCurrentUser] = useState(null);
-	const [loading, setLoading] = useState();
+	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState('');
-	const [isUser, setIsUser] = useState(null);
 
-	// SIGN UP NEW USER
-	const userSignUp = async (email, password) => {
-		setLoading(true);
-		try {
-			const res = await createUserWithEmailAndPassword(auth, email, password);
-		} catch (err) {
-			console.log(err.message);
-			setError(err);
-		} finally {
-			setLoading(false);
-		}
+	useEffect(() => !loading && currentUser && console.log(currentUser), [currentUser, loading]);
+
+	// LOG IN
+	const handleLogin = (email, password) => {
+		return signInWithEmailAndPassword(auth, email, password);
 	};
 
-	// LOG USER IN
-	const userLogIn = async (email, password) => {
-		setLoading(true);
-		try {
-			const res = await signInWithEmailAndPassword(auth, email, password);
-			// setCurrentUser(res.user);
-			setIsUser(true);
-		} catch (err) {
-			console.log(err.message);
-			setError(err);
-		} finally {
-			setLoading(false);
-		}
-	};
+	// LOG OUT
+	const handleLogout = () => signOut(auth);
 
-	// LOG USER OUT
-	const userLogOut = () => {
-		signOut(auth);
-		setIsUser(false);
+	// NEW ACCOUNT
+	const handleRegister = (email, password) => {
+		return createUserWithEmailAndPassword(auth, email, password);
 	};
 
 	// USER FORGOT PASSWORD
-	const userForgotPassword = email => {
+	const handlePasswordReset = email => {
 		return sendPasswordResetEmail(auth, email);
 	};
 
 	// WHEN A USER SIGNS IN OR LOGS OUT
 	useEffect(() => {
-		setLoading(true);
 		const unsubscribe = onAuthStateChanged(auth, user => {
-			if (user) {
-				setCurrentUser(user);
-				console.log(user);
-			} else {
-				setCurrentUser(null);
-			}
-			setError('');
+			setCurrentUser(user);
 			setLoading(false);
 		});
 		return unsubscribe;
@@ -80,17 +53,16 @@ export const AuthContextProvider = ({ children }) => {
 	return (
 		<AuthContext.Provider
 			value={{
-				isUser,
-				currentUser,
 				error,
 				loading,
-				userForgotPassword,
-				onSignUp: userSignUp,
-				onLogIn: userLogIn,
-				onLogOut: userLogOut,
+				currentUser,
+				onLogin: handleLogin,
+				onLogout: handleLogout,
+				onRegister: handleRegister,
+				onPasswordReset: handlePasswordReset,
 			}}
 		>
-			{children}
+			{!loading && children}
 		</AuthContext.Provider>
 	);
 };
