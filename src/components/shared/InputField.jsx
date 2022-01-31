@@ -70,16 +70,7 @@ const StyledTextField = styled(TextField)`
 	}
 `;
 
-function InputField({
-	required,
-	showPassword,
-	updateShowPassword,
-	type,
-	title,
-	label,
-	icon,
-	...props
-}) {
+function InputField({ required, type, title, label, innerRef, icon, ...props }) {
 	return (
 		<StyledWrapper>
 			{icon}
@@ -88,6 +79,7 @@ function InputField({
 				type={type}
 				title={title}
 				label={label}
+				ref={innerRef}
 				icon={icon}
 				variant='standard'
 				{...props}
