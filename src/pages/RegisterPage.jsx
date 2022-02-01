@@ -2,9 +2,7 @@ import { useState } from 'react';
 import { useAuthContext } from 'context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
-import { Container } from 'globalStyles';
-import Card from 'components/shared/Card';
-import CardAnimation from 'components/shared/CardAnimation';
+import Page from './Page';
 import Button from 'components/shared/Button';
 import InputField from 'components/shared/InputField';
 
@@ -50,57 +48,53 @@ function RegisterPage() {
 	};
 
 	return (
-		<Container centerJustify>
-			<CardAnimation>
-				<Card page>
-					<StyledRegisterPage>
-						<h1>Create Account</h1>
-						{currentUser && <h2>{currentUser.email}</h2>}
-						<StyledRegisterForm>
-							<InputField
-								required
-								type='email'
-								label='Email'
-								icon={<EmailIcon />}
-								value={email}
-								error={emailError}
-								helperText={emailError}
-								onChange={e => setEmail(e.target.value)}
-							/>
-							<InputField
-								required
-								type='password'
-								label='Password'
-								icon={<PasswordIcon />}
-								value={password}
-								autoComplete='new-password'
-								error={passwordError}
-								helperText={passwordError}
-								onChange={e => setPassword(e.target.value)}
-							/>
-							<InputField
-								required
-								type='password'
-								label='Confirm Password'
-								icon={<PasswordIcon />}
-								value={passwordConfirm}
-								autoComplete='new-password'
-								error={passwordError}
-								helperText={passwordError}
-								onChange={e => setPasswordConfirm(e.target.value)}
-							/>
-							<Button
-								type='submit'
-								className='submit-btn'
-								children='Join'
-								onClick={handleSubmitClick}
-								disabled={loading}
-							/>
-						</StyledRegisterForm>
-					</StyledRegisterPage>
-				</Card>
-			</CardAnimation>
-		</Container>
+		<Page>
+			<StyledRegisterPage>
+				<h1>Create Account</h1>
+				{currentUser && <h2>{currentUser.email}</h2>}
+				<StyledRegisterForm>
+					<InputField
+						required
+						type='email'
+						label='Email'
+						icon={<EmailIcon />}
+						value={email}
+						error={emailError}
+						helperText={emailError}
+						onChange={e => setEmail(e.target.value)}
+					/>
+					<InputField
+						required
+						type='password'
+						label='Password'
+						icon={<PasswordIcon />}
+						value={password}
+						autoComplete='new-password'
+						error={passwordError}
+						helperText={passwordError}
+						onChange={e => setPassword(e.target.value)}
+					/>
+					<InputField
+						required
+						type='password'
+						label='Confirm Password'
+						icon={<PasswordIcon />}
+						value={passwordConfirm}
+						autoComplete='new-password'
+						error={passwordError}
+						helperText={passwordError}
+						onChange={e => setPasswordConfirm(e.target.value)}
+					/>
+					<Button
+						type='submit'
+						className='submit-btn'
+						children='Join'
+						onClick={handleSubmitClick}
+						disabled={loading}
+					/>
+				</StyledRegisterForm>
+			</StyledRegisterPage>
+		</Page>
 	);
 }
 

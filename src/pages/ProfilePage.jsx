@@ -1,11 +1,9 @@
 import { useAuthContext } from 'context/AuthContext';
+import { Link } from 'react-router-dom';
 import { getFormatedDate } from 'utils/util';
 
-import { Container } from 'globalStyles';
-import Card from 'components/shared/Card';
-import CardAnimation from 'components/shared/CardAnimation';
+import Page from './Page';
 import Button from 'components/shared/Button';
-
 import { StyledProfilePage } from './Pages.Styled';
 
 function ProfilePage() {
@@ -14,17 +12,18 @@ function ProfilePage() {
 	const memberSince = getFormatedDate(currentUser.metadata.createdAt).split(' @')[0];
 
 	return (
-		<Container centerJustify>
-			<CardAnimation>
-				<Card page>
-					<StyledProfilePage>
-						<h1>Profile Page</h1>
-						<h2>{currentUser.email}</h2>
-						<h2>Member Since: {memberSince}</h2>
-					</StyledProfilePage>
-				</Card>
-			</CardAnimation>
-		</Container>
+		<Page>
+			<StyledProfilePage>
+				<h1>Profile Page</h1>
+				<h2>{currentUser.email}</h2>
+				<h2>Member Since: {memberSince}</h2>
+				<Button
+					animate
+					className='profile-update-btn'
+					children={<Link to='/profile-update' children='Update Profile' />}
+				/>
+			</StyledProfilePage>
+		</Page>
 	);
 }
 
