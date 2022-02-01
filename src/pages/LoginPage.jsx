@@ -2,9 +2,7 @@ import { useState } from 'react';
 import { useAuthContext } from 'context/AuthContext';
 import { Link, useNavigate } from 'react-router-dom';
 
-import { Container } from 'globalStyles';
-import Card from 'components/shared/Card';
-import CardAnimation from 'components/shared/CardAnimation';
+import Page from './Page';
 import Button from 'components/shared/Button';
 import InputField from 'components/shared/InputField';
 
@@ -46,47 +44,43 @@ function LoginPage() {
 	};
 
 	return (
-		<Container centerJustify>
-			<CardAnimation>
-				<Card page>
-					<StyledLoginPage>
-						<h1>Welcome Back</h1>
-						{currentUser && <h2>{currentUser.email}</h2>}
-						<StyledLoginForm autoComplete='off'>
-							<InputField
-								required
-								type='email'
-								label='Email'
-								icon={<EmailIcon />}
-								value={email}
-								error={emailError}
-								helperText={emailError}
-								onChange={e => setEmail(e.target.value)}
-							/>
-							<InputField
-								required
-								type='password'
-								label='Password'
-								icon={<PasswordIcon />}
-								value={password}
-								autoComplete='new-password'
-								error={passwordError}
-								helperText={passwordError}
-								onChange={e => setPassword(e.target.value)}
-							/>
-							<Button
-								type='submit'
-								className='submit-btn'
-								children='Log In'
-								onClick={handleSubmitClick}
-								disabled={loading}
-							/>
-						</StyledLoginForm>
-						<Link className='user-forgets' to='' children='Forgot your password?' />
-					</StyledLoginPage>
-				</Card>
-			</CardAnimation>
-		</Container>
+		<Page>
+			<StyledLoginPage>
+				<h1>Welcome Back</h1>
+				{currentUser && <h2>{currentUser.email}</h2>}
+				<StyledLoginForm autoComplete='off'>
+					<InputField
+						required
+						type='email'
+						label='Email'
+						icon={<EmailIcon />}
+						value={email}
+						error={emailError}
+						helperText={emailError}
+						onChange={e => setEmail(e.target.value)}
+					/>
+					<InputField
+						required
+						type='password'
+						label='Password'
+						icon={<PasswordIcon />}
+						value={password}
+						autoComplete='new-password'
+						error={passwordError}
+						helperText={passwordError}
+						onChange={e => setPassword(e.target.value)}
+					/>
+					<Button
+						type='submit'
+						className='submit-btn'
+						children='Log In'
+						onClick={handleSubmitClick}
+						disabled={loading}
+					/>
+				</StyledLoginForm>
+				<Link className='user-forgets' to='' children='Forgot your password?' />
+			</StyledLoginPage>
+		</Page>
 	);
 }
 
