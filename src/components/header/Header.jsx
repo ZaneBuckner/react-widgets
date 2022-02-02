@@ -80,6 +80,7 @@ function Header() {
 		};
 
 		setNavLinks(getNavLinks());
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [currentUser, onLogout]);
 
 	return (
