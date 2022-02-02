@@ -23,15 +23,13 @@ function Header() {
 	const navigate = useNavigate();
 
 	const handleLogout = async () => {
-		setError('');
-
 		try {
+			setError('');
 			await onLogout();
+			navigate('/');
 		} catch {
 			setError('Failed to log out.');
 			error && console.log(error);
-		} finally {
-			navigate('/');
 		}
 	};
 
@@ -39,7 +37,7 @@ function Header() {
 		const linksRef = {
 			widgets: {
 				title: 'Widgets',
-				path: '/widgets-dashboard',
+				path: '/widgets',
 				icon: <DashboardIcon />,
 				clickEvent: null,
 			},
@@ -68,8 +66,6 @@ function Header() {
 				clickEvent: handleLogout,
 			},
 		};
-
-		// () => onLogout()
 
 		const getNavLinks = () => {
 			let links = currentUser
