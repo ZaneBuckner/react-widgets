@@ -5,12 +5,13 @@ import { Link, useNavigate } from 'react-router-dom';
 import Page from './Page';
 import Button from 'components/shared/Button';
 import InputField from 'components/shared/InputField';
+import UserAlert from 'components/shared/UserAlerts';
 
 import { StyledLoginPage, StyledLoginForm } from './Pages.Styled';
 import { MdEmail as EmailIcon, MdLock as PasswordIcon } from 'react-icons/md';
 
 function LoginPage() {
-	const { currentUser, onLogin, onPasswordReset } = useAuthContext();
+	const { onLogin } = useAuthContext();
 	const [error, setError] = useState('');
 	const [loading, setLoading] = useState(false);
 
@@ -28,18 +29,20 @@ function LoginPage() {
 		email || setEmailError('Please enter an email address.');
 		password || setPasswordError('Please enter a password.');
 
-		try {
-			setError('');
-			setLoading(true);
-			await onLogin(email, password);
-		} catch (err) {
-			setError('Failed to create account');
-			console.log(err.message);
-		} finally {
-			setLoading(false);
-			setEmail('');
-			setPassword('');
-			navigate('/');
+		if (!emailError && !passwordError) {
+			try {
+				setError('');
+				setLoading(true);
+				await onLogin(email, password);
+				navigate('/profile');
+			} catch (err) {
+				setError(err.message);
+				console.log(err.message);
+			} finally {
+				setLoading(false);
+				setEmail('');
+				setPassword('');
+			}
 		}
 	};
 
@@ -47,7 +50,7 @@ function LoginPage() {
 		<Page>
 			<StyledLoginPage>
 				<h1>Welcome Back</h1>
-				{currentUser && <h2>{currentUser.email}</h2>}
+				{error && <UserAlert variant='error' message={error} />}
 				<StyledLoginForm autoComplete='off'>
 					<InputField
 						required
@@ -78,7 +81,8 @@ function LoginPage() {
 						disabled={loading}
 					/>
 				</StyledLoginForm>
-				<Link className='user-forgets' to='' children='Forgot your password?' />
+				<Link className='redirect' to='/register' children='Need an account?' />
+				<Link className='user-forgets' to='/password-reset' children='Forgot your password?' />
 			</StyledLoginPage>
 		</Page>
 	);
