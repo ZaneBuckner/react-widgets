@@ -19,7 +19,6 @@ export const useAuthContext = () => useContext(AuthContext);
 export const AuthContextProvider = ({ children }) => {
 	const [currentUser, setCurrentUser] = useState(null);
 	const [loading, setLoading] = useState(true);
-	const [error, setError] = useState('');
 
 	useEffect(() => !loading && currentUser && console.log(currentUser), [currentUser, loading]);
 
@@ -53,7 +52,6 @@ export const AuthContextProvider = ({ children }) => {
 	return (
 		<AuthContext.Provider
 			value={{
-				error,
 				loading,
 				currentUser,
 				onLogin: handleLogin,
