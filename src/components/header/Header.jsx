@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAuthContext } from 'context/AuthContext';
 
 import { Container } from 'globalStyles';
@@ -19,6 +19,21 @@ import {
 function Header() {
 	const { currentUser, onLogout } = useAuthContext();
 	const [navLinks, setNavLinks] = useState();
+	const [error, setError] = useState();
+	const navigate = useNavigate();
+
+	const handleLogout = async () => {
+		setError('');
+
+		try {
+			await onLogout();
+		} catch {
+			setError('Failed to log out.');
+			error && console.log(error);
+		} finally {
+			navigate('/');
+		}
+	};
 
 	useEffect(() => {
 		const linksRef = {
@@ -42,7 +57,7 @@ function Header() {
 			},
 			profile: {
 				title: 'Profile',
-				path: '/',
+				path: '/profile',
 				icon: <ProfileIcon />,
 				clickEvent: null,
 			},
@@ -50,9 +65,11 @@ function Header() {
 				title: 'Log Out',
 				path: '/',
 				icon: <LogOutIcon />,
-				clickEvent: () => onLogout(),
+				clickEvent: handleLogout,
 			},
 		};
+
+		// () => onLogout()
 
 		const getNavLinks = () => {
 			let links = currentUser
