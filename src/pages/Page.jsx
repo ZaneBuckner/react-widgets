@@ -5,30 +5,29 @@ import CardAnimation from 'components/shared/CardAnimation';
 const StyledContainer = styled.div`
 	width: 100%;
 	max-width: 1200px;
+	height: auto;
 	margin: auto;
 	padding: 0 50px;
 `;
 
-const StyledPagesCard = styled.div`
-	position: relative;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
+const StyledCard = styled.div`
 	width: 100%;
-	height: 100%;
+	height: auto;
 	padding: 3rem;
 
 	background-color: #353535;
 	border-radius: 10px;
 	box-shadow: 2px 6px 13px -4px rgba(0, 0, 0, 0.57);
+
+	font-family: 'Roboto', serif;
+	color: #c3c3c3;
 `;
 
 function Page({ children }) {
 	return (
 		<StyledContainer>
 			<CardAnimation>
-				<StyledPagesCard>{children}</StyledPagesCard>
+				<StyledCard>{children}</StyledCard>
 			</CardAnimation>
 		</StyledContainer>
 	);
