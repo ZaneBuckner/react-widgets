@@ -83,10 +83,7 @@ export const StyledFooterIcons = styled.div`
 	align-items: center;
 	margin-left: auto;
 
-	button {
-		width: 3rem;
-		height: 3rem;
-		padding: 0.7rem;
+	div {
 		margin-left: 1rem;
 
 		svg {
