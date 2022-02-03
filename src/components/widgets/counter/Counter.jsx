@@ -28,11 +28,11 @@ function Counter() {
 				<h1>Hello There</h1>
 			</Modal>
 			<StyledCounter>
-				<Button onClick={decrement}>
+				<Button animate onClick={decrement}>
 					<RemoveIcon />
 				</Button>
 				<CountDisplay>{count}</CountDisplay>
-				<Button onClick={increment}>
+				<Button animate onClick={increment}>
 					<AddIcon />
 				</Button>
 			</StyledCounter>
