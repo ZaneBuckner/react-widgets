@@ -8,6 +8,10 @@ const StyledContainer = styled.div`
 	height: auto;
 	margin: auto;
 	padding: 0 50px;
+
+	@media only screen and (max-width: 550px) {
+		padding: 0 25px;
+	}
 `;
 
 const StyledCard = styled.div`
@@ -21,6 +25,10 @@ const StyledCard = styled.div`
 
 	font-family: 'Roboto', serif;
 	color: #c3c3c3;
+
+	@media only screen and (max-width: 550px) {
+		padding: 1.5rem;
+	}
 `;
 
 function Page({ children }) {
