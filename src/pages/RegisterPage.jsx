@@ -88,6 +88,7 @@ function RegisterPage() {
 						onChange={e => setPasswordConfirm(e.target.value)}
 					/>
 					<Button
+						animate
 						type='submit'
 						className='submit-btn'
 						children='Join'

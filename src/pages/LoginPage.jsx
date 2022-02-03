@@ -74,6 +74,7 @@ function LoginPage() {
 						onChange={e => setPassword(e.target.value)}
 					/>
 					<Button
+						animate
 						type='submit'
 						className='submit-btn'
 						children='Log In'
