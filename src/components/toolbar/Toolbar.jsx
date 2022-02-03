@@ -14,7 +14,7 @@ function Toolbar() {
 			<StyledToolbar>
 				{widgets.map(widget => (
 					<StyledWidgetWrapper key={widget.id}>
-						<Button animate isClicked={widget.display} onClick={() => toggleDisplay(widget.ref)}>
+						<Button animate buttonState={widget.display} onClick={() => toggleDisplay(widget.ref)}>
 							{widget.icon}
 						</Button>
 						<h1>{widget.name}</h1>
