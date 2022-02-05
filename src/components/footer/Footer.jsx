@@ -47,19 +47,16 @@ function Footer() {
 	const getFooterIcons = () => {
 		const icons = [
 			{
-				id: uuidv4(),
-				title: "Developer's Website",
+				title: 'Website',
 				href: 'https://zaniac.io/',
-				icon: <LogoIcon />,
+				icon: <LogoIcon height='25px' />,
 			},
 			{
-				id: uuidv4(),
 				title: 'Github Profile',
 				href: 'https://github.com/ZaneBuckner/',
 				icon: <FaGithubSquare />,
 			},
 			{
-				id: uuidv4(),
 				title: 'LinkedIn Profile',
 				href: 'https://www.linkedin.com/in/ZaneBuckner/',
 				icon: <FaLinkedin />,
@@ -67,11 +64,14 @@ function Footer() {
 		];
 
 		return icons.map(icon => (
-			<Button animate key={icon.id}>
-				<a title={icon.title} href={icon.href} target='_blank' rel='noopener noreferrer'>
-					{icon.icon}
-				</a>
-			</Button>
+			<a
+				key={uuidv4()}
+				title={icon.title}
+				href={icon.href}
+				target='_blank'
+				rel='noopener noreferrer'
+				children={<Button animate children={icon.icon} />}
+			/>
 		));
 	};
 
