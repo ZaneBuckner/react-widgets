@@ -1,49 +1,12 @@
 import { v4 as uuidv4 } from 'uuid';
-import { Link } from 'react-router-dom';
 import Logo from 'Assets/Logo';
 import LogoIcon from 'Assets/LogoIcon';
 import Button from 'components/shared/Button';
 import { FaGithubSquare, FaLinkedin } from 'react-icons/fa';
 
-import {
-	StyledFooterContainer,
-	StyledFooterWrapper,
-	StyledSiteLinks,
-	StyledFooterIcons,
-} from './Footer.Styled';
+import { StyledContainer, StyledWrapper } from './Footer.Styled';
 
 function Footer() {
-	const getSiteLinks = () => {
-		const links = [
-			{
-				id: uuidv4(),
-				path: '/',
-				text: 'Home',
-			},
-			{
-				id: uuidv4(),
-				path: '/widgets-dashboard',
-				text: 'Widgets',
-			},
-			{
-				id: uuidv4(),
-				path: '/login',
-				text: 'Sign In',
-			},
-			{
-				id: uuidv4(),
-				path: '/register',
-				text: 'Join',
-			},
-		];
-
-		return links.map(link => (
-			<Link to={link.path} key={link.id}>
-				<h3 className='site-links'>{link.text}</h3>
-			</Link>
-		));
-	};
-
 	const getFooterIcons = () => {
 		const icons = [
 			{
@@ -71,23 +34,21 @@ function Footer() {
 				target='_blank'
 				rel='noopener noreferrer'
 				children={<Button animate children={icon.icon} />}
+				className='button'
 			/>
 		));
 	};
 
 	return (
-		<StyledFooterContainer>
-			<StyledFooterWrapper>
-				<StyledSiteLinks>
-					<div className='header'>
-						<Logo strokeWidth={3} height={50} />
-						<h1 className='site-title'>React Widgets</h1>
-					</div>
-					{getSiteLinks()}
-				</StyledSiteLinks>
-				<StyledFooterIcons>{getFooterIcons()}</StyledFooterIcons>
-			</StyledFooterWrapper>
-		</StyledFooterContainer>
+		<StyledContainer>
+			<StyledWrapper>
+				<div className='site-title'>
+					<Logo strokeWidth={4} />
+					<h1>React Widgets</h1>
+				</div>
+				<div className='buttons-wrapper'>{getFooterIcons()}</div>
+			</StyledWrapper>
+		</StyledContainer>
 	);
 }
 
