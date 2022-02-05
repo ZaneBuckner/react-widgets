@@ -1,12 +1,11 @@
-import { useContext } from 'react';
-import { WidgetContext } from 'context/WidgetContext';
+import { useWidgetContext } from 'context/WidgetContext';
 
 import Button from 'components/shared/Button';
 import { BsChevronCompactLeft as NavLeft, BsChevronCompactRight as NavRight } from 'react-icons/bs';
 import { StyledContainer, StyledToolbar, StyledWidgetWrapper } from './Toolbar.styled';
 
 function Toolbar() {
-	const { widgets, toggleDisplay } = useContext(WidgetContext);
+	const { widgets, toggleDisplay } = useWidgetContext();
 
 	return (
 		<StyledContainer>
