@@ -17,11 +17,7 @@ function ProfilePage() {
 				<h1>Profile Page</h1>
 				<h2>{currentUser.email}</h2>
 				<h2>Member Since: {memberSince}</h2>
-				<Button
-					animate
-					className='profile-update-btn'
-					children={<Link to='/profile-update' children='Update Profile' />}
-				/>
+				<Link to='/profile-update' children={<Button animate children='Update Profile' />} />
 			</StyledProfilePage>
 		</Page>
 	);
