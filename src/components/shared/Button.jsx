@@ -15,11 +15,11 @@ const StyledButton = styled.button`
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	width: 3rem;
-	height: 3rem;
+	width: 100%;
+	height: 100%;
 	padding: 10px;
 
-	color: #c3c3c3;
+	color: inherit;
 	white-space: nowrap;
 
 	&:disabled {
@@ -28,20 +28,17 @@ const StyledButton = styled.button`
 		pointer-events: none;
 	}
 
-	a {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-	}
-
 	svg {
 		color: #c3c3c3;
 	}
 `;
 
 const buttonVariants = {
-	initial: {
+	clickable: {
 		boxShadow: '2px 2px 3px #1E1E1E',
+	},
+	clicked: {
+		boxShadow: 'inset 2px 2px 3px #1E1E1E',
 	},
 	whileTap: {
 		boxShadow: 'inset 2px 2px 3px #1E1E1E',
@@ -49,23 +46,17 @@ const buttonVariants = {
 	transition: {
 		type: 'spring',
 	},
-	clickable: {
-		boxShadow: '2px 2px 3px #1E1E1E',
-	},
-	clicked: {
-		boxShadow: 'inset 2px 2px 3px #1E1E1E',
-	},
 };
 
 function Button({ buttonState, animate, disabled, className, children, ...props }) {
 	const StatefulButton = (
 		<AnimatedWrapper
 			variants={buttonVariants}
-			initial={buttonState ? 'clicked' : 'clickable'}
-			animate={buttonState ? 'clickable' : 'clicked'}
+			initial={buttonState ? 'clickable' : 'clicked'}
+			animate={buttonState ? 'clicked' : 'clickable'}
 			transition='transition'
 		>
-			<StyledButton className={className} {...props}>
+			<StyledButton disabled={disabled} className={className} {...props}>
 				{children}
 			</StyledButton>
 		</AnimatedWrapper>
