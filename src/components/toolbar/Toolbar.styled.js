@@ -80,7 +80,7 @@ export const StyledWidgetWrapper = styled.div`
 	}
 
 	h1 {
-		margin-top: 0.5rem;
+		margin-top: 0.2rem;
 
 		font-family: 'Roboto', serif;
 		font-size: 0.8rem;
