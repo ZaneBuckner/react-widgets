@@ -33,6 +33,10 @@ a {
 	color: inherit;
 }
 
+a[disabled] {
+	pointer-events: none;
+}
+
 input {
 	appearance: none;
 	outline: none;
