@@ -3,7 +3,8 @@ import BobRossPaintingsData from 'components/widgets/bobross/BobRossPaintingsDat
 
 import Card from 'components/shared/Card';
 import CardHeader from 'components/shared/CardHeader';
-import Modal from 'components/shared/Modal';
+import WidgetModal from '../WidgetModal';
+import { About } from './BobRossModal';
 import Painting from './Painting';
 
 import { StyledBobRossPaintings } from './BobRossPaintings.Styed';
@@ -15,7 +16,9 @@ import { HiCursorClick as ClickIcon } from 'react-icons/hi';
 
 function BobRossPaintings() {
 	const [painting, setPainting] = useState([]);
-	const [showModal, setShowModal] = useState(false);
+	const [isAboutModal, setIsAboutModal] = useState(false);
+
+	const handleAboutToggle = () => setIsAboutModal(!isAboutModal);
 
 	const fetchPainting = () => {
 		if (BobRossPaintingsData) {
@@ -26,8 +29,14 @@ function BobRossPaintings() {
 
 	useEffect(() => {
 		fetchPainting();
-		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
+
+	const hyperLink = (
+		<a className='hyperlink' href={painting.youtube_src} target='_blank' rel='noopener noreferrer'>
+			Season {painting.season} Episode {painting.episode}
+			<YoutubeIcon className='icon' />
+		</a>
+	);
 
 	return (
 		<Card>
@@ -35,36 +44,23 @@ function BobRossPaintings() {
 				name={painting.title}
 				icon={<BobRossIcon />}
 				widgetRef='bobross'
-				setShowModal={setShowModal}
-				utilityModal={
-					<RefreshIcon
-						title='New Painting'
-						className='action-icons'
-						aria-label='Open Widget Modal'
-						onClick={() => fetchPainting()}
+				onAboutToggle={handleAboutToggle}
+				onUtilityToggle={<RefreshIcon className='action-icons' onClick={fetchPainting} />}
+			/>
+
+			<WidgetModal
+				open={isAboutModal}
+				onClose={handleAboutToggle}
+				element={
+					<About
+						widgetIcon={<BobRossIcon className='widget-icon' height={'1.5rem'} fill={'#DAB55D'} />}
+						refreshIcon={<RefreshIcon className='icon' onClick={fetchPainting} />}
+						clickIcon={<ClickIcon className='icon' onClick={handleAboutToggle} />}
+						youtubeLink={hyperLink}
 					/>
 				}
 			/>
-			<Modal showModal={showModal} setShowModal={setShowModal}>
-				<BobRossIcon width={25} height={25} fill={'#DAB55D'} />
-				<h1 className='modal-title'>Bob Ross Paintings</h1>
-				<h2 className='modal-description'>
-					"We don't make mistakes, just happy little accidents."
-				</h2>
-				<p className='modal-usage'>
-					For a random painting, select the {<RefreshIcon onClick={() => fetchPainting()} />} icon.
-					<br />
-					Or double {<ClickIcon />} the image.
-				</p>
-				<p className='modal-footer'>
-					{painting.title}
-					<br />
-					Season {painting.season} Episode {painting.episode}
-					<a href={painting.youtube_src} target='_blank' rel='noopener noreferrer'>
-						<YoutubeIcon />
-					</a>
-				</p>
-			</Modal>
+
 			<StyledBobRossPaintings onDoubleClick={() => fetchPainting()}>
 				<Painting painting={painting} icon={<BobRossIcon />} />
 			</StyledBobRossPaintings>
