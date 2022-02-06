@@ -3,7 +3,7 @@ import { getFormatedDate } from 'utils/util';
 
 import Button from 'components/shared/Button';
 import UserAlert from 'components/shared/UserAlerts';
-import { StyledAddTask, StyledInput, StyledCheckbox } from './TaskTracker.Styled';
+import { StyledInput, StyledCheckbox } from './TaskTracker.Styled';
 import { BsCheck as CheckmarkIcon } from 'react-icons/bs';
 
 function AddTask({ onAddTask }) {
@@ -11,6 +11,8 @@ function AddTask({ onAddTask }) {
 	const [date, setDate] = useState(getFormatedDate());
 	const [reminder, setReminder] = useState(false);
 	const [errorMessage, setErrorMessage] = useState('');
+
+	const toggleReminder = () => setReminder(!reminder);
 
 	const handleSubmit = e => {
 		e.preventDefault();
@@ -22,16 +24,14 @@ function AddTask({ onAddTask }) {
 		setErrorMessage('');
 	};
 
-	const toggleReminder = () => setReminder(!reminder);
-
 	return (
-		<StyledAddTask>
+		<>
 			{errorMessage && <UserAlert variant='error' message={errorMessage} />}
 			<form onSubmit={handleSubmit}>
 				<StyledInput
 					type='text'
 					className='form-input'
-					placeholder='Add Task'
+					placeholder='Task Name'
 					value={title}
 					onChange={e => setTitle(e.target.value)}
 				/>
@@ -43,7 +43,7 @@ function AddTask({ onAddTask }) {
 					onChange={e => setDate(e.target.value)}
 				/>
 				<div className='form-checkbox-wrapper'>
-					<label>Set Reminder</label>
+					<label>Mark as important:</label>
 					<div className='checkbox-wrapper'>
 						<StyledCheckbox type='checkbox' value={reminder} onChange={toggleReminder} />
 						{reminder && <CheckmarkIcon onClick={toggleReminder} />}
@@ -51,7 +51,7 @@ function AddTask({ onAddTask }) {
 				</div>
 				<Button animate type='submit' children='Save Task' />
 			</form>
-		</StyledAddTask>
+		</>
 	);
 }
 
