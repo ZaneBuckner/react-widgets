@@ -2,11 +2,11 @@ import { useState, useEffect } from 'react';
 
 import Card from 'components/shared/Card';
 import CardHeader from 'components/shared/CardHeader';
-import Modal from 'components/shared/Modal';
-import UtilityModal from 'components/shared/UtilityModal';
-import WeatherModal from './WeatherModal';
 import WeatherCurrent from './WeatherCurrent';
 import WeatherForecast from './WeatherForecast';
+
+import WidgetModal from 'components/widgets/WidgetModal';
+import { About, Utility } from './WeatherModal';
 
 import { StyledWeather } from './Weather.styled';
 import { TiWeatherPartlySunny as WeatherIcon } from 'react-icons/ti';
@@ -51,8 +51,13 @@ function Weather() {
 	const [userInput, setUserInput] = useState(70401);
 	const [fetchedTime, setFetchedTime] = useState('');
 	const [units, setUnits] = useState('imperial');
-	const [showModal, setShowModal] = useState(false);
-	const [showUtilityModal, setShowUtilityModal] = useState(false);
+
+	const [isAboutModal, setIsAboutModal] = useState(false);
+	const [isUtilityModal, setIsUtilityModal] = useState(false);
+
+	const handleAboutToggle = () => setIsAboutModal(!isAboutModal);
+	const handleUtilityToggle = () => setIsUtilityModal(!isUtilityModal);
+	const handleModalSwitch = () => [handleAboutToggle(), handleUtilityToggle()];
 
 	useEffect(() => {
 		if (isNaN(userInput)) {
@@ -68,11 +73,6 @@ function Weather() {
 		}
 	}, [userInput, units]);
 
-	const handleModalSettings = () => {
-		setShowModal(!showModal);
-		setShowUtilityModal(!showUtilityModal);
-	};
-
 	return (
 		<Card>
 			<CardHeader
@@ -81,38 +81,10 @@ function Weather() {
 				placeholder='City or Zip'
 				widgetRef='weather'
 				setUserInput={setUserInput}
-				setShowModal={setShowModal}
-				utilityModal={
-					<SettingsIcon
-						title='Add New Task'
-						className='action-icons'
-						aria-label='Open Widget Modal'
-						onClick={() => setShowUtilityModal(!showUtilityModal)}
-					/>
-				}
+				onAboutToggle={handleAboutToggle}
+				onUtilityToggle={<SettingsIcon className='action-icons' onClick={handleUtilityToggle} />}
 			/>
-			<Modal showModal={showModal} setShowModal={setShowModal}>
-				<WeatherIcon />
-				<h1 className='modal-title'>Weather Dashboard</h1>
-				<h2 className='modal-description'>Rainy Weather && Hacking</h2>
-				<p className='modal-usage'>
-					To change units, select the {<SettingsIcon onClick={handleModalSettings} />} icon.
-					<br />
-					Weather data provided by OpenWeather APIs
-				</p>
-				{fetchedTime && (
-					<p className='modal-footer'>
-						Last Updated: {fetchedTime}
-						<br />
-						<a href='https://openweathermap.org/' target='_blank' rel='noopener noreferrer'>
-							https://openweathermap.org/
-						</a>
-					</p>
-				)}
-			</Modal>
-			<UtilityModal showUtilityModal={showUtilityModal} setShowUtilityModal={setShowUtilityModal}>
-				<WeatherModal setUnits={setUnits} />
-			</UtilityModal>
+
 			<StyledWeather>
 				{currentURL && (
 					<WeatherCurrent
@@ -125,6 +97,31 @@ function Weather() {
 				)}
 				{forecastURL && <WeatherForecast url={forecastURL} units={units} unitValues={unitValues} />}
 			</StyledWeather>
+
+			<WidgetModal
+				open={isAboutModal}
+				onClose={handleAboutToggle}
+				element={
+					<About
+						widgetIcon={<WeatherIcon className='widget-icon' />}
+						settingsIcon={<SettingsIcon className='icon' onClick={handleModalSwitch} />}
+						fetchedTime={fetchedTime}
+					/>
+				}
+			/>
+
+			<WidgetModal
+				open={isUtilityModal}
+				onClose={handleUtilityToggle}
+				element={
+					<Utility
+						widgetIcon={<WeatherIcon className='widget-icon' />}
+						settingsIcon={<SettingsIcon className='icon' />}
+						units={units}
+						setUnits={setUnits}
+					/>
+				}
+			/>
 		</Card>
 	);
 }
