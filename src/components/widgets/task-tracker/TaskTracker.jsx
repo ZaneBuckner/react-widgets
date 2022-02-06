@@ -3,19 +3,17 @@ import { v4 as uuidv4 } from 'uuid';
 
 import Card from 'components/shared/Card';
 import CardHeader from 'components/shared/CardHeader';
-import Modal from 'components/shared/Modal';
-import UtilityModal from 'components/shared/UtilityModal';
-import AddTask from './AddTask';
+import WidgetModal from 'components/widgets/WidgetModal';
+
 import TaskList from './TaskList';
+import { About, Utility } from './TaskTrackerModal';
 
 import { StyledTaskTracker } from './TaskTracker.Styled';
-
-import { MdOutlineChecklistRtl as TaskIcon } from 'react-icons/md';
-import { MdPlaylistAdd as AddElementIcon } from 'react-icons/md';
+import { MdOutlineChecklistRtl as TaskIcon, MdPlaylistAdd as AddTaskIcon } from 'react-icons/md';
 
 function TaskTracker() {
-	const [showModal, setShowModal] = useState(false);
-	const [showUtilityModal, setShowUtilityModal] = useState(false);
+	const [isAboutModal, setIsAboutModal] = useState(false);
+	const [isUtilityModal, setIsUtilityModal] = useState(false);
 	const [tasks, setTasks] = useState([
 		{
 			id: uuidv4(),
@@ -37,17 +35,20 @@ function TaskTracker() {
 		},
 	]);
 
-	const addTask = newTask => {
+	// ADD TASK
+	const handleAddTask = newTask => {
 		const addNewTask = { ...newTask, id: uuidv4() };
 		setTasks([...tasks, addNewTask]);
 	};
 
-	const deleteTask = id => {
+	// DELETE TASK
+	const handleDeleteTask = id => {
 		const filteredTasks = tasks.filter(task => task.id !== id);
 		setTasks(filteredTasks);
 	};
 
-	const toggleReminder = id => {
+	// SET TASK REMINDER
+	const handleReminder = id => {
 		const updatedTasks = tasks.map(task => {
 			if (task.id !== id) return task;
 			return { ...task, reminder: !task.reminder };
@@ -56,12 +57,17 @@ function TaskTracker() {
 		setTasks(updatedTasks);
 	};
 
-	const handleModalAddTask = () => {
-		setShowModal(!showModal);
-		setShowUtilityModal(!showUtilityModal);
-	};
+	// TOGGLE ABOUT MODAL
+	const handleAboutToggle = () => setIsAboutModal(!isAboutModal);
 
-	const messageTasksCompleted = <h1 className='user-message'>All Tasks Completed</h1>;
+	// TOGGLE UTILITY MODAL
+	const handleUtilityToggle = () => setIsUtilityModal(!isUtilityModal);
+
+	// TOGGLE BOTH MODALS
+	const handleModalSwitch = () => [handleAboutToggle(), handleUtilityToggle()];
+
+	const taskList = <TaskList tasks={tasks} onDelete={handleDeleteTask} onToggle={handleReminder} />;
+	const emptyList = <h1 className='user-message'>All Tasks Completed</h1>;
 
 	return (
 		<Card>
@@ -69,38 +75,28 @@ function TaskTracker() {
 				name='Task Tracker'
 				icon={<TaskIcon />}
 				widgetRef='task'
-				setShowModal={setShowModal}
-				utilityModal={
-					<AddElementIcon
-						title='Add New Task'
-						className='action-icons'
-						aria-label='Open Widget Modal'
-						onClick={() => setShowUtilityModal(!showUtilityModal)}
+				onAboutToggle={handleAboutToggle}
+				onUtilityToggle={<AddTaskIcon className='toolbar-icon' onClick={handleUtilityToggle} />}
+			/>
+
+			<StyledTaskTracker>{tasks.length > 0 ? taskList : emptyList}</StyledTaskTracker>
+
+			<WidgetModal
+				open={isAboutModal}
+				onClose={handleAboutToggle}
+				element={
+					<About
+						widgetIcon={<TaskIcon />}
+						addTaskIcon={<AddTaskIcon onClick={handleModalSwitch} />}
 					/>
 				}
 			/>
-			<Modal showModal={showModal} setShowModal={setShowModal}>
-				<TaskIcon />
-				<h1 className='modal-title'>Task Tracker</h1>
-				<h2 className='modal-description'>
-					Take control and organize your day-to-day tasks with this efficient Task Tracker.
-				</h2>
-				<p className='modal-usage'>
-					To add a task, select the {<AddElementIcon onClick={handleModalAddTask} />} icon.
-					<br />
-					Only a Task Name is required.
-				</p>
-			</Modal>
-			<UtilityModal showUtilityModal={showUtilityModal} setShowUtilityModal={setShowUtilityModal}>
-				<AddTask onAdd={addTask} />
-			</UtilityModal>
-			<StyledTaskTracker>
-				{tasks.length > 0 ? (
-					<TaskList tasks={tasks} onDelete={deleteTask} onToggle={toggleReminder} />
-				) : (
-					messageTasksCompleted
-				)}
-			</StyledTaskTracker>
+
+			<WidgetModal
+				open={isUtilityModal}
+				onClose={handleUtilityToggle}
+				element={<Utility addTaskIcon={<AddTaskIcon />} onAddTask={handleAddTask} />}
+			/>
 		</Card>
 	);
 }
