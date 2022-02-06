@@ -1,5 +1,13 @@
 import styled from 'styled-components';
 
+const StyledBody = styled.div`
+	grid-area: 2 / 1 / 4 / 2;
+`;
+
+const StyledFooter = styled.div`
+	grid-area: 4 / 1 / 5 / 2;
+`;
+
 const hyperLink = (
 	<a
 		href='https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date'
@@ -15,18 +23,18 @@ export function About({ widgetIcon, javaScriptTime, unixTime }) {
 	return (
 		<>
 			{widgetIcon}
-			<h1 className='header'>Analogue Clock</h1>
-			<div className='body'>
+			<h1 className='header'>Simple Clock</h1>
+			<StyledBody className='body'>
 				<p>
 					A {hyperLink} is defined as the number of milliseconds since midnight on January 1, 1970,
 					UTC.
 				</p>
-			</div>
-			<div className='footer'>
+			</StyledBody>
+			<StyledFooter className='footer'>
 				<p>
 					{javaScriptTime} ms ➤ {unixTime} s
 				</p>
-			</div>
+			</StyledFooter>
 		</>
 	);
 }
