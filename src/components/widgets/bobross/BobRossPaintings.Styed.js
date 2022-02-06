@@ -30,15 +30,6 @@ export const StyledPainting = styled.div`
 	.painting-image {
 		width: 100%;
 		height: 100%;
-	}
-
-	.alt-display {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-
-		width: 100%;
-		height: 100%;
-		background: #363636;
+		padding: 1.2rem;
 	}
 `;
