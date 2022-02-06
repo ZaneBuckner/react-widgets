@@ -25,7 +25,7 @@ export const getFormatedDate = () => {
 	const date = new Date();
 	let day = date.getDate();
 	let week = date.getDay();
-	let month = date.getMonth() + 1;
+	let month = date.getMonth();
 	let time = formatUnixTime(date / 1000);
 	return `${weekdayList[week]} ${monthList[month]} ${day} @ ${time}`;
 };
