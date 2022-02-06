@@ -72,7 +72,7 @@ function TaskTracker() {
 				icon={<TaskIcon />}
 				widgetRef='task'
 				onAboutToggle={handleAboutToggle}
-				onUtilityToggle={<AddTaskIcon className='toolbar-icon' onClick={handleUtilityToggle} />}
+				onUtilityToggle={<AddTaskIcon className='action-icons' onClick={handleUtilityToggle} />}
 			/>
 
 			<StyledTaskTracker>{tasks.length > 0 ? taskList : emptyList}</StyledTaskTracker>
