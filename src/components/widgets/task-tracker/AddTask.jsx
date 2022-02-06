@@ -2,29 +2,32 @@ import { useState } from 'react';
 import { getFormatedDate } from 'utils/util';
 
 import Button from 'components/shared/Button';
+import UserAlert from 'components/shared/UserAlerts';
 import { StyledAddTask, StyledInput, StyledCheckbox } from './TaskTracker.Styled';
 import { BsCheck as CheckmarkIcon } from 'react-icons/bs';
 
-function AddTask({ onAdd }) {
+function AddTask({ onAddTask }) {
 	const [title, setTitle] = useState('');
 	const [date, setDate] = useState(getFormatedDate());
 	const [reminder, setReminder] = useState(false);
+	const [errorMessage, setErrorMessage] = useState('');
 
-	const handleFormSubmit = e => {
+	const handleSubmit = e => {
 		e.preventDefault();
-		if (!title) return alert('Task Name Cannot Be Empty');
 
-		onAdd({ title, date, reminder });
+		if (!title) return setErrorMessage('Please provide a title.');
+		onAddTask({ title, date, reminder });
 		setTitle('');
-		setDate('');
 		setReminder(false);
+		setErrorMessage('');
 	};
 
 	const toggleReminder = () => setReminder(!reminder);
 
 	return (
 		<StyledAddTask>
-			<form onSubmit={handleFormSubmit}>
+			{errorMessage && <UserAlert variant='error' message={errorMessage} />}
+			<form onSubmit={handleSubmit}>
 				<StyledInput
 					type='text'
 					className='form-input'
@@ -46,7 +49,7 @@ function AddTask({ onAdd }) {
 						{reminder && <CheckmarkIcon onClick={toggleReminder} />}
 					</div>
 				</div>
-				<Button type='submit'>Save Task</Button>
+				<Button animate type='submit' children='Save Task' />
 			</form>
 		</StyledAddTask>
 	);
