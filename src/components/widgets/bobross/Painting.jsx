@@ -1,7 +1,7 @@
 import { StyledPainting } from './BobRossPaintings.Styed';
 import tealFrame from 'Assets/Images/tealFrame.png';
 
-function Painting({ painting, icon }) {
+function Painting({ painting }) {
 	return (
 		<StyledPainting>
 			<img className='painting-frame' src={tealFrame} alt='Teal Frame' />
