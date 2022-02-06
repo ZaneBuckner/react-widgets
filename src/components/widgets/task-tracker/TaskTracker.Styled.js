@@ -28,42 +28,6 @@ export const StyledTaskTracker = styled.div`
 	}
 `;
 
-export const StyledAddTask = styled.div`
-	width: 100%;
-	height: 100%;
-	margin: 2rem 0;
-
-	form {
-		.form-input {
-			margin: 1rem 0;
-			width: 100%;
-		}
-
-		.form-checkbox-wrapper {
-			display: flex;
-			justify-content: space-between;
-			align-items: center;
-			width: 100%;
-			padding: 0 0.5rem;
-
-			font-size: 0.9rem;
-
-			.checkbox-wrapper {
-				display: flex;
-				justify-content: center;
-				align-items: center;
-
-				svg {
-					position: absolute;
-					font-size: 1.5rem;
-					color: #363636;
-					cursor: pointer;
-				}
-			}
-		}
-	}
-`;
-
 export const StyledTaskList = styled.div`
 	width: 100%;
 	height: 100%;
