@@ -10,6 +10,7 @@ import { About, Utility } from './TaskTrackerModal';
 
 import { StyledTaskTracker } from './TaskTracker.Styled';
 import { MdOutlineChecklistRtl as TaskIcon, MdPlaylistAdd as AddTaskIcon } from 'react-icons/md';
+import { HiCursorClick as ClickIcon } from 'react-icons/hi';
 
 function TaskTracker() {
 	const [isAboutModal, setIsAboutModal] = useState(false);
@@ -35,6 +36,10 @@ function TaskTracker() {
 		},
 	]);
 
+	const handleAboutToggle = () => setIsAboutModal(!isAboutModal);
+	const handleUtilityToggle = () => setIsUtilityModal(!isUtilityModal);
+	const handleModalSwitch = () => [handleAboutToggle(), handleUtilityToggle()];
+
 	// ADD TASK
 	const handleAddTask = newTask => {
 		const addNewTask = { ...newTask, id: uuidv4() };
@@ -57,15 +62,6 @@ function TaskTracker() {
 		setTasks(updatedTasks);
 	};
 
-	// TOGGLE ABOUT MODAL
-	const handleAboutToggle = () => setIsAboutModal(!isAboutModal);
-
-	// TOGGLE UTILITY MODAL
-	const handleUtilityToggle = () => setIsUtilityModal(!isUtilityModal);
-
-	// TOGGLE BOTH MODALS
-	const handleModalSwitch = () => [handleAboutToggle(), handleUtilityToggle()];
-
 	const taskList = <TaskList tasks={tasks} onDelete={handleDeleteTask} onToggle={handleReminder} />;
 	const emptyList = <h1 className='user-message'>All Tasks Completed</h1>;
 
@@ -86,8 +82,9 @@ function TaskTracker() {
 				onClose={handleAboutToggle}
 				element={
 					<About
-						widgetIcon={<TaskIcon />}
-						addTaskIcon={<AddTaskIcon onClick={handleModalSwitch} />}
+						widgetIcon={<TaskIcon className='widget-icon' />}
+						addTaskIcon={<AddTaskIcon className='icon' onClick={handleModalSwitch} />}
+						clickIcon={<ClickIcon className='icon' onClick={handleAboutToggle} />}
 					/>
 				}
 			/>
@@ -95,7 +92,13 @@ function TaskTracker() {
 			<WidgetModal
 				open={isUtilityModal}
 				onClose={handleUtilityToggle}
-				element={<Utility addTaskIcon={<AddTaskIcon />} onAddTask={handleAddTask} />}
+				element={
+					<Utility
+						widgetIcon={<TaskIcon className='widget-icon' />}
+						addTaskIcon={<AddTaskIcon className='icon' />}
+						onAddTask={handleAddTask}
+					/>
+				}
 			/>
 		</Card>
 	);
