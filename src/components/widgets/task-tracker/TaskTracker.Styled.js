@@ -61,17 +61,6 @@ export const StyledAddTask = styled.div`
 				}
 			}
 		}
-
-		button {
-			width: 100%;
-			height: 1.8rem;
-			margin-top: 1rem;
-			border-radius: 5px;
-			background-color: #333333;
-
-			font-size: 0.8rem;
-			text-transform: uppercase;
-		}
 	}
 `;
 
