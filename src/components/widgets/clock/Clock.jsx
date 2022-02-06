@@ -15,6 +15,8 @@ function Clock() {
 	const [seconds, setSeconds] = useState(null);
 	const [isAboutModal, setIsAboutModal] = useState(false);
 
+	const handleAboutToggle = () => setIsAboutModal(!isAboutModal);
+
 	const getClockData = () => {
 		let date = new Date();
 
@@ -39,9 +41,6 @@ function Clock() {
 		return () => clearInterval(interval);
 	}, []);
 
-	// TOGGLE ABOUT MODAL
-	const handleAboutToggle = () => setIsAboutModal(!isAboutModal);
-
 	return (
 		<Card>
 			<CardHeader
@@ -55,7 +54,7 @@ function Clock() {
 				onClose={handleAboutToggle}
 				element={
 					<About
-						widgetIcon={<ClockIcon />}
+						widgetIcon={<ClockIcon className='widget-icon' />}
 						javaScriptTime={Math.floor(Date.now())}
 						unixTime={Math.floor(Date.now() / 1000)}
 					/>
