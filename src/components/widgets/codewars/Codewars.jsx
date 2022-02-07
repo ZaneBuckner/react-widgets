@@ -2,9 +2,10 @@ import { useState } from 'react';
 
 import Card from 'components/shared/Card';
 import CardHeader from 'components/shared/CardHeader';
-import Modal from 'components/shared/Modal';
 
-import CodewarsModal from './CodewarsModal';
+import WidgetModal from '../WidgetModal';
+import { About } from './CodewarsModal';
+
 import UserProfile from './UserProfile';
 import ChallengesList from './ChallengesList';
 import ChallengeDetails from './ChallengeDetails';
@@ -14,8 +15,10 @@ import CodewarsIcon from 'Assets/CodewarsIcon';
 
 function Codewars() {
 	const [userInput, setUserInput] = useState('Zaniac');
-	const [showModal, setShowModal] = useState(false);
 	const [selectedChallenge, setSelectedChallenge] = useState(null);
+	const [isAboutModal, setIsAboutModal] = useState(false);
+
+	const handleAboutToggle = () => setIsAboutModal(!isAboutModal);
 
 	const challegeDetails = <ChallengeDetails selectedChallenge={selectedChallenge} />;
 	const awaitChallengeDetails = (
@@ -32,21 +35,19 @@ function Codewars() {
 				placeholder='Search User'
 				widgetRef='codewars'
 				setUserInput={setUserInput}
-				setShowModal={setShowModal}
+				onAboutToggle={handleAboutToggle}
 			/>
-			<Modal showModal={showModal} setShowModal={setShowModal}>
-				<CodewarsIcon />
-				<h1 className='modal-title'>Codewars Dashboard</h1>
-				<p className='modal-usage'>
-					<a href='https://www.codewars.com/dashboard' target='_blank' rel='noopener noreferrer'>
-						Codewars
-					</a>
-					&nbsp;is a platform where developers can improve their coding prowess by solving
-					challenges at various difficulty levels.
-				</p>
-				{/* <p className='modal-usage'>For a new painting, select the {<RefreshIcon />} icon.</p> */}
-				<CodewarsModal />
-			</Modal>
+
+			<WidgetModal
+				open={isAboutModal}
+				onClose={handleAboutToggle}
+				element={
+					<About
+						widgetIcon={<CodewarsIcon className='widget-icon' height={'1.5rem'} fill={'#DAB55D'} />}
+					/>
+				}
+			/>
+
 			<StyledCodewars>
 				<UserProfile user={userInput} />
 				<ChallengesList user={userInput} setSelectedChallenge={setSelectedChallenge} />
