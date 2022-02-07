@@ -7,19 +7,18 @@ import Button from 'components/shared/Button';
 import InputField from 'components/shared/InputField';
 import UserAlert from 'components/shared/UserAlerts';
 
-import { StyledResetPasswordPage, StyledSuccessMessage } from './Pages.Styled';
+import { StyledResetPasswordPage } from './Pages.Styled';
 import { MdEmail as EmailIcon } from 'react-icons/md';
-import { BiCheckShield as SuccessIcon } from 'react-icons/bi';
 
 function PasswordResetPage() {
 	const { onPasswordReset } = useAuthContext();
 
 	const [email, setEmail] = useState('');
-	const [successMessage, setSuccessMessage] = useState('');
-	const [loading, setLoading] = useState(false);
+	const [emailError, setEmailError] = useState(false);
 
 	const [error, setError] = useState('');
-	const [emailError, setEmailError] = useState(false);
+	const [loading, setLoading] = useState(false);
+	const [successMessage, setSuccessMessage] = useState('');
 
 	const handleSubmitClick = async e => {
 		e.preventDefault();
@@ -36,7 +35,6 @@ function PasswordResetPage() {
 				setSuccessMessage('Check your email to reset password.');
 			} catch (err) {
 				setError(err.message);
-				console.log(error);
 			} finally {
 				setLoading(false);
 				setEmail('');
@@ -48,6 +46,7 @@ function PasswordResetPage() {
 		<Page>
 			<StyledResetPasswordPage>
 				<h1>Reset Password</h1>
+				{error && <UserAlert variant='error' message={error} />}
 				{successMessage && <UserAlert variant='success' message={successMessage} />}
 				<form autoComplete='off'>
 					<InputField
@@ -61,6 +60,7 @@ function PasswordResetPage() {
 						onChange={e => setEmail(e.target.value)}
 					/>
 					<Button
+						animate
 						type='submit'
 						className='submit-btn'
 						children='Reset'
@@ -69,7 +69,7 @@ function PasswordResetPage() {
 					/>
 				</form>
 				<div className='login-redirect'>
-					<Link className='redirect' to='/login' children='Sign In' />
+					<Link className='redirect' to='/login' children='SIGN IN' />
 				</div>
 			</StyledResetPasswordPage>
 		</Page>
