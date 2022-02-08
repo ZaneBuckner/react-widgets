@@ -1,13 +1,29 @@
-export const formatUnixTime = unixTime => {
-	let date = new Date(unixTime * 1000);
-	let hours = (date.getHours() + 24) % 12 || 12;
-	let minutes = date.getMinutes().toString().padStart(2, '0');
-	let meridian = date.getHours() < 12 ? 'AM' : 'PM';
-	return `${hours}:${minutes} ${meridian}`;
+/**
+ * FORMATS JS DATE OBJECT
+ * @param {num} timestamp - Epoch Time (milliseconds)
+ * @returns Formatted Time Object
+ */
+export const getFormattedTime = (timestamp = Date.now()) => {
+	const date = new Date(timestamp);
+
+	const formattedHours = (date.getHours() + 24) % 12 || 12;
+	const formattedMinutes = String(date.getMinutes()).padStart(2, '0');
+	const formattedMeridian = date.getHours() < 12 ? 'AM' : 'PM';
+
+	return {
+		hours: formattedHours,
+		minutes: formattedMinutes,
+		meridian: formattedMeridian,
+	};
 };
 
-export const getFormatedDate = () => {
-	const monthList = [
+/**
+ * FORMATS JS DATE OBJECT
+ * @param {num} timestamp - Epoch Time (milliseconds)
+ * @returns Formatted Date Object
+ */
+export const getFormattedDate = (timestamp = Date.now()) => {
+	const monthRef = [
 		'Jan',
 		'Feb',
 		'Mar',
@@ -21,11 +37,13 @@ export const getFormatedDate = () => {
 		'Nov',
 		'Dec',
 	];
-	const weekdayList = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-	const date = new Date();
-	let day = date.getDate();
-	let week = date.getDay();
-	let month = date.getMonth();
-	let time = formatUnixTime(date / 1000);
-	return `${weekdayList[week]} ${monthList[month]} ${day} @ ${time}`;
+	const weekdayRef = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+	const date = new Date(timestamp);
+
+	return {
+		day: date.getDate(),
+		week: weekdayRef[date.getDay()],
+		month: monthRef[date.getMonth()],
+		year: date.getFullYear(),
+	};
 };
