@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { getFormatedDate } from 'utils/util';
+import { useState, useEffect } from 'react';
+import { getFormattedDate, getFormattedTime } from 'utils/util';
 
 import Button from 'components/shared/Button';
 import UserAlert from 'components/shared/UserAlerts';
@@ -8,11 +8,19 @@ import { BsCheck as CheckmarkIcon } from 'react-icons/bs';
 
 function AddTask({ onAddTask }) {
 	const [title, setTitle] = useState('');
-	const [date, setDate] = useState(getFormatedDate());
+	const [date, setDate] = useState('');
 	const [reminder, setReminder] = useState(false);
 	const [errorMessage, setErrorMessage] = useState('');
 
-	const toggleReminder = () => setReminder(!reminder);
+	const toggleReminder = () => setReminder(reminder => !reminder);
+	const getDefaultDate = () => {
+		const d = getFormattedDate();
+		const t = getFormattedTime();
+		const formattedDate = `${d.day} ${d.month} ${d.year}`;
+		const formattedTime = `${t.hours}:${t.minutes} ${t.meridian}`;
+
+		return `${formattedDate} @ ${formattedTime}`;
+	};
 
 	const handleSubmit = e => {
 		e.preventDefault();
@@ -23,6 +31,10 @@ function AddTask({ onAddTask }) {
 		setReminder(false);
 		setErrorMessage('');
 	};
+
+	useEffect(() => {
+		setDate(getDefaultDate);
+	}, []);
 
 	return (
 		<>
