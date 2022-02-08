@@ -35,7 +35,7 @@ export function About({ widgetIcon, settingsIcon, fetchedTime }) {
 				<p>Select {settingsIcon} to change the units.</p>
 			</div>
 			<div className='footer'>
-				Last Updated: {fetchedTime}
+				Last Updated: {`${fetchedTime.hours}:${fetchedTime.minutes} ${fetchedTime.meridian}`}
 				{hyperLink}
 			</div>
 		</>

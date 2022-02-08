@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import useAxios from 'hooks/useAxios';
-import { formatUnixTime } from 'utils/util';
+import { getFormattedTime } from 'utils/util';
 
 import { StyledWeatherCurrent } from './Weather.styled';
 
@@ -16,19 +16,22 @@ function WeatherCurrent({ url, userInput, units, unitValues, setFetchedTime }) {
 	const { data, loading, error } = useAxios(url);
 
 	useEffect(() => {
-		data && setFetchedTime(formatUnixTime(data.dt));
-	}, [data]);
+		data && setFetchedTime(getFormattedTime(data.dt));
+	}, [data, setFetchedTime]);
 
-	const getDayLength = (sunrise, sunset) => {
+	const getDayLength = (start, end) => {
+		const sunrise = getFormattedTime(start);
+		const sunset = getFormattedTime(end);
+
 		return (
 			<>
 				<div className='sunrise'>
 					<SunriseIcon />
-					<p>{formatUnixTime(sunrise)}</p>
+					<p>{`${sunrise.hours}:${sunrise.minutes} ${sunrise.meridian}`}</p>
 				</div>
 				<div className='sunset'>
 					<SunsetIcon />
-					<p>{formatUnixTime(sunset)}</p>
+					<p>{`${sunset.hours}:${sunset.minutes} ${sunset.meridian}`}</p>
 				</div>
 			</>
 		);
