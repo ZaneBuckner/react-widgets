@@ -6,6 +6,21 @@ import {
 	BiCheckShield as SuccessIcon,
 } from 'react-icons/bi';
 
+export default function UserAlert({ variant, message }) {
+	const variantIcon = {
+		error: <ErrorIcon />,
+		warning: <WarningIcon />,
+		success: <SuccessIcon />,
+	};
+
+	return (
+		<StyledAlert variant={variant}>
+			{variantIcon[variant]}
+			{message}
+		</StyledAlert>
+	);
+}
+
 const handleVariantColor = variant => {
 	switch (variant) {
 		case 'error':
@@ -34,20 +49,3 @@ const StyledAlert = styled.div`
 		margin-right: 0.5rem;
 	}
 `;
-
-function UserAlert({ variant, message }) {
-	const variantIcon = {
-		error: <ErrorIcon />,
-		warning: <WarningIcon />,
-		success: <SuccessIcon />,
-	};
-
-	return (
-		<StyledAlert variant={variant}>
-			{variantIcon[variant]}
-			{message}
-		</StyledAlert>
-	);
-}
-
-export default UserAlert;
