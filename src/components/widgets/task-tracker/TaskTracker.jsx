@@ -36,8 +36,8 @@ function TaskTracker() {
 		},
 	]);
 
-	const handleAboutToggle = () => setIsAboutModal(!isAboutModal);
-	const handleUtilityToggle = () => setIsUtilityModal(!isUtilityModal);
+	const handleAboutToggle = () => setIsAboutModal(isAboutModal => !isAboutModal);
+	const handleUtilityToggle = () => setIsUtilityModal(isUtilityModal => !isUtilityModal);
 	const handleModalSwitch = () => [handleAboutToggle(), handleUtilityToggle()];
 
 	// ADD TASK

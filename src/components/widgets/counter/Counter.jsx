@@ -16,7 +16,7 @@ function Counter() {
 	const [count, setCount] = useState(0);
 	const [isAboutModal, setIsAboutModal] = useState(false);
 
-	const handleAboutToggle = () => setIsAboutModal(!isAboutModal);
+	const handleAboutToggle = () => setIsAboutModal(isAboutModal => !isAboutModal);
 
 	const decrement = () => setCount(count - 1);
 	const increment = () => setCount(count + 1);

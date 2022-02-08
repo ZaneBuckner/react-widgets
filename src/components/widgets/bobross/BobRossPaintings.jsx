@@ -18,7 +18,7 @@ function BobRossPaintings() {
 	const [painting, setPainting] = useState([]);
 	const [isAboutModal, setIsAboutModal] = useState(false);
 
-	const handleAboutToggle = () => setIsAboutModal(!isAboutModal);
+	const handleAboutToggle = () => setIsAboutModal(isAboutModal => !isAboutModal);
 
 	const fetchPainting = () => {
 		if (BobRossPaintingsData) {

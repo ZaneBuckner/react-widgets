@@ -55,8 +55,8 @@ function Weather() {
 	const [isAboutModal, setIsAboutModal] = useState(false);
 	const [isUtilityModal, setIsUtilityModal] = useState(false);
 
-	const handleAboutToggle = () => setIsAboutModal(!isAboutModal);
-	const handleUtilityToggle = () => setIsUtilityModal(!isUtilityModal);
+	const handleAboutToggle = () => setIsAboutModal(isAboutModal => !isAboutModal);
+	const handleUtilityToggle = () => setIsUtilityModal(isUtilityModal => !isUtilityModal);
 	const handleModalSwitch = () => [handleAboutToggle(), handleUtilityToggle()];
 
 	useEffect(() => {

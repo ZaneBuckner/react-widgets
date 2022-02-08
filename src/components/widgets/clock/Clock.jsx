@@ -15,7 +15,7 @@ function Clock() {
 	const [seconds, setSeconds] = useState(null);
 	const [isAboutModal, setIsAboutModal] = useState(false);
 
-	const handleAboutToggle = () => setIsAboutModal(!isAboutModal);
+	const handleAboutToggle = () => setIsAboutModal(isAboutModal => !isAboutModal);
 
 	const getClockData = () => {
 		let date = new Date();

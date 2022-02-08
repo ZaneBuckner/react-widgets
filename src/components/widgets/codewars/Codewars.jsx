@@ -18,7 +18,7 @@ function Codewars() {
 	const [selectedChallenge, setSelectedChallenge] = useState(null);
 	const [isAboutModal, setIsAboutModal] = useState(false);
 
-	const handleAboutToggle = () => setIsAboutModal(!isAboutModal);
+	const handleAboutToggle = () => setIsAboutModal(isAboutModal => !isAboutModal);
 
 	const challegeDetails = <ChallengeDetails selectedChallenge={selectedChallenge} />;
 	const awaitChallengeDetails = (
