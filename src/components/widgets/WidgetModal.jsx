@@ -3,6 +3,23 @@ import styled from 'styled-components';
 
 import { AiOutlineClose as CloseIcon } from 'react-icons/ai';
 
+export default function WidgetModal({ open, onClose, element }) {
+	return (
+		open && (
+			<StyledWidgetModal>
+				<StyledCloseIcon onClick={onClose} />
+				{element}
+			</StyledWidgetModal>
+		)
+	);
+}
+
+WidgetModal.propTypes = {
+	open: PropTypes.bool.isRequired, // CURRENT DISPLAY STATE
+	onClose: PropTypes.func.isRequired, // TOGGLE DISPLAY STATE
+	element: PropTypes.node.isRequired, // MODAL ELEMENT
+};
+
 const StyledWidgetModal = styled.div`
 	position: absolute;
 	z-index: 1;
@@ -97,22 +114,3 @@ const StyledCloseIcon = styled(CloseIcon)`
 	fill: #dab55d;
 	cursor: pointer;
 `;
-
-function WidgetModal({ open, onClose, element }) {
-	return (
-		open && (
-			<StyledWidgetModal>
-				<StyledCloseIcon onClick={onClose} />
-				{element}
-			</StyledWidgetModal>
-		)
-	);
-}
-
-WidgetModal.propTypes = {
-	open: PropTypes.bool.isRequired, // CURRENT DISPLAY STATE
-	onClose: PropTypes.func.isRequired, // TOGGLE DISPLAY STATE
-	element: PropTypes.node.isRequired, // MODAL ELEMENT
-};
-
-export default WidgetModal;
