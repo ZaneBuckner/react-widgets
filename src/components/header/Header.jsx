@@ -1,9 +1,8 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuthContext } from 'context/AuthContext';
 
-import { Container } from 'globalStyles';
 import Button from 'components/shared/Button';
-import { StyledHeader, StyledNav } from './Header.styled';
+import { StyledHeaderContainer, StyledHeader, StyledNav } from './Header.styled';
 
 import Logo from 'Assets/Logo';
 import { MdDashboard as WidgetsIcon } from 'react-icons/md';
@@ -54,12 +53,12 @@ function Header() {
 	);
 
 	return (
-		<Container header>
+		<StyledHeaderContainer>
 			<StyledHeader>
 				<Logo strokeWidth={3} height={50} />
 				<StyledNav>{currentUser ? signedInLinks : signedOutLinks}</StyledNav>
 			</StyledHeader>
-		</Container>
+		</StyledHeaderContainer>
 	);
 }
 

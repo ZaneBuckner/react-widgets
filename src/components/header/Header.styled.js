@@ -1,5 +1,12 @@
 import styled from 'styled-components';
 
+export const StyledHeaderContainer = styled.div`
+	width: 100%;
+	max-width: 1200px;
+	margin: 0 auto;
+	padding: 0 30px;
+`;
+
 export const StyledHeader = styled.header`
 	display: flex;
 	align-items: center;
