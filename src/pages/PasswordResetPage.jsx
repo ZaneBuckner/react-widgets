@@ -7,10 +7,10 @@ import Button from 'components/shared/Button';
 import InputField from 'components/shared/InputField';
 import UserAlert from 'components/shared/UserAlerts';
 
-import { StyledResetPasswordPage } from './Pages.Styled';
+import { StyledResetPasswordForm } from './Pages.Styled';
 import { MdEmail as EmailIcon } from 'react-icons/md';
 
-function PasswordResetPage() {
+export default function PasswordResetPage() {
 	const { onPasswordReset } = useAuthContext();
 
 	const [email, setEmail] = useState('');
@@ -44,36 +44,34 @@ function PasswordResetPage() {
 
 	return (
 		<Page>
-			<StyledResetPasswordPage>
-				<h1>Reset Password</h1>
-				{error && <UserAlert variant='error' message={error} />}
-				{successMessage && <UserAlert variant='success' message={successMessage} />}
-				<form autoComplete='off'>
-					<InputField
-						required
-						type='email'
-						label='Email'
-						icon={<EmailIcon />}
-						value={email}
-						error={emailError}
-						helperText={emailError}
-						onChange={e => setEmail(e.target.value)}
-					/>
-					<Button
-						animate
-						type='submit'
-						className='submit-btn'
-						children='Reset'
-						onClick={handleSubmitClick}
-						disabled={loading}
-					/>
-				</form>
-				<div className='login-redirect'>
-					<Link className='redirect' to='/login' children='SIGN IN' />
-				</div>
-			</StyledResetPasswordPage>
+			<h1 className='title'>Reset Password</h1>
+			{error && <UserAlert className='user-message' variant='error' message={error} />}
+			{successMessage && (
+				<UserAlert className='user-message' variant='success' message={successMessage} />
+			)}
+			<StyledResetPasswordForm className='body' autoComplete='off'>
+				<InputField
+					required
+					type='email'
+					label='Email'
+					icon={<EmailIcon />}
+					value={email}
+					error={emailError}
+					helperText={emailError}
+					onChange={e => setEmail(e.target.value)}
+				/>
+				<Button
+					animate
+					type='submit'
+					className='submit-btn'
+					children='Reset'
+					onClick={handleSubmitClick}
+					disabled={loading}
+				/>
+			</StyledResetPasswordForm>
+			<div className='footer'>
+				<Link className='link' to='/login' children='LOGIN' />
+			</div>
 		</Page>
 	);
 }
-
-export default PasswordResetPage;

@@ -4,14 +4,16 @@ import { Link, useNavigate } from 'react-router-dom';
 
 import Page from './Page';
 import Button from 'components/shared/Button';
-import InputField from 'components/shared/InputField';
 import UserAlert from 'components/shared/UserAlerts';
+import InputField from 'components/shared/InputField';
 
-import { StyledLoginPage, StyledLoginForm } from './Pages.Styled';
+import { StyledLoginForm } from './Pages.Styled';
 import { MdEmail as EmailIcon, MdLock as PasswordIcon } from 'react-icons/md';
 
-function LoginPage() {
+export default function LoginPage() {
+	const navigate = useNavigate();
 	const { onLogin } = useAuthContext();
+
 	const [error, setError] = useState('');
 	const [loading, setLoading] = useState(false);
 
@@ -19,11 +21,12 @@ function LoginPage() {
 	const [password, setPassword] = useState('');
 	const [emailError, setEmailError] = useState(false);
 	const [passwordError, setPasswordError] = useState(false);
-	const navigate = useNavigate();
 
 	const handleSubmitClick = async e => {
 		e.preventDefault();
 
+		setEmail('');
+		setPassword('');
 		setEmailError(false);
 		setPasswordError(false);
 		email || setEmailError('Please enter an email address.');
@@ -34,59 +37,57 @@ function LoginPage() {
 				setError('');
 				setLoading(true);
 				await onLogin(email, password);
+				setLoading(false);
 				navigate('/profile');
 			} catch (err) {
-				setError(err.message);
-				console.log(err.message);
-			} finally {
+				setError(err.code);
 				setLoading(false);
-				setEmail('');
-				setPassword('');
 			}
 		}
 	};
 
 	return (
 		<Page>
-			<StyledLoginPage>
-				<h1>Welcome Back</h1>
-				{error && <UserAlert variant='error' message={error} />}
-				<StyledLoginForm autoComplete='off'>
-					<InputField
-						required
-						type='email'
-						label='Email'
-						icon={<EmailIcon />}
-						value={email}
-						error={emailError}
-						helperText={emailError}
-						onChange={e => setEmail(e.target.value)}
-					/>
-					<InputField
-						required
-						type='password'
-						label='Password'
-						icon={<PasswordIcon />}
-						value={password}
-						autoComplete='new-password'
-						error={passwordError}
-						helperText={passwordError}
-						onChange={e => setPassword(e.target.value)}
-					/>
-					<Button
-						animate
-						type='submit'
-						className='submit-btn'
-						children='Log In'
-						onClick={handleSubmitClick}
-						disabled={loading}
-					/>
-				</StyledLoginForm>
-				<Link className='redirect' to='/register' children='Need an account?' />
+			<h1 className='title'>Welcome Back</h1>
+			{error && <UserAlert className='user-message' variant='error' message={error} />}
+			<StyledLoginForm className='body' autoComplete='off'>
+				<InputField
+					required
+					type='email'
+					label='Email'
+					icon={<EmailIcon />}
+					value={email}
+					error={emailError}
+					helperText={emailError}
+					onChange={e => setEmail(e.target.value)}
+				/>
+				<InputField
+					required
+					type='password'
+					label='Password'
+					icon={<PasswordIcon />}
+					value={password}
+					autoComplete='new-password'
+					error={passwordError}
+					helperText={passwordError}
+					onChange={e => setPassword(e.target.value)}
+				/>
+				<Button
+					animate
+					type='submit'
+					className='submit-btn'
+					children='Log In'
+					onClick={handleSubmitClick}
+					disabled={loading}
+				/>
+			</StyledLoginForm>
+			<div className='links'>
 				<Link className='user-forgets' to='/password-reset' children='Forgot your password?' />
-			</StyledLoginPage>
+			</div>
+			<div className='footer'>
+				Need an account?&nbsp;
+				<Link className='link' to='/register' children='SIGNUP' />
+			</div>
 		</Page>
 	);
 }
-
-export default LoginPage;

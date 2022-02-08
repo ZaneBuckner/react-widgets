@@ -5,11 +5,12 @@ import { Link, useNavigate } from 'react-router-dom';
 import Page from './Page';
 import Button from 'components/shared/Button';
 import InputField from 'components/shared/InputField';
+import UserAlert from 'components/shared/UserAlerts';
 
-import { StyledRegisterPage, StyledRegisterForm } from './Pages.Styled';
+import { StyledRegisterForm } from './Pages.Styled';
 import { MdEmail as EmailIcon, MdLock as PasswordIcon } from 'react-icons/md';
 
-function RegisterPage() {
+export default function RegisterPage() {
 	const { onRegister } = useAuthContext();
 	const [error, setError] = useState('');
 	const [loading, setLoading] = useState(false);
@@ -52,54 +53,54 @@ function RegisterPage() {
 
 	return (
 		<Page>
-			<StyledRegisterPage>
-				<h1>Create Account</h1>
-				<StyledRegisterForm>
-					<InputField
-						required
-						type='email'
-						label='Email'
-						icon={<EmailIcon />}
-						value={email}
-						error={emailError}
-						helperText={emailError}
-						onChange={e => setEmail(e.target.value)}
-					/>
-					<InputField
-						required
-						type='password'
-						label='Password'
-						icon={<PasswordIcon />}
-						value={password}
-						autoComplete='new-password'
-						error={passwordError}
-						helperText={passwordError}
-						onChange={e => setPassword(e.target.value)}
-					/>
-					<InputField
-						required
-						type='password'
-						label='Confirm Password'
-						icon={<PasswordIcon />}
-						value={passwordConfirm}
-						autoComplete='new-password'
-						error={passwordError}
-						helperText={passwordError}
-						onChange={e => setPasswordConfirm(e.target.value)}
-					/>
-					<Button
-						animate
-						type='submit'
-						className='submit-btn'
-						children='Join'
-						onClick={handleSubmitClick}
-						disabled={loading}
-					/>
-				</StyledRegisterForm>
-				<Link className='redirect' to='/login' children='Already have an account?' />
-			</StyledRegisterPage>
+			<h1 className='title'>Create Account</h1>
+			{error && <UserAlert className='user-message' variant='error' message={error} />}
+			<StyledRegisterForm className='body'>
+				<InputField
+					required
+					type='email'
+					label='Email'
+					icon={<EmailIcon />}
+					value={email}
+					error={emailError}
+					helperText={emailError}
+					onChange={e => setEmail(e.target.value)}
+				/>
+				<InputField
+					required
+					type='password'
+					label='Password'
+					icon={<PasswordIcon />}
+					value={password}
+					autoComplete='new-password'
+					error={passwordError}
+					helperText={passwordError}
+					onChange={e => setPassword(e.target.value)}
+				/>
+				<InputField
+					required
+					type='password'
+					label='Confirm Password'
+					icon={<PasswordIcon />}
+					value={passwordConfirm}
+					autoComplete='new-password'
+					error={passwordError}
+					helperText={passwordError}
+					onChange={e => setPasswordConfirm(e.target.value)}
+				/>
+				<Button
+					animate
+					type='submit'
+					className='submit-btn'
+					children='Join'
+					onClick={handleSubmitClick}
+					disabled={loading}
+				/>
+			</StyledRegisterForm>
+			<div className='footer'>
+				Already have an account?&nbsp;
+				<Link className='link' to='/login' children='LOGIN' />
+			</div>
 		</Page>
 	);
 }
-
-export default RegisterPage;
