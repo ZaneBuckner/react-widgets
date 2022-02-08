@@ -1,44 +1,67 @@
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import CardAnimation from 'components/shared/CardAnimation';
-
-const StyledContainer = styled.div`
-	width: 100%;
+const StyledPageContainer = styled.div`
+	width: 90%;
 	max-width: 1200px;
-	height: auto;
 	margin: auto;
-	padding: 0 50px;
-
-	@media only screen and (max-width: 550px) {
-		padding: 0 25px;
-	}
-`;
-
-const StyledCard = styled.div`
-	width: 100%;
-	height: auto;
-	padding: 3rem;
 
 	background-color: #353535;
 	border-radius: 10px;
 	box-shadow: 2px 6px 13px -4px rgba(0, 0, 0, 0.57);
+`;
+
+const StyledPage = styled.div`
+	position: relative;
+	display: grid;
+	grid-template-columns: 1fr;
+	grid-template-rows: 0.5fr 0.5fr 3fr 1fr 1fr;
+	place-items: center;
+
+	width: 100%;
+	height: 100%;
+	padding: 2rem;
 
 	font-family: 'Roboto', serif;
 	color: #c3c3c3;
 
-	@media only screen and (max-width: 550px) {
-		padding: 1.5rem;
+	.link {
+		color: #dab55d;
+	}
+
+	.title {
+		font-size: 2rem;
+		font-weight: 300;
+		color: #dab55d;
+	}
+
+	.body {
+		width: 100%;
+		height: 100%;
+	}
+
+	.links {
+		grid-area: 4 / 1 / 5 / 2;
+	}
+
+	.footer {
+		grid-area: 5 / 1 / 6 / 2;
+
+		display: flex;
+		justify-content: center;
 	}
 `;
 
 function Page({ children }) {
 	return (
-		<StyledContainer>
-			<CardAnimation>
-				<StyledCard>{children}</StyledCard>
-			</CardAnimation>
-		</StyledContainer>
+		<StyledPageContainer>
+			<StyledPage>{children}</StyledPage>
+		</StyledPageContainer>
 	);
 }
+
+Page.propTypes = {
+	children: PropTypes.node.isRequired,
+};
 
 export default Page;
