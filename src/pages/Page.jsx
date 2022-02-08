@@ -1,6 +1,18 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
+export default function Page({ children }) {
+	return (
+		<StyledPageContainer>
+			<StyledPage>{children}</StyledPage>
+		</StyledPageContainer>
+	);
+}
+
+Page.propTypes = {
+	children: PropTypes.node.isRequired,
+};
+
 const StyledPageContainer = styled.div`
 	width: 90%;
 	max-width: 1200px;
@@ -15,7 +27,8 @@ const StyledPage = styled.div`
 	position: relative;
 	display: grid;
 	grid-template-columns: 1fr;
-	grid-template-rows: 0.5fr 0.5fr 3fr 1fr 1fr;
+	grid-template-rows: repeat(5, auto);
+	grid-row-gap: 1rem;
 	place-items: center;
 
 	width: 100%;
@@ -50,18 +63,8 @@ const StyledPage = styled.div`
 		display: flex;
 		justify-content: center;
 	}
+
+	@media only screen and (max-width: 450px) {
+		padding: 1rem;
+	}
 `;
-
-function Page({ children }) {
-	return (
-		<StyledPageContainer>
-			<StyledPage>{children}</StyledPage>
-		</StyledPageContainer>
-	);
-}
-
-Page.propTypes = {
-	children: PropTypes.node.isRequired,
-};
-
-export default Page;
