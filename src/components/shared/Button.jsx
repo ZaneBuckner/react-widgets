@@ -31,6 +31,19 @@ const StyledButton = styled.button`
 	svg {
 		color: #c3c3c3;
 	}
+
+	/* STYLED PROP FOR BUTTONS THAT INCORPORATE ICONS AND TEXT */
+	${({ text }) =>
+		text &&
+		`
+    font-size: 1rem;
+    text-transform: uppercase;
+
+    svg {
+      margin-right: 0.5rem;
+      color: #DAB55D;
+    }
+  `}
 `;
 
 const buttonVariants = {
@@ -48,7 +61,7 @@ const buttonVariants = {
 	},
 };
 
-function Button({ buttonState, animate, disabled, className, children, ...props }) {
+function Button({ buttonState, animate, disabled, text, className, children, ...props }) {
 	const StatefulButton = (
 		<AnimatedWrapper
 			variants={buttonVariants}
@@ -56,8 +69,9 @@ function Button({ buttonState, animate, disabled, className, children, ...props 
 			animate={buttonState ? 'clicked' : 'clickable'}
 			transition='transition'
 		>
-			<StyledButton disabled={disabled} className={className} {...props}>
+			<StyledButton text={text} disabled={disabled} className={className} {...props}>
 				{children}
+				{text}
 			</StyledButton>
 		</AnimatedWrapper>
 	);
@@ -69,15 +83,17 @@ function Button({ buttonState, animate, disabled, className, children, ...props 
 			whileTap='whileTap'
 			transition='transition'
 		>
-			<StyledButton disabled={disabled} className={className} {...props}>
+			<StyledButton text={text} disabled={disabled} className={className} {...props}>
 				{children}
+				{text}
 			</StyledButton>
 		</AnimatedWrapper>
 	);
 
 	const StaticButton = (
-		<StyledButton className={className} {...props}>
+		<StyledButton text={text} className={className} {...props}>
 			{children}
+			{text}
 		</StyledButton>
 	);
 
