@@ -1,4 +1,4 @@
-import { createContext, useState } from 'react';
+import { useState, createContext, useContext } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
 import CodewarsIcon from 'Assets/CodewarsIcon';
@@ -8,7 +8,11 @@ import { BsClock as ClockIcon } from 'react-icons/bs';
 import { MdOutlineChecklistRtl as TaskIcon } from 'react-icons/md';
 import { TiWeatherPartlySunny as WeatherIcon } from 'react-icons/ti';
 
-export const WidgetContext = createContext();
+// CREATE WIDGET CONTEXT
+const WidgetContext = createContext({});
+
+// RETURNS WIDGET CONTEXT DATA
+export const useWidgetContext = () => useContext(WidgetContext);
 
 export const WidgetContextProvider = ({ children }) => {
 	const [widgets, setWidgets] = useState([
