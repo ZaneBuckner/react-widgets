@@ -13,7 +13,7 @@ import { TiWeatherPartlySunny as WeatherIcon } from 'react-icons/ti';
 import { IoMdSettings as SettingsIcon } from 'react-icons/io';
 
 const api = {
-	key: `&appid=ca83fef2c9a6797b8aa86d8ff2304488`,
+	key: `&appid=${process.env.REACT_APP_WIDGET_WEATHER_API_KEY}`,
 	current: `https://api.openweathermap.org/data/2.5/weather?`,
 	forecast: `https://api.openweathermap.org/data/2.5/forecast?`,
 };
