@@ -16,7 +16,7 @@ function WeatherCurrent({ url, userInput, units, unitValues, setFetchedTime }) {
 	const { data, loading, error } = useAxios(url);
 
 	useEffect(() => {
-		data && setFetchedTime(getFormattedTime(data.dt));
+		data && setFetchedTime(getFormattedTime(data.dt * 1000));
 	}, [data, setFetchedTime]);
 
 	const getDayLength = (start, end) => {
@@ -91,7 +91,9 @@ function WeatherCurrent({ url, userInput, units, unitValues, setFetchedTime }) {
 		<StyledWeatherCurrent>
 			<h1 className='city'>{data.name}</h1>
 			<div className='current-conditions'>{getCurrentConditions()}</div>
-			<div className='day-length'>{getDayLength(data.sys.sunrise, data.sys.sunset)}</div>
+			<div className='day-length'>
+				{getDayLength(data.sys.sunrise * 1000, data.sys.sunset * 1000)}
+			</div>
 			<div className='additional-conditions'>
 				{additionalConditions('Wind Speed', <WindSpeedIcon />, data.wind.speed, 'speed')}
 				{additionalConditions('Humidity', <HumidityIcon />, data.main.humidity, 'percent')}
