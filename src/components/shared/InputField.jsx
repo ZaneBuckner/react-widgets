@@ -2,8 +2,22 @@ import { styled } from '@mui/system';
 
 import { TextField } from '@mui/material';
 
+export default function InputField({ required, type, label, icon, ...props }) {
+	return (
+		<StyledWrapper>
+			{icon}
+			<StyledTextField
+				required={required}
+				type={type}
+				label={label}
+				variant='standard'
+				{...props}
+			/>
+		</StyledWrapper>
+	);
+}
+
 const StyledWrapper = styled('div')`
-	/* border: 0.1px solid lightblue; */
 	display: flex;
 	align-items: flex-end;
 	width: 100%;
@@ -69,23 +83,3 @@ const StyledTextField = styled(TextField)`
 		border-color: ${color.gold};
 	}
 `;
-
-function InputField({ required, type, title, label, innerRef, icon, ...props }) {
-	return (
-		<StyledWrapper>
-			{icon}
-			<StyledTextField
-				required={required}
-				type={type}
-				title={title}
-				label={label}
-				ref={innerRef}
-				icon={icon}
-				variant='standard'
-				{...props}
-			/>
-		</StyledWrapper>
-	);
-}
-
-export default InputField;
