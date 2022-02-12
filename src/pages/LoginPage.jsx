@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useAuthContext } from 'context/AuthContext';
 import { Link, useNavigate } from 'react-router-dom';
+import { formatErrorCode } from 'utils/util';
 
 import Page from './Page';
 import Button from 'components/shared/Button';
@@ -13,38 +14,50 @@ import { MdEmail as EmailIcon, MdLock as PasswordIcon } from 'react-icons/md';
 export default function LoginPage() {
 	const navigate = useNavigate();
 	const { onLogin } = useAuthContext();
-
-	const [error, setError] = useState('');
 	const [loading, setLoading] = useState(false);
+	const mounted = useRef(false);
 
+	// FORM VALUES
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
-	const [emailError, setEmailError] = useState(false);
-	const [passwordError, setPasswordError] = useState(false);
 
-	const handleSubmitClick = async e => {
+	// ERROR VALUES
+	const [error, setError] = useState('');
+	const [emailError, setEmailError] = useState('');
+	const [passwordError, setPasswordError] = useState('');
+
+	const resetErrors = () => [setError(''), setEmailError(''), setPasswordError('')];
+	const resetValues = () => [setEmail(''), setPassword('')];
+
+	const handleSubmit = async e => {
 		e.preventDefault();
 
-		setEmail('');
-		setPassword('');
-		setEmailError(false);
-		setPasswordError(false);
-		email || setEmailError('Please enter an email address.');
-		password || setPasswordError('Please enter a password.');
+		resetErrors();
+
+		if (!email) return setEmailError('Please enter an email address.');
+		if (!password) return setPasswordError('Please enter a password.');
 
 		if (!emailError && !passwordError) {
 			try {
-				setError('');
 				setLoading(true);
 				await onLogin(email, password);
-				setLoading(false);
 				navigate('/profile');
 			} catch (err) {
-				setError(err.code);
+				console.log(err);
+				setError(`Error: ${formatErrorCode(err.code)}`);
+				resetValues();
 				setLoading(false);
+			} finally {
+				// TOGGLE LOADING STATE IF COMPONENT IS MOUNTED => AVOID MEMORY LEAK
+				mounted.current && setLoading(false);
 			}
 		}
 	};
+
+	useEffect(() => {
+		mounted.current = true;
+		return (mounted.current = false);
+	}, []);
 
 	return (
 		<Page>
@@ -57,7 +70,7 @@ export default function LoginPage() {
 					label='Email'
 					icon={<EmailIcon />}
 					value={email}
-					error={emailError}
+					error={emailError ? true : false}
 					helperText={emailError}
 					onChange={e => setEmail(e.target.value)}
 				/>
@@ -68,7 +81,7 @@ export default function LoginPage() {
 					icon={<PasswordIcon />}
 					value={password}
 					autoComplete='new-password'
-					error={passwordError}
+					error={passwordError ? true : false}
 					helperText={passwordError}
 					onChange={e => setPassword(e.target.value)}
 				/>
@@ -77,7 +90,7 @@ export default function LoginPage() {
 					type='submit'
 					className='submit-btn'
 					children='Log In'
-					onClick={handleSubmitClick}
+					onClick={handleSubmit}
 					disabled={loading}
 				/>
 			</StyledLoginForm>

@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useAuthContext } from 'context/AuthContext';
 import { Link, useNavigate } from 'react-router-dom';
+import { formatErrorCode } from 'utils/util';
 
 import Page from './Page';
 import Button from 'components/shared/Button';
@@ -11,50 +12,64 @@ import { StyledRegisterForm } from './Pages.Styled';
 import { MdEmail as EmailIcon, MdLock as PasswordIcon } from 'react-icons/md';
 
 export default function RegisterPage() {
-	const { onRegister } = useAuthContext();
-	const [error, setError] = useState('');
-	const [loading, setLoading] = useState(false);
-
 	const navigate = useNavigate();
+	const { onRegister } = useAuthContext();
+	const [loading, setLoading] = useState(false);
+	const mounted = useRef(false);
+
+	// FORM VALUES
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [passwordConfirm, setPasswordConfirm] = useState('');
-	const [emailError, setEmailError] = useState(false);
-	const [passwordError, setPasswordError] = useState(false);
 
-	const handleSubmitClick = async e => {
+	// ERROR VALUES
+	const [error, setError] = useState('');
+	const [emailError, setEmailError] = useState('');
+	const [passwordError, setPasswordError] = useState('');
+
+	const resetErrors = () => [setError(''), setEmailError(''), setPasswordError('')];
+	const resetValues = () => [setEmail(''), setPassword(''), setPasswordConfirm('')];
+
+	const handleSubmit = async e => {
 		e.preventDefault();
 
-		setEmailError(false);
-		setPasswordError(false);
+		resetErrors();
 
-		email || setEmailError('Please enter an email address.');
-		password || setPasswordError('Please enter a password.');
-		password !== passwordConfirm && setPasswordError('Passwords do not match.');
-		password.length < 6 && setPasswordError('Passwords must be at least 6 characters.');
+		if (!email) {
+			return setEmailError('Please enter an email address.');
+		}
 
-		if (!emailError && !passwordError) {
-			try {
-				setError('');
-				setLoading(true);
-				await onRegister(email, password);
-				navigate('/profile');
-			} catch {
-				setError('Failed to create account');
-				console.log(error);
-			} finally {
-				setLoading(false);
-				setEmail('');
-				setPassword('');
-				setPasswordConfirm('');
-			}
+		if (!password) {
+			return setPasswordError('Please enter a password.');
+		} else if (password.length < 6) {
+			return setPasswordError('Passwords must be at least 6 characters.');
+		} else if (password !== passwordConfirm) {
+			return setPasswordError('Passwords do not match.');
+		}
+
+		try {
+			setLoading(true);
+			await onRegister(email, password);
+			navigate('/profile');
+		} catch (err) {
+			setError(`Error: ${formatErrorCode(err.code)}`);
+			resetValues();
+			setLoading(false);
+		} finally {
+			// TOGGLE LOADING STATE IF COMPONENT IS MOUNTED => AVOID MEMORY LEAK
+			mounted.current && setLoading(false);
 		}
 	};
+
+	useEffect(() => {
+		mounted.current = true;
+		return (mounted.current = false);
+	}, []);
 
 	return (
 		<Page>
 			<h1 className='title'>Create Account</h1>
-			{error && <UserAlert className='user-message' variant='error' message={error} />}
+			<div className='user-messages'>{error && <UserAlert variant='error' message={error} />}</div>
 			<StyledRegisterForm className='body'>
 				<InputField
 					required
@@ -62,7 +77,7 @@ export default function RegisterPage() {
 					label='Email'
 					icon={<EmailIcon />}
 					value={email}
-					error={emailError}
+					error={emailError ? true : false}
 					helperText={emailError}
 					onChange={e => setEmail(e.target.value)}
 				/>
@@ -73,7 +88,7 @@ export default function RegisterPage() {
 					icon={<PasswordIcon />}
 					value={password}
 					autoComplete='new-password'
-					error={passwordError}
+					error={passwordError ? true : false}
 					helperText={passwordError}
 					onChange={e => setPassword(e.target.value)}
 				/>
@@ -84,7 +99,7 @@ export default function RegisterPage() {
 					icon={<PasswordIcon />}
 					value={passwordConfirm}
 					autoComplete='new-password'
-					error={passwordError}
+					error={passwordError ? true : false}
 					helperText={passwordError}
 					onChange={e => setPasswordConfirm(e.target.value)}
 				/>
@@ -93,7 +108,7 @@ export default function RegisterPage() {
 					type='submit'
 					className='submit-btn'
 					children='Join'
-					onClick={handleSubmitClick}
+					onClick={handleSubmit}
 					disabled={loading}
 				/>
 			</StyledRegisterForm>
