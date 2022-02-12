@@ -15,7 +15,7 @@ Page.propTypes = {
 
 const StyledPageContainer = styled.div`
 	width: 90%;
-	max-width: 1200px;
+	max-width: 700px;
 	margin: auto;
 
 	background-color: #353535;
@@ -34,10 +34,12 @@ const StyledPage = styled.div`
 	width: 100%;
 	height: 100%;
 	padding: 2rem;
+	margin: 0 auto;
 
 	font-family: 'Roboto', serif;
 	color: #c3c3c3;
 
+	.icon,
 	.link {
 		color: #dab55d;
 	}
