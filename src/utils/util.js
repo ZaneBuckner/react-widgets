@@ -47,3 +47,16 @@ export const getFormattedDate = (timestamp = Date.now()) => {
 		year: date.getFullYear(),
 	};
 };
+
+/**
+ * FORMATS FIREBASE ERROR CODE INTO OPINIONATED FORM
+ * @param {str} errorCode - firebaseError.code
+ * @returns FORMATTED MESSAGE (auth/invalid-email => Invalid Email)
+ */
+export const formatErrorCode = errorCode => {
+	const words = errorCode.split('/')[1].split('-');
+	const formatMessage = words.map(word => {
+		return `${word[0].toUpperCase()}${word.substring(1)}`;
+	});
+	return formatMessage.join(' ');
+};
