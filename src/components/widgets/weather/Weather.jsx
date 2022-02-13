@@ -7,6 +7,7 @@ import WeatherForecast from './WeatherForecast';
 
 import WidgetModal from 'components/widgets/WidgetModal';
 import { About, Utility } from './WeatherModal';
+import WidgetSearch from '../WidgetSearch';
 
 import { StyledWeather } from './Weather.styled';
 import { TiWeatherPartlySunny as WeatherIcon } from 'react-icons/ti';
@@ -54,10 +55,14 @@ function Weather() {
 
 	const [isAboutModal, setIsAboutModal] = useState(false);
 	const [isUtilityModal, setIsUtilityModal] = useState(false);
+	const [isSearch, setIsSearch] = useState(false);
 
 	const handleAboutToggle = () => setIsAboutModal(isAboutModal => !isAboutModal);
 	const handleUtilityToggle = () => setIsUtilityModal(isUtilityModal => !isUtilityModal);
 	const handleModalSwitch = () => [handleAboutToggle(), handleUtilityToggle()];
+
+	const handleSearchToggle = () => setIsSearch(isSearch => !isSearch);
+	const handleSearchSubmit = e => e.key === 'Enter' && setUserInput(e.target.value);
 
 	useEffect(() => {
 		if (isNaN(userInput)) {
@@ -80,7 +85,14 @@ function Weather() {
 				icon={<WeatherIcon />}
 				placeholder='City or Zip'
 				widgetRef='weather'
-				setUserInput={setUserInput}
+				widgetSearch={
+					<WidgetSearch
+						open={isSearch}
+						onToggle={handleSearchToggle}
+						onSubmit={handleSearchSubmit}
+						placeholder='Search by city or ZIP code'
+					/>
+				}
 				onAboutToggle={handleAboutToggle}
 				onUtilityToggle={<SettingsIcon className='action-icons' onClick={handleUtilityToggle} />}
 			/>
