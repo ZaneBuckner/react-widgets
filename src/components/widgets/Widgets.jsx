@@ -1,9 +1,8 @@
-import { useContext } from 'react';
-import { WidgetContext } from 'context/WidgetContext';
+import { useWidgetContext } from 'context/WidgetContext';
 import { v4 as uuidv4 } from 'uuid';
+import styled from 'styled-components';
 
-import { Grid } from '@mui/material';
-import { makeStyles } from '@mui/styles';
+import { Container, Grid } from '@mui/material';
 import CardAnimation from 'components/shared/CardAnimation';
 
 import Counter from './counter/Counter';
@@ -13,18 +12,8 @@ import Clock from './clock/Clock';
 import TaskTracker from './task-tracker/TaskTracker';
 import BobRossPaintings from './bobross/BobRossPaintings';
 
-const useStyles = makeStyles({
-	grid: {
-		width: '100%',
-		maxWidth: '1200px',
-		margin: '2rem auto',
-		padding: '0 20px',
-	},
-});
-
-function Widgets() {
-	const { currentDisplay } = useContext(WidgetContext);
-	const classes = useStyles();
+export default function Widgets() {
+	const { currentDisplay } = useWidgetContext();
 
 	const widgetComponents = [
 		{
@@ -72,24 +61,27 @@ function Widgets() {
 	];
 
 	return (
-		<Grid container className={classes.grid} spacing={3}>
-			{widgetComponents.map(
-				widget =>
-					widget.isVisible && (
-						<Grid
-							item
-							key={widget.id}
-							className={classes.item}
-							xs={widget.columns.xs}
-							sm={widget.columns.sm}
-							md={widget.columns.md}
-						>
-							<CardAnimation children={widget.component} />
-						</Grid>
-					),
-			)}
-		</Grid>
+		<StyledMuiContainer>
+			<Grid container spacing={3}>
+				{widgetComponents.map(
+					widget =>
+						widget.isVisible && (
+							<Grid
+								item
+								key={widget.id}
+								xs={widget.columns.xs}
+								sm={widget.columns.sm}
+								md={widget.columns.md}
+							>
+								<CardAnimation children={widget.component} />
+							</Grid>
+						),
+				)}
+			</Grid>
+		</StyledMuiContainer>
 	);
 }
 
-export default Widgets;
+const StyledMuiContainer = styled(Container)`
+	margin: 2rem 0;
+`;
