@@ -3,9 +3,11 @@ import styled from 'styled-components';
 
 export default function Page({ children }) {
 	return (
-		<StyledPageContainer>
-			<StyledPage>{children}</StyledPage>
-		</StyledPageContainer>
+		<PageConatiner>
+			<PageWrapper>
+				<StyledPage>{children}</StyledPage>
+			</PageWrapper>
+		</PageConatiner>
 	);
 }
 
@@ -13,10 +15,15 @@ Page.propTypes = {
 	children: PropTypes.node.isRequired,
 };
 
-const StyledPageContainer = styled.div`
+const PageConatiner = styled.div`
 	width: 90%;
-	max-width: 700px;
 	margin: auto;
+`;
+
+const PageWrapper = styled.div`
+	width: 100%;
+	max-width: 700px;
+	margin: 2rem auto;
 
 	background-color: #353535;
 	border-radius: 10px;
