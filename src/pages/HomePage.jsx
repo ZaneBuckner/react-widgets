@@ -32,11 +32,11 @@ const StyledMessage = styled.div`
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	max-width: 80%;
 
 	p {
 		max-width: 60ch;
 		line-height: 2;
-		text-align: center;
 	}
 `;
 
