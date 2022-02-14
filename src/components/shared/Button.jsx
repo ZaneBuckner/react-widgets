@@ -64,6 +64,7 @@ const buttonVariants = {
 function Button({ buttonState, animate, disabled, text, className, children, ...props }) {
 	const StatefulButton = (
 		<AnimatedWrapper
+			key={disabled}
 			variants={buttonVariants}
 			initial={buttonState ? 'clickable' : 'clicked'}
 			animate={buttonState ? 'clicked' : 'clickable'}
@@ -78,6 +79,7 @@ function Button({ buttonState, animate, disabled, text, className, children, ...
 
 	const AnimatedButton = (
 		<AnimatedWrapper
+			key={disabled}
 			variants={buttonVariants}
 			initial={disabled ? 'clicked' : 'clickable'}
 			whileTap='whileTap'
