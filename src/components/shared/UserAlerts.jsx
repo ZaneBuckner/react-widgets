@@ -16,7 +16,9 @@ export default function UserAlert({ variant, message }) {
 	return (
 		<StyledAlert variant={variant}>
 			{variantIcon[variant]}
-			{message}
+			<div className='message-wrapper'>
+				<h3>{message}</h3>
+			</div>
 		</StyledAlert>
 	);
 }
@@ -39,9 +41,26 @@ const StyledAlert = styled.div`
 	align-items: center;
 	color: ${({ variant }) => handleVariantColor(variant)};
 
-	h3 {
-		font-size: 1rem;
-		font-weight: 400;
+	.message-wrapper {
+		display: flex;
+		align-items: center;
+		height: 2rem;
+		max-width: 60vw;
+		overflow-x: scroll;
+		overflow-y: hidden;
+		white-space: nowrap;
+
+		h3 {
+			font-size: 1rem;
+			font-weight: 400;
+		}
+
+		/* HIDE SCROLLBAR | KEEP FUNCTIONALITY */
+		scrollbar-width: none; /* Firefox */
+		-ms-overflow-style: none; /* IE Edge */
+		::-webkit-scrollbar {
+			display: none; /* Chrome Safari Opera */
+		}
 	}
 
 	svg {
