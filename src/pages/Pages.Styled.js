@@ -29,12 +29,6 @@ export const StyledLoginForm = styled.div`
 	grid-row-gap: 2rem;
 	place-items: center;
 	width: 100%;
-
-	.submit-btn {
-		width: 9rem;
-		text-transform: uppercase;
-		color: #dab55d;
-	}
 `;
 
 export const StyledRegisterForm = styled.div`
@@ -46,12 +40,16 @@ export const StyledRegisterForm = styled.div`
 	place-items: center;
 	width: 100%;
 	margin: auto 0;
+`;
 
-	.submit-btn {
-		width: 9rem;
-		text-transform: uppercase;
-		color: #dab55d;
-	}
+export const StyledUpdateForm = styled.div`
+	display: grid;
+	grid-template-columns: auto;
+	grid-template-rows: repeat(6, auto);
+	grid-row-gap: 1.5rem;
+	place-items: center;
+	width: 100%;
+	margin: auto 0;
 `;
 
 export const StyledResetPasswordForm = styled.div`
@@ -61,10 +59,4 @@ export const StyledResetPasswordForm = styled.div`
 	grid-template-rows: 1fr 2fr;
 	place-items: center;
 	width: 100%;
-
-	.submit-btn {
-		width: 9rem;
-		text-transform: uppercase;
-		color: #dab55d;
-	}
 `;
