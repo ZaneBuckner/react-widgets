@@ -13,22 +13,22 @@ export default function PageNotFound() {
 
 	const homeLink = (
 		<Link to='/'>
-			<Button animate text='Home' children={<HomeIcon />} />
+			<Button animate size='large' variant='combo' icon={<HomeIcon />} children='Home' />
 		</Link>
 	);
 
 	const profileLink = (
 		<Link to='/profile'>
-			<Button animate text='Profile' children={<ProfileIcon />} />
+			<Button animate size='large' variant='combo' icon={<ProfileIcon />} children='Profile' />
 		</Link>
 	);
 
 	return (
 		<Page>
-			<h1 className='title'>404 Page Not Found</h1>
+			<h1 className='title'>404 Page&nbsp;Not&nbsp;Found</h1>
 			<StyledWrapper className='links'>
 				<Link to='/widgets'>
-					<Button animate text='Widgets' children={<WidgetsIcon />} />
+					<Button animate size='large' variant='combo' icon={<WidgetsIcon />} children='Widgets' />
 				</Link>
 				{currentUser ? profileLink : homeLink}
 			</StyledWrapper>
@@ -41,16 +41,13 @@ const StyledWrapper = styled.div`
 	justify-content: center;
 	align-items: center;
 
-	button {
-		width: 9rem;
-	}
-
 	div {
 		margin: 0 1rem;
 	}
 
 	@media only screen and (max-width: 400px) {
 		flex-direction: column;
+
 		div {
 			margin: 1rem 0;
 		}

@@ -106,8 +106,8 @@ export default function RegisterPage() {
 				<Button
 					animate
 					type='submit'
-					className='submit-btn'
-					children='Join'
+					size='large'
+					text='Join'
 					onClick={handleSubmit}
 					disabled={loading}
 				/>

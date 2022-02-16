@@ -88,8 +88,8 @@ export default function LoginPage() {
 				<Button
 					animate
 					type='submit'
-					className='submit-btn'
-					children='Log In'
+					size='large'
+					text='Log In'
 					onClick={handleSubmit}
 					disabled={loading}
 				/>

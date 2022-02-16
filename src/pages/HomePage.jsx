@@ -16,8 +16,8 @@ export default function HomePage() {
 				</p>
 			</StyledMessage>
 			<StyledLinks className='links'>
-				<Link to='/login' children={<Button animate>Sign In</Button>} />
-				<Link to='/register' children={<Button animate>Create Account</Button>} />
+				<Link to='/login' children={<Button animate size='large' text='Sign In' />} />
+				<Link to='/register' children={<Button animate size='auto' text='Create Account' />} />
 			</StyledLinks>
 			<div className='footer'>
 				Not interested?&nbsp;
@@ -32,10 +32,9 @@ const StyledMessage = styled.div`
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	max-width: 80%;
+	max-width: 90%;
 
 	p {
-		max-width: 60ch;
 		line-height: 2;
 	}
 `;
@@ -45,11 +44,6 @@ const StyledLinks = styled.div`
 	justify-content: space-around;
 	align-items: center;
 	width: 100%;
-
-	a {
-		width: 9rem;
-		color: #dab55d;
-	}
 
 	@media only screen and (max-width: 500px) {
 		flex-direction: column;
