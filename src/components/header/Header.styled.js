@@ -18,18 +18,9 @@ export const StyledHeader = styled.header`
 `;
 
 export const StyledNav = styled.nav`
-	display: flex;
-	align-items: center;
+	display: grid;
+	grid-template-columns: repeat(3, auto);
+	grid-template-rows: auto;
+	grid-column-gap: 1rem;
 	margin-left: auto;
-
-	div {
-		margin-left: 1rem;
-
-		svg {
-			width: 100%;
-			height: 100%;
-			fill: #dab55d;
-			font-size: 1.5rem;
-		}
-	}
 `;

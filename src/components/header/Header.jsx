@@ -2,18 +2,18 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuthContext } from 'context/AuthContext';
 
 import Button from 'components/shared/Button';
+import { UserAvatar } from 'components/shared/Avatar';
 import { StyledHeaderContainer, StyledHeader, StyledNav } from './Header.styled';
 
 import Logo from 'Assets/Logo';
 import { MdDashboard as WidgetsIcon } from 'react-icons/md';
 import {
 	FaHome as HomeIcon,
-	FaUserCircle as ProfileIcon,
 	FaSignInAlt as SignInIcon,
 	FaSignOutAlt as LogOutIcon,
 } from 'react-icons/fa';
 
-function Header() {
+export default function Header() {
 	const { currentUser, onLogout } = useAuthContext();
 	const navigate = useNavigate();
 
@@ -28,26 +28,20 @@ function Header() {
 
 	const signedInLinks = (
 		<>
-			<Link to='/widgets' title='Widgets'>
-				<Button animate children={<WidgetsIcon />} />
-			</Link>
 			<Link to='/profile' title='Profile'>
-				<Button animate children={<ProfileIcon />} />
+				<Button animate size='small' icon={<UserAvatar src={currentUser?.photoURL} />} />
 			</Link>
-			<Button animate onClick={handleLogout} children={<LogOutIcon />} title='Signout' />
+			<Button animate size='small' icon={<LogOutIcon />} onClick={handleLogout} title='Log Out' />
 		</>
 	);
 
 	const signedOutLinks = (
 		<>
-			<Link to='/widgets' title='Widgets'>
-				<Button animate children={<WidgetsIcon />} />
-			</Link>
 			<Link to='/' title='Home'>
-				<Button animate children={<HomeIcon />} />
+				<Button animate size='small' icon={<HomeIcon />} />
 			</Link>
-			<Link to='/login' title='Signin'>
-				<Button animate children={<SignInIcon />} />
+			<Link to='/login' title='Sign In'>
+				<Button animate size='small' icon={<SignInIcon />} />
 			</Link>
 		</>
 	);
@@ -56,10 +50,13 @@ function Header() {
 		<StyledHeaderContainer>
 			<StyledHeader>
 				<Logo strokeWidth={3} height={50} />
-				<StyledNav>{currentUser ? signedInLinks : signedOutLinks}</StyledNav>
+				<StyledNav>
+					<Link to='/widgets' title='Widgets'>
+						<Button animate size='small' icon={<WidgetsIcon />} />
+					</Link>
+					{currentUser ? signedInLinks : signedOutLinks}
+				</StyledNav>
 			</StyledHeader>
 		</StyledHeaderContainer>
 	);
 }
-
-export default Header;
