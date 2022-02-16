@@ -15,12 +15,12 @@ const StyledButton = styled.button`
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	width: 100%;
-	height: 100%;
 	padding: 10px;
+	transition: 250ms ease-in-out;
 
-	color: inherit;
-	white-space: nowrap;
+	&:hover {
+		filter: brightness(1.2) saturate(1.1);
+	}
 
 	&:disabled {
 		opacity: 0.4;
@@ -29,24 +29,61 @@ const StyledButton = styled.button`
 	}
 
 	svg {
-		color: #c3c3c3;
+		width: auto;
+		height: 100%;
+		color: #dab55d;
 	}
 
-	/* STYLED PROP FOR BUTTONS THAT INCORPORATE ICONS AND TEXT */
+	${({ size }) =>
+		size &&
+		buttonSizes[size] &&
+		`
+    width: ${buttonSizes[size].width};
+    height: 3rem;
+  `}
+
 	${({ text }) =>
 		text &&
 		`
     font-size: 1rem;
     text-transform: uppercase;
+    color: #DAB55D;
+    white-space: nowrap;
+  `}
+
+  ${({ variant }) =>
+		variant === 'combo' &&
+		`
+    font-family: 'Roboto', serif;
+    font-size: 1rem;
+    font-weight: 300;
+    color: #C3C3C3;
+    white-space: nowrap;
 
     svg {
       margin-right: 0.5rem;
-      color: #DAB55D;
+      height: 80%;
+
     }
   `}
 `;
 
-const buttonVariants = {
+const buttonSizes = {
+	auto: {
+		width: 'auto',
+	},
+	small: {
+		width: '3rem',
+	},
+	medium: {
+		width: '6rem',
+	},
+	large: {
+		width: '9rem',
+	},
+};
+
+const buttonStates = {
 	clickable: {
 		boxShadow: '2px 2px 3px #1E1E1E',
 	},
@@ -61,18 +98,36 @@ const buttonVariants = {
 	},
 };
 
-function Button({ buttonState, animate, disabled, text, className, children, ...props }) {
+export default function Button({
+	buttonState,
+	animate,
+	disabled,
+	variant,
+	icon,
+	text,
+	className,
+	children,
+	...props
+}) {
 	const StatefulButton = (
 		<AnimatedWrapper
 			key={disabled}
-			variants={buttonVariants}
+			variants={buttonStates}
 			initial={buttonState ? 'clickable' : 'clicked'}
 			animate={buttonState ? 'clicked' : 'clickable'}
 			transition='transition'
 		>
-			<StyledButton text={text} disabled={disabled} className={className} {...props}>
-				{children}
+			<StyledButton
+				variant={variant}
+				icon={icon}
+				text={text}
+				disabled={disabled}
+				className={className}
+				{...props}
+			>
+				{icon}
 				{text}
+				{children}
 			</StyledButton>
 		</AnimatedWrapper>
 	);
@@ -80,22 +135,31 @@ function Button({ buttonState, animate, disabled, text, className, children, ...
 	const AnimatedButton = (
 		<AnimatedWrapper
 			key={disabled}
-			variants={buttonVariants}
+			variants={buttonStates}
 			initial={disabled ? 'clicked' : 'clickable'}
 			whileTap='whileTap'
 			transition='transition'
 		>
-			<StyledButton text={text} disabled={disabled} className={className} {...props}>
-				{children}
+			<StyledButton
+				variant={variant}
+				icon={icon}
+				text={text}
+				disabled={disabled}
+				className={className}
+				{...props}
+			>
+				{icon}
 				{text}
+				{children}
 			</StyledButton>
 		</AnimatedWrapper>
 	);
 
 	const StaticButton = (
-		<StyledButton text={text} className={className} {...props}>
-			{children}
+		<StyledButton variant={variant} icon={icon} text={text} className={className} {...props}>
+			{icon}
 			{text}
+			{children}
 		</StyledButton>
 	);
 
@@ -103,5 +167,3 @@ function Button({ buttonState, animate, disabled, text, className, children, ...
 	else if (animate) return AnimatedButton;
 	else return StaticButton;
 }
-
-export default Button;
