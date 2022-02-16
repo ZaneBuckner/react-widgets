@@ -16,7 +16,7 @@ export function UserAvatar({ size, variant, src }) {
 
 export function UserAvatarBrowse({ onImageSelect }) {
 	return (
-		<Button animate size='auto' variant='combo' icon={<ImageFileIcon />}>
+		<Button animate size='large' variant='combo' icon={<ImageFileIcon />}>
 			<label htmlFor='input'>
 				<input
 					id='input'
@@ -35,7 +35,7 @@ export function UserAvatarUpload({ onImageUpload, loading }) {
 	return (
 		<Button
 			animate
-			size='auto'
+			size='large'
 			variant='combo'
 			icon={<UploadIcon />}
 			children='Save Avatar'
