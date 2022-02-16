@@ -42,13 +42,6 @@ export const StyledWrapper = styled.div`
 		grid-template-columns: repeat(3, 1fr);
 		grid-template-rows: 1fr;
 		grid-column-gap: 1rem;
-
-		svg {
-			width: 100%;
-			height: 100%;
-			fill: #dab55d;
-			font-size: 1.5rem;
-		}
 	}
 
 	@media only screen and (max-width: 390px) {

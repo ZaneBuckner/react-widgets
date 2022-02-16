@@ -12,7 +12,7 @@ function Footer() {
 			{
 				title: 'Website',
 				href: 'https://zaniac.io/',
-				icon: <LogoIcon height='25px' />,
+				icon: <LogoIcon fill={'#dab55d'} />,
 			},
 			{
 				title: 'Github Profile',
@@ -33,7 +33,7 @@ function Footer() {
 				href={icon.href}
 				target='_blank'
 				rel='noopener noreferrer'
-				children={<Button animate children={icon.icon} />}
+				children={<Button animate size='small' icon={icon.icon} />}
 				className='button'
 			/>
 		));
