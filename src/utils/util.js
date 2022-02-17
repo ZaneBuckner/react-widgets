@@ -1,6 +1,10 @@
-/** FORMATS JS DATE OBJECT
- * @param {num} timestamp - Epoch Time (milliseconds)
- * @returns Formatted Time Object
+/**
+ * Formats timestamp into readable time components.
+ * @param {number} timestamp Time in milliseconds.
+ * @returns {object} Returns formatted time object.
+ * @example
+ * const timestamp = 946706400000;
+ * getFormattedTime(timestamp) => { hours: 12, minutes: '00', meridian: 'AM' }
  */
 export const getFormattedTime = (timestamp = Date.now()) => {
 	const date = new Date(timestamp);
@@ -16,9 +20,13 @@ export const getFormattedTime = (timestamp = Date.now()) => {
 	};
 };
 
-/** FORMATS JS DATE OBJECT
- * @param {num} timestamp - Epoch Time (milliseconds)
- * @returns Formatted Date Object
+/**
+ * Formats a timestamp into a readable date components.
+ * @param {number} timestamp Time in milliseconds.
+ * @returns {object} Returns formatted date object.
+ * @example
+ * const timestamp = 946706400000;
+ * getFormattedDate(timestamp) => { day: 1, week: 'Sat', month: 'Jan', year: 2000 }
  */
 export const getFormattedDate = (timestamp = Date.now()) => {
 	const monthRef = [
@@ -46,9 +54,13 @@ export const getFormattedDate = (timestamp = Date.now()) => {
 	};
 };
 
-/** FORMATS FIREBASE ERROR CODE INTO OPINIONATED FORM
- * @param {str} errorCode - firebaseError.code
- * @returns FORMATTED MESSAGE (auth/invalid-email => Invalid Email)
+/**
+ * Formats firebase error code into a more readable format for users.
+ * @param {string} Firebase Firebase error code.
+ * @returns {string} Returns formatted error code.
+ * @example
+ * const errorCode = 'auth/invalid-email';
+ * formatErrorCode(errorCode) => 'Invalid Email'
  */
 export const formatErrorCode = errorCode => {
 	const words = errorCode.split('/')[1].split('-');
