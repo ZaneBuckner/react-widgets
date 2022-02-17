@@ -1,5 +1,4 @@
-/**
- * FORMATS JS DATE OBJECT
+/** FORMATS JS DATE OBJECT
  * @param {num} timestamp - Epoch Time (milliseconds)
  * @returns Formatted Time Object
  */
@@ -17,8 +16,7 @@ export const getFormattedTime = (timestamp = Date.now()) => {
 	};
 };
 
-/**
- * FORMATS JS DATE OBJECT
+/** FORMATS JS DATE OBJECT
  * @param {num} timestamp - Epoch Time (milliseconds)
  * @returns Formatted Date Object
  */
@@ -48,8 +46,7 @@ export const getFormattedDate = (timestamp = Date.now()) => {
 	};
 };
 
-/**
- * FORMATS FIREBASE ERROR CODE INTO OPINIONATED FORM
+/** FORMATS FIREBASE ERROR CODE INTO OPINIONATED FORM
  * @param {str} errorCode - firebaseError.code
  * @returns FORMATTED MESSAGE (auth/invalid-email => Invalid Email)
  */
