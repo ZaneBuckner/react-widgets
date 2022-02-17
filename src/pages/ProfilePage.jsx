@@ -1,27 +1,39 @@
 import { useAuthContext } from 'context/AuthContext';
 import { Link } from 'react-router-dom';
+import { getFormattedDate } from 'utils/util';
 import styled from 'styled-components';
 
 import Page from './Page';
 import Button from 'components/shared/Button';
+import { UserAvatar } from 'components/shared/Avatar';
+
+import { IoFlag as FlagIcon } from 'react-icons/io5';
 
 export default function ProfilePage() {
 	const { currentUser, onLogout } = useAuthContext();
 
-	const [day, month, year] = currentUser.metadata.creationTime.split(' ').slice(1, 4);
+	const { day, month, year } = getFormattedDate(parseInt(currentUser.metadata.createdAt));
 
 	return (
 		<Page>
-			<h1 className='title'>Profile Page</h1>
+			<StyledProfileHeader>
+				<UserAvatar size='medium' src={currentUser.photoURL} />
+				<h1 className='title'>{currentUser.displayName}</h1>
+				<div className='account-age-wrapper'>
+					<FlagIcon className='icon' />
+					<p>{`${month} ${day}, ${year}`}</p>
+				</div>
+			</StyledProfileHeader>
+
 			<StyledBody className='body'>
-				<h2>{currentUser.email}</h2>
-				<h2>{`Member Since: ${month} ${day}, ${year}`}</h2>
+				<p>Email: {currentUser.email}</p>
+				<p>UniqueID: {currentUser.uid}</p>
 			</StyledBody>
 			<div className='links'>
 				<Link
-					className='button-link'
+					className='link'
 					to='/profile-update'
-					children={<Button animate children='UPDATE' />}
+					children={<Button animate size='large' text='Update' />}
 				/>
 			</div>
 			<div className='footer'>
@@ -30,6 +42,25 @@ export default function ProfilePage() {
 		</Page>
 	);
 }
+
+const StyledProfileHeader = styled.div`
+	grid-area: 1 / 1 / 2 / 2;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+
+	.icon {
+		margin-right: 0.5rem;
+	}
+
+	.account-age-wrapper {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+`;
 
 const StyledBody = styled.div`
 	grid-area: 2 / 1 / 4 / 2;
