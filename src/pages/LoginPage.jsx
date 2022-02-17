@@ -31,11 +31,10 @@ export default function LoginPage() {
 
 	const handleSubmit = async e => {
 		e.preventDefault();
-
 		resetErrors();
 
-		if (!email) return setEmailError('Please enter an email address.');
-		if (!password) return setPasswordError('Please enter a password.');
+		if (!email) setEmailError('Please enter an email address.');
+		if (!password) setPasswordError('Please enter a password.');
 
 		if (!emailError && !passwordError) {
 			try {
@@ -43,7 +42,6 @@ export default function LoginPage() {
 				await onLogin(email, password);
 				navigate('/profile');
 			} catch (err) {
-				console.log(err);
 				setError(`Error: ${formatErrorCode(err.code)}`);
 				resetValues();
 				setLoading(false);
