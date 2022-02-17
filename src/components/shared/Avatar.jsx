@@ -21,7 +21,7 @@ export function UserAvatarBrowse({ onImageSelect }) {
 				<input
 					id='input'
 					type='file'
-					accept='image/*'
+					accept='image/png, image/jpeg, image/svg+xml'
 					style={{ display: 'none' }}
 					onChange={onImageSelect}
 				/>
