@@ -4,7 +4,6 @@ import Button from './Button';
 import Avatar from '@mui/material/Avatar';
 
 import { FaUserCircle as DefaultIcon, FaImages as ImageFileIcon } from 'react-icons/fa';
-import { IoMdCloudDone as UploadIcon } from 'react-icons/io';
 
 export function UserAvatar({ size, variant, src }) {
 	return (
@@ -28,20 +27,6 @@ export function UserAvatarBrowse({ onImageSelect }) {
 				<span style={{ cursor: 'pointer' }}>Browse...</span>
 			</label>
 		</Button>
-	);
-}
-
-export function UserAvatarUpload({ onImageUpload, loading }) {
-	return (
-		<Button
-			animate
-			size='large'
-			variant='combo'
-			icon={<UploadIcon />}
-			children='Save Avatar'
-			disabled={loading}
-			onClick={onImageUpload}
-		/>
 	);
 }
 
