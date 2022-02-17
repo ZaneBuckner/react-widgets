@@ -36,13 +36,13 @@ export default function RegisterPage() {
 		resetErrors();
 
 		if (!email) {
-			return setEmailError('Please enter an email address.');
+			setEmailError('Please enter an email address.');
 		}
 
 		if (!password) {
-			return setPasswordError('Please enter a password.');
+			setPasswordError('Please enter a password.');
 		} else if (password.length < 6) {
-			return setPasswordError('Passwords must be at least 6 characters.');
+			setPasswordError('Passwords must be at least 6 characters.');
 		} else if (password !== passwordConfirm) {
 			return setPasswordError('Passwords do not match.');
 		}
