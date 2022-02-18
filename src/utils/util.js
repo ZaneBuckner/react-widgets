@@ -29,20 +29,7 @@ export const getFormattedTime = (timestamp = Date.now()) => {
  * getFormattedDate(timestamp) => { day: 1, week: 'Sat', month: 'Jan', year: 2000 }
  */
 export const getFormattedDate = (timestamp = Date.now()) => {
-	const monthRef = [
-		'Jan',
-		'Feb',
-		'Mar',
-		'Apr',
-		'May',
-		'Jun',
-		'Jul',
-		'Aug',
-		'Sep',
-		'Oct',
-		'Nov',
-		'Dec',
-	];
+	const monthRef = [ 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', ]; // prettier-ignore
 	const weekdayRef = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 	const date = new Date(timestamp);
 
@@ -68,4 +55,45 @@ export const formatErrorCode = errorCode => {
 		return `${word[0].toUpperCase()}${word.substring(1)}`;
 	});
 	return formatMessage.join(' ');
+};
+
+/**
+ * Reverse geocodes user coordinates (using [Geoapify](https://apidocs.geoapify.com/docs/geocoding/reverse-geocoding/#about)) retrieved from HTML5 Geolocation API.
+ * @param {object} setUserLocation Method to set user location state.
+ * @returns {Promise<object>} Returns location data object.
+ * @example
+ * const userLocation = await getUserLocation();
+ * userLocation => { zip: 70401, state: 'LA', city: 'Hammond' }
+ */
+export const fetchUserLocation = setUserLocation => {
+	if (!navigator.geolocation) return console.log('Geolocation is unsupported.');
+
+	// USERS GEOLOCATION (HTML5 GEOLOCATION API)
+	navigator.geolocation.getCurrentPosition(
+		location => {
+			const base = 'https://api.geoapify.com/v1/geocode/reverse';
+			const query = `?lat=${location.coords.latitude}&lon=${location.coords.longitude}&format=json`;
+			const key = `&apiKey=${process.env.REACT_APP_GEOAPIFY_API_KEY}`;
+			fetchUserAddress(`${base}${query}${key}`);
+		},
+		error => {
+			console.log('Unable to retrieve coordinates.', error);
+		},
+	);
+
+	// FETCHED ADDRESS (GEOAPIFY)
+	const fetchUserAddress = async fetchURL => {
+		try {
+			const response = await fetch(fetchURL);
+			const data = await response.json();
+
+			setUserLocation({
+				city: data.results[0].city,
+				state: data.results[0].state_code,
+				zip: data.results[0].postcode,
+			});
+		} catch (error) {
+			console.log('Unable fetch location address.', error);
+		}
+	};
 };
