@@ -71,6 +71,7 @@ const StyledPage = styled.div`
 
 		display: flex;
 		justify-content: center;
+		margin-top: 4rem;
 	}
 
 	@media only screen and (max-width: 450px) {
