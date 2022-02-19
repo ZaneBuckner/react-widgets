@@ -8,7 +8,6 @@ import Page from './Page';
 import Button from 'components/shared/Button';
 import { UserAvatar } from 'components/shared/Avatar';
 
-// import { MdEmail as EmailIcon } from 'react-icons/md';
 import { MdOutlineEmail as EmailIcon } from 'react-icons/md';
 import { IoFlag as FlagIcon } from 'react-icons/io5';
 import { TiLocationArrow as LocationIcon } from 'react-icons/ti';
@@ -97,6 +96,8 @@ const StyledBody = styled.div`
 const StyledProfileItem = styled.div`
 	display: flex;
 	align-items: center;
+	justify-content: center;
+	width: 100%;
 	height: 3rem;
 
 	svg {
@@ -109,15 +110,32 @@ const StyledProfileItem = styled.div`
 
 	div {
 		display: flex;
-		align-items: center;
+		align-items: flex-start;
 		width: 24rem;
+		max-width: 100%;
 		height: 100%;
 		padding: 0.5rem 1rem;
 
 		font-size: 1.2rem;
+		font-size: auto;
 		font-weight: 400;
 
 		background-color: #262626;
 		border-radius: 25px;
+
+		overflow-x: scroll;
+		overflow-y: hidden;
+		white-space: nowrap;
+
+		/* HIDE SCROLLBAR | KEEP FUNCTIONALITY */
+		scrollbar-width: none; /* Firefox */
+		-ms-overflow-style: none; /* IE Edge */
+		::-webkit-scrollbar {
+			display: none; /* Chrome Safari Opera */
+		}
+
+		@media only screen and (max-width: 550px) {
+			width: 65vw;
+		}
 	}
 `;
