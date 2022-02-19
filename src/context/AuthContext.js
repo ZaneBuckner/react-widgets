@@ -1,7 +1,11 @@
 import { useState, useEffect, useContext, createContext } from 'react';
-import { auth } from '../firebase'; // FIREBASE AUTH INSTANCE
+import { auth, db } from '../firebase'; // FIREBASE AUTH & CLOUD FIRESTORE INSTANCE
+import { createUserDocument, updateUserDocument } from './FirebaseFirestore';
+import { fetchUserLocation } from 'utils/util';
+import { doc, onSnapshot } from 'firebase/firestore';
 import {
 	signOut,
+	deleteUser,
 	updateEmail,
 	updateProfile,
 	updatePassword,
@@ -19,20 +23,23 @@ export const useAuthContext = () => useContext(AuthContext);
 
 export const AuthContextProvider = ({ children }) => {
 	const [currentUser, setCurrentUser] = useState(null);
+	const [currentUserData, setCurrentUserData] = useState(null);
+	const [userLocation, setUserLocation] = useState(null);
 	const [loading, setLoading] = useState(true);
-
-	useEffect(() => {
-		!loading && currentUser && console.log(currentUser);
-	}, [currentUser, loading]);
 
 	// FIREBASE AUTHENTICATION METHODS
 	const handleLogin = (email, password) => signInWithEmailAndPassword(auth, email, password);
 	const handleLogout = () => signOut(auth);
-	const handleRegister = (email, password) => createUserWithEmailAndPassword(auth, email, password);
+	const handleRegister = async (email, password) => {
+		const newUser = await createUserWithEmailAndPassword(auth, email, password);
+		createUserDocument(newUser.user);
+		fetchUserLocation(setUserLocation);
+	};
 	const handleEmailUpdate = newEmail => updateEmail(currentUser, newEmail);
 	const handlePasswordReset = email => sendPasswordResetEmail(auth, email);
 	const handlePasswordUpdate = newPassword => updatePassword(currentUser, newPassword);
 	const handleUsernameUpdate = newName => updateProfile(currentUser, { displayName: newName });
+	const handleAccountDelete = () => deleteUser(currentUser);
 
 	// FIREBASE AUTH OBSERVER => WHEN USER STATE CHANGES (LOGIN & LOGOUT)
 	useEffect(() => {
@@ -43,10 +50,24 @@ export const AuthContextProvider = ({ children }) => {
 		return unsubscribe;
 	}, []);
 
+	// FIREBASE FIRESTORE DB OBSERVER => WHEN USER DATA CHANGES
+	useEffect(() => {
+		if (!currentUser) return;
+		const userDocumentRef = doc(db, `users/${currentUser.uid}`);
+		const unsubscribe = onSnapshot(userDocumentRef, doc => setCurrentUserData(doc.data()));
+		return unsubscribe;
+	}, [currentUser]);
+
+	// UPDATE USER LOCATION DATA ON SIGNUP & ON CHANGE => RUNS WHEN DATA IS FETCHED
+	useEffect(() => {
+		userLocation && updateUserDocument(currentUser, { location: userLocation });
+	}, [userLocation, currentUser]);
+
 	return (
 		<AuthContext.Provider
 			value={{
 				currentUser,
+				userData: currentUserData,
 				onLogin: handleLogin,
 				onLogout: handleLogout,
 				onRegister: handleRegister,
@@ -54,6 +75,7 @@ export const AuthContextProvider = ({ children }) => {
 				onPasswordReset: handlePasswordReset,
 				onPasswordUpdate: handlePasswordUpdate,
 				onUsernameUpdate: handleUsernameUpdate,
+				onAccountDelete: handleAccountDelete,
 			}}
 		>
 			{!loading && children}
