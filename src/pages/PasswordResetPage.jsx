@@ -63,8 +63,8 @@ export default function PasswordResetPage() {
 				<Button
 					animate
 					type='submit'
-					className='submit-btn'
-					children='Reset'
+					size='large'
+					text='Reset'
 					onClick={handleSubmitClick}
 					disabled={loading}
 				/>
