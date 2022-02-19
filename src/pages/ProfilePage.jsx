@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { useAuthContext } from 'context/AuthContext';
 import { Link } from 'react-router-dom';
 import { getFormattedDate } from 'utils/util';
@@ -7,12 +8,30 @@ import Page from './Page';
 import Button from 'components/shared/Button';
 import { UserAvatar } from 'components/shared/Avatar';
 
+// import { MdEmail as EmailIcon } from 'react-icons/md';
+import { MdOutlineEmail as EmailIcon } from 'react-icons/md';
 import { IoFlag as FlagIcon } from 'react-icons/io5';
+import { TiLocationArrow as LocationIcon } from 'react-icons/ti';
+import { BiUserCircle as UserIcon } from 'react-icons/bi';
 
 export default function ProfilePage() {
-	const { currentUser, onLogout } = useAuthContext();
+	const { userData, currentUser, onLogout } = useAuthContext();
+	const [userLocation, setUserLocation] = useState('');
 
 	const { day, month, year } = getFormattedDate(parseInt(currentUser.metadata.createdAt));
+
+	useEffect(() => {
+		userData?.location && setUserLocation(`${userData.location.city}, ${userData.location.state}`);
+	}, [userData]);
+
+	const ProfileItem = ({ icon, value, ...props }) => {
+		return (
+			<StyledProfileItem {...props}>
+				{icon}
+				<div>{value}</div>
+			</StyledProfileItem>
+		);
+	};
 
 	return (
 		<Page>
@@ -26,8 +45,9 @@ export default function ProfilePage() {
 			</StyledProfileHeader>
 
 			<StyledBody className='body'>
-				<p>Email: {currentUser.email}</p>
-				<p>UniqueID: {currentUser.uid}</p>
+				<ProfileItem icon={<EmailIcon />} value={currentUser.email} />
+				<ProfileItem icon={<LocationIcon />} value={userLocation || 'Update Location'} />
+				<ProfileItem icon={<UserIcon />} value={currentUser.uid} />
 			</StyledBody>
 			<div className='links'>
 				<Link
@@ -64,5 +84,40 @@ const StyledProfileHeader = styled.div`
 
 const StyledBody = styled.div`
 	grid-area: 2 / 1 / 4 / 2;
+
+	display: grid;
+	grid-template-rows: repeat(3, auto);
+	grid-template-columns: auto;
+	grid-row-gap: 1rem;
+	place-items: center;
+	margin: 1rem 0;
 	width: 100%;
+`;
+
+const StyledProfileItem = styled.div`
+	display: flex;
+	align-items: center;
+	height: 3rem;
+
+	svg {
+		width: 2rem;
+		height: auto;
+		margin-right: 1rem;
+
+		opacity: 60%;
+	}
+
+	div {
+		display: flex;
+		align-items: center;
+		width: 24rem;
+		height: 100%;
+		padding: 0.5rem 1rem;
+
+		font-size: 1.2rem;
+		font-weight: 400;
+
+		background-color: #262626;
+		border-radius: 25px;
+	}
 `;
