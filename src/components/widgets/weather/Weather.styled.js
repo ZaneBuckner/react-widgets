@@ -1,22 +1,5 @@
 import styled from 'styled-components';
 
-const flexCenter = `
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-export const StyledWeatherModal = styled.div`
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-
-	h1 {
-		font-size: 1rem;
-	}
-`;
-
 export const StyledWeather = styled.div`
 	display: flex;
 	flex-direction: column;
@@ -109,12 +92,16 @@ export const StyledWeatherCurrent = styled.div`
 		color: #c3c3c3;
 
 		.condition-wrapper {
-			${flexCenter};
+			display: flex;
+			justify-content: center;
+			align-items: center;
 			flex-direction: column;
 			width: 30%;
 
 			.details {
-				${flexCenter};
+				display: flex;
+				justify-content: center;
+				align-items: center;
 				flex-direction: column;
 				width: 100%;
 				background-color: rgba(255, 255, 255, 0.1);
