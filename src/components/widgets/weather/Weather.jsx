@@ -51,7 +51,7 @@ function Weather() {
 	const { userData } = useAuthContext();
 	const [currentURL, setCurrentURL] = useState('');
 	const [forecastURL, setForecastURL] = useState('');
-	const [userInput, setUserInput] = useState(userData?.location?.zip || 70401);
+	const [userInput, setUserInput] = useState(userData.location?.zip || 70401);
 	const [fetchedTime, setFetchedTime] = useState('');
 	const [units, setUnits] = useState('imperial');
 
