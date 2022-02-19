@@ -224,7 +224,7 @@ export default function UpdateProfilePage() {
 			</StyledUpdateForm>
 			<Button animate size='large' text='Delete Account' onClick={handleAccountDelete} />
 			<div className='footer'>
-				<Link className='link' to='/profile' children='Cancel' />
+				<Link className='link' to='/profile' children='CANCEL' />
 			</div>
 		</Page>
 	);
