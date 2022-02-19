@@ -56,9 +56,10 @@ function BobRossPaintings() {
 						widgetIcon={<BobRossIcon className='widget-icon' height={'1.5rem'} fill={'#DAB55D'} />}
 						refreshIcon={
 							<RefreshIcon
+								removeBG
 								width='1rem'
 								height='1rem'
-								color='#000'
+								color='#DAB55D'
 								style={{ cursor: 'pointer' }}
 								onClick={fetchPainting}
 							/>

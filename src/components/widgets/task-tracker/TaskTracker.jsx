@@ -86,9 +86,10 @@ function TaskTracker() {
 						widgetIcon={<TaskIcon className='widget-icon' />}
 						addTaskIcon={
 							<AddTaskIcon
+								removeBG
 								width='1rem'
 								height='1rem'
-								fill='#000'
+								color='#DAB55D'
 								style={{ cursor: 'pointer' }}
 								onClick={handleModalSwitch}
 							/>

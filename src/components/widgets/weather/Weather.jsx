@@ -120,9 +120,10 @@ function Weather() {
 						widgetIcon={<WeatherIcon className='widget-icon' />}
 						settingsIcon={
 							<SettingsIcon
+								removeBG
 								width='1rem'
 								height='1rem'
-								color='#000'
+								color='#DAB55D'
 								style={{ cursor: 'pointer' }}
 								onClick={handleModalSwitch}
 							/>
@@ -138,7 +139,7 @@ function Weather() {
 				element={
 					<Utility
 						widgetIcon={<WeatherIcon className='widget-icon' />}
-						settingsIcon={<SettingsIcon className='inline-icon' />}
+						settingsIcon={<SettingsIcon removeBG className='inline-icon' />}
 						units={units}
 						setUnits={setUnits}
 					/>
