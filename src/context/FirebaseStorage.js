@@ -12,7 +12,7 @@ import { updateProfile } from 'firebase/auth';
  * @param {boolean} setLoading UpdateProfilePage component loading state.
  * @param {string} setError UpdateProfilePage component error state.
  */
-export async function storeUserImage(currentUser, file, setLoading, setError) {
+export async function storeUserImage(currentUser, file, setLoading, setError, setSuccess) {
 	const userStorageRef = ref(storage, `${currentUser.uid}`);
 
 	try {
@@ -20,6 +20,7 @@ export async function storeUserImage(currentUser, file, setLoading, setError) {
 		await uploadBytes(userStorageRef, file);
 		const photoURL = await getDownloadURL(userStorageRef);
 		updateProfile(currentUser, { photoURL });
+		setSuccess('Profile image updated.');
 	} catch (err) {
 		setError(err);
 	} finally {
