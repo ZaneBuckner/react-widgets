@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import styled from 'styled-components';
+import { useAuthContext } from 'context/AuthContext';
 
 import Card from 'components/shared/Card';
 import CardHeader from 'components/shared/CardHeader';
@@ -13,8 +13,6 @@ import WidgetSearch from '../WidgetSearch';
 import { StyledWeather } from './Weather.styled';
 import { TiWeatherPartlySunny as WeatherIcon } from 'react-icons/ti';
 import { SettingsIcon } from 'Assets/WidgetIcons';
-import { InfoIcon } from 'Assets/WidgetIcons';
-import { SearchIcon } from 'Assets/WidgetIcons';
 
 const api = {
 	key: `&appid=${process.env.REACT_APP_WIDGET_WEATHER_API_KEY}`,
@@ -50,9 +48,10 @@ const unitValues = {
 };
 
 function Weather() {
+	const { userData } = useAuthContext();
 	const [currentURL, setCurrentURL] = useState('');
 	const [forecastURL, setForecastURL] = useState('');
-	const [userInput, setUserInput] = useState(70401);
+	const [userInput, setUserInput] = useState(userData?.location?.zip || 70401);
 	const [fetchedTime, setFetchedTime] = useState('');
 	const [units, setUnits] = useState('imperial');
 

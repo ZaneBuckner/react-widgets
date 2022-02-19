@@ -1,5 +1,6 @@
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import useAxios from 'hooks/useAxios';
+import { useAuthContext } from 'context/AuthContext';
 import { getFormattedTime } from 'utils/util';
 
 import { StyledWeatherCurrent } from './Weather.styled';
@@ -14,10 +15,18 @@ import {
 
 function WeatherCurrent({ url, userInput, units, unitValues, setFetchedTime }) {
 	const { data, loading, error } = useAxios(url);
+	const [userLocaton, setUserLocation] = useState();
+	const { userData } = useAuthContext();
 
 	useEffect(() => {
 		data && setFetchedTime(getFormattedTime(data.dt * 1000));
 	}, [data, setFetchedTime]);
+
+	useEffect(() => {
+		if (userData) {
+			setUserLocation(`${userData.location.city}, ${userData.location.state}`);
+		}
+	}, [userData]);
 
 	const getDayLength = (start, end) => {
 		const sunrise = getFormattedTime(start);
@@ -89,7 +98,7 @@ function WeatherCurrent({ url, userInput, units, unitValues, setFetchedTime }) {
 	if (error) return preRender.error;
 	return (
 		<StyledWeatherCurrent>
-			<h1 className='city'>{data.name}</h1>
+			<h1 className='city'>{userLocaton}</h1>
 			<div className='current-conditions'>{getCurrentConditions()}</div>
 			<div className='day-length'>
 				{getDayLength(data.sys.sunrise * 1000, data.sys.sunset * 1000)}
