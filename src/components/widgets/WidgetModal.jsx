@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import { AiOutlineClose as CloseIcon } from 'react-icons/ai';
+import { CloseIcon } from 'Assets/WidgetIcons';
 
 export default function WidgetModal({ open, onClose, element }) {
 	return (
@@ -109,8 +109,9 @@ const StyledCloseIcon = styled(CloseIcon)`
 	top: 0;
 	right: 0;
 	margin: 1rem;
+	width: 1.3rem;
+	height: 1.3rem;
+	fill: #000;
 
-	font-size: 1.5rem;
-	fill: #dab55d;
 	cursor: pointer;
 `;

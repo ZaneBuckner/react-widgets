@@ -13,6 +13,7 @@ import ChallengeDetails from './ChallengeDetails';
 
 import { StyledCodewars, StyledChallengeDetails } from './Codewars.styled';
 import CodewarsIcon from 'Assets/CodewarsIcon';
+import { SearchIcon } from 'Assets/WidgetIcons';
 
 function Codewars() {
 	const [userInput, setUserInput] = useState('Zaniac');

@@ -120,7 +120,7 @@ export function AddTaskIcon({ width, height, color, ...props }) {
 	);
 }
 
-export function SettingsIcon({ width, height, color, ...props }) {
+export function SettingsIcon({ width, height, color, transparent, ...props }) {
 	return (
 		<svg
 			width={width}

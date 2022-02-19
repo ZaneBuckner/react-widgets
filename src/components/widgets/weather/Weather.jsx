@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import styled from 'styled-components';
 
 import Card from 'components/shared/Card';
 import CardHeader from 'components/shared/CardHeader';
@@ -11,7 +12,9 @@ import WidgetSearch from '../WidgetSearch';
 
 import { StyledWeather } from './Weather.styled';
 import { TiWeatherPartlySunny as WeatherIcon } from 'react-icons/ti';
-import { IoMdSettings as SettingsIcon } from 'react-icons/io';
+import { SettingsIcon } from 'Assets/WidgetIcons';
+import { InfoIcon } from 'Assets/WidgetIcons';
+import { SearchIcon } from 'Assets/WidgetIcons';
 
 const api = {
 	key: `&appid=${process.env.REACT_APP_WIDGET_WEATHER_API_KEY}`,
@@ -94,7 +97,7 @@ function Weather() {
 					/>
 				}
 				onAboutToggle={handleAboutToggle}
-				onUtilityToggle={<SettingsIcon className='action-icons' onClick={handleUtilityToggle} />}
+				onUtilityToggle={<SettingsIcon onClick={handleUtilityToggle} />}
 			/>
 
 			<StyledWeather>
@@ -116,7 +119,15 @@ function Weather() {
 				element={
 					<About
 						widgetIcon={<WeatherIcon className='widget-icon' />}
-						settingsIcon={<SettingsIcon className='icon' onClick={handleModalSwitch} />}
+						settingsIcon={
+							<SettingsIcon
+								width='1rem'
+								height='1rem'
+								color='#000'
+								style={{ cursor: 'pointer' }}
+								onClick={handleModalSwitch}
+							/>
+						}
 						fetchedTime={fetchedTime}
 					/>
 				}
@@ -128,7 +139,7 @@ function Weather() {
 				element={
 					<Utility
 						widgetIcon={<WeatherIcon className='widget-icon' />}
-						settingsIcon={<SettingsIcon className='icon' />}
+						settingsIcon={<SettingsIcon className='inline-icon' />}
 						units={units}
 						setUnits={setUnits}
 					/>

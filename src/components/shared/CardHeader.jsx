@@ -1,7 +1,7 @@
 import { useWidgetContext } from 'context/WidgetContext';
 import styled from 'styled-components';
 
-import { AiFillInfoCircle as InfoIcon, AiFillCloseCircle as CancelIcon } from 'react-icons/ai';
+import { CloseIcon, InfoIcon } from 'Assets/WidgetIcons';
 
 export default function CardHeader({
 	name,
@@ -20,18 +20,8 @@ export default function CardHeader({
 			<StyledIcons>
 				{onUtilityToggle && onUtilityToggle}
 				{widgetSearch && widgetSearch}
-				{onAboutToggle && (
-					<InfoIcon
-						className='action-icons'
-						aria-label='Open Widget Modal'
-						onClick={onAboutToggle}
-					/>
-				)}
-				<CancelIcon
-					className='action-icons'
-					aria-label='Close Widget'
-					onClick={() => toggleDisplay(widgetRef)}
-				/>
+				{onAboutToggle && <InfoIcon aria-label='Open Widget Modal' onClick={onAboutToggle} />}
+				<CloseIcon aria-label='Close Widget' onClick={() => toggleDisplay(widgetRef)} />
 			</StyledIcons>
 		</StyledCardHeader>
 	);
@@ -53,6 +43,18 @@ const StyledCardHeader = styled.div`
 		fill: #dab55d;
 	}
 
+	.widget-header-icon {
+		width: auto;
+		height: 110%;
+		stroke: #000;
+		fill: #000;
+		cursor: pointer;
+
+		&:hover {
+			filter: brightness(1.2) saturate(1.1);
+		}
+	}
+
 	.widget-title {
 		margin-left: 0.5rem;
 		font-size: 0.8rem;
@@ -61,7 +63,7 @@ const StyledCardHeader = styled.div`
 	}
 
 	@media (max-width: 500px) {
-		height: 1.8rem;
+		height: 1.4rem;
 	}
 `;
 
@@ -70,6 +72,10 @@ const StyledIcons = styled.div`
 	justify-content: center;
 	height: 100%;
 	margin-left: auto;
+
+	svg {
+		margin: 0 0.3rem;
+	}
 
 	.action-input {
 		display: flex;
@@ -83,11 +89,5 @@ const StyledIcons = styled.div`
 
 		background-color: rgba(255, 255, 255, 0.1);
 		border-radius: 5px;
-	}
-
-	.action-icons {
-		cursor: pointer;
-		height: 100%;
-		margin-left: 0.3rem;
 	}
 `;

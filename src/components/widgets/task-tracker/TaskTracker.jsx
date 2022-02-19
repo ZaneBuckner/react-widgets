@@ -9,8 +9,9 @@ import TaskList from './TaskList';
 import { About, Utility } from './TaskTrackerModal';
 
 import { StyledTaskTracker } from './TaskTracker.Styled';
-import { MdOutlineChecklistRtl as TaskIcon, MdPlaylistAdd as AddTaskIcon } from 'react-icons/md';
+import { MdOutlineChecklistRtl as TaskIcon } from 'react-icons/md';
 import { HiCursorClick as ClickIcon } from 'react-icons/hi';
+import { AddTaskIcon } from 'Assets/WidgetIcons';
 
 function TaskTracker() {
 	const [isAboutModal, setIsAboutModal] = useState(false);
@@ -72,7 +73,7 @@ function TaskTracker() {
 				icon={<TaskIcon />}
 				widgetRef='task'
 				onAboutToggle={handleAboutToggle}
-				onUtilityToggle={<AddTaskIcon className='action-icons' onClick={handleUtilityToggle} />}
+				onUtilityToggle={<AddTaskIcon onClick={handleUtilityToggle} />}
 			/>
 
 			<StyledTaskTracker>{tasks.length > 0 ? taskList : emptyList}</StyledTaskTracker>
@@ -83,7 +84,15 @@ function TaskTracker() {
 				element={
 					<About
 						widgetIcon={<TaskIcon className='widget-icon' />}
-						addTaskIcon={<AddTaskIcon className='icon' onClick={handleModalSwitch} />}
+						addTaskIcon={
+							<AddTaskIcon
+								width='1rem'
+								height='1rem'
+								fill='#000'
+								style={{ cursor: 'pointer' }}
+								onClick={handleModalSwitch}
+							/>
+						}
 						clickIcon={<ClickIcon className='icon' onClick={handleAboutToggle} />}
 					/>
 				}
@@ -95,7 +104,7 @@ function TaskTracker() {
 				element={
 					<Utility
 						widgetIcon={<TaskIcon className='widget-icon' />}
-						addTaskIcon={<AddTaskIcon className='icon' />}
+						addTaskIcon={<AddTaskIcon />}
 						onAddTask={handleAddTask}
 					/>
 				}
@@ -103,5 +112,13 @@ function TaskTracker() {
 		</Card>
 	);
 }
+
+// const StyledSettingsIcon = styled(AddTaskIcon)`
+// 	width: 1rem;
+// 	height: 1rem;
+// 	fill: #000;
+// 	stroke: #000;
+// 	cursor: pointer;
+// `;
 
 export default TaskTracker;

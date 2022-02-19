@@ -10,7 +10,7 @@ import Painting from './Painting';
 import { StyledBobRossPaintings } from './BobRossPaintings.Styed';
 
 import BobRossIcon from 'Assets/BobRossIcon';
-import { BiRefresh as RefreshIcon } from 'react-icons/bi';
+import { RefreshIcon } from 'Assets/WidgetIcons';
 import { BsYoutube as YoutubeIcon } from 'react-icons/bs';
 import { HiCursorClick as ClickIcon } from 'react-icons/hi';
 
@@ -45,7 +45,7 @@ function BobRossPaintings() {
 				icon={<BobRossIcon />}
 				widgetRef='bobross'
 				onAboutToggle={handleAboutToggle}
-				onUtilityToggle={<RefreshIcon className='action-icons' onClick={fetchPainting} />}
+				onUtilityToggle={<RefreshIcon onClick={fetchPainting} />}
 			/>
 
 			<WidgetModal
@@ -54,7 +54,15 @@ function BobRossPaintings() {
 				element={
 					<About
 						widgetIcon={<BobRossIcon className='widget-icon' height={'1.5rem'} fill={'#DAB55D'} />}
-						refreshIcon={<RefreshIcon className='icon' onClick={fetchPainting} />}
+						refreshIcon={
+							<RefreshIcon
+								width='1rem'
+								height='1rem'
+								color='#000'
+								style={{ cursor: 'pointer' }}
+								onClick={fetchPainting}
+							/>
+						}
 						clickIcon={<ClickIcon className='icon' onClick={handleAboutToggle} />}
 						youtubeLink={hyperLink}
 					/>
