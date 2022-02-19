@@ -46,8 +46,10 @@ const StyledCardHeader = styled.div`
 	.widget-header-icon {
 		width: auto;
 		height: 110%;
-		stroke: #000;
-		fill: #000;
+		/* stroke: #000;
+		fill: #000; */
+		stroke: #333333;
+		fill: #333333;
 		cursor: pointer;
 
 		&:hover {
