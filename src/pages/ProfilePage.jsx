@@ -139,6 +139,12 @@ const StyledProfileHeader = styled.div`
 			color: #dab55d;
 		}
 	}
+
+	@media only screen and (max-width: 450px) {
+		.title {
+			font-size: 8vw;
+		}
+	}
 `;
 
 const StyledBody = styled.div`
