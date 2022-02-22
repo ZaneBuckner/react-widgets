@@ -72,7 +72,7 @@ export default function ProfilePage() {
 	return (
 		<Page>
 			<StyledProfileHeader>
-				<UserAvatar size='medium' src={profileData.photoURL} />
+				<UserAvatar size='medium' src={profileData.userPhotoURL} />
 				<h1 className='title'>{profileData.username}</h1>
 				<div className='account-age-wrapper'>
 					<h3>Est.</h3>
