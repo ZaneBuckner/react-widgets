@@ -65,8 +65,13 @@ export const formatErrorCode = errorCode => {
  * const userLocation = await getUserLocation();
  * userLocation => { zip: 70401, state: 'LA', city: 'Hammond' }
  */
-export const fetchUserLocation = setUserLocation => {
-	if (!navigator.geolocation) return console.log('Geolocation is unsupported.');
+export const fetchUserLocation = (setUserLocation, setLoading) => {
+	setLoading(true);
+
+	if (!navigator.geolocation) {
+		console.log('Geolocation is unsupported.');
+		setLoading(false);
+	}
 
 	// USERS GEOLOCATION (HTML5 GEOLOCATION API)
 	navigator.geolocation.getCurrentPosition(
@@ -78,6 +83,7 @@ export const fetchUserLocation = setUserLocation => {
 		},
 		error => {
 			console.log('Unable to retrieve coordinates.', error);
+			setLoading(false);
 		},
 	);
 
@@ -94,6 +100,8 @@ export const fetchUserLocation = setUserLocation => {
 			});
 		} catch (error) {
 			console.log('Unable fetch location address.', error);
+		} finally {
+			setLoading(false);
 		}
 	};
 };
