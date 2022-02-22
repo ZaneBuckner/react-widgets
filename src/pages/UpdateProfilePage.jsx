@@ -17,6 +17,7 @@ import { StyledUpdateForm } from './Pages.Styled';
 import { MdEmail as EmailIcon, MdLock as PasswordIcon, MdOutlineLocationOn as LocationIcon } from 'react-icons/md';
 import { AiOutlineUser as UsernameIcon } from 'react-icons/ai';
 import { CgFileRemove as RemoveFileIcon } from 'react-icons/cg';
+import { CodewarsIcon } from 'Assets/WidgetIcons';
 
 export default function UpdateProfilePage() {
 	const navigate = useNavigate();
@@ -36,10 +37,14 @@ export default function UpdateProfilePage() {
 	const [photoURL, setPhotoURL] = useState('');
 	const [imagePreview, setImagePreview] = useState('');
 	const [username, setUsername] = useState('');
-	const [userLocaton, setUserLocation] = useState('');
+	const [codewars, setCodewars] = useState('');
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [passwordConfirm, setPasswordConfirm] = useState('');
+
+	const [userCity, setUserCity] = useState('');
+	const [userState, setUserState] = useState('');
+	const [userZip, setUserZip] = useState('');
 
 	// ERROR VALUES
 	const [error, setError] = useState('');
@@ -57,7 +62,6 @@ export default function UpdateProfilePage() {
 	const resetValues = () => [
 		setPhotoURL(''),
 		setUsername(''),
-		setUserLocation(''),
 		setEmail(''),
 		setPassword(''),
 		setPasswordConfirm(''),
@@ -87,22 +91,28 @@ export default function UpdateProfilePage() {
 		resetErrors();
 		const promises = [];
 
-		photoURL && storeUserImage(currentUser, photoURL, setLoading, setError, setSuccess);
+		if (photoURL) {
+			promises.push(storeUserImage(currentUser, photoURL, setLoading, setError, setSuccess));
+		}
 
 		if (username) {
 			promises.push(onUsernameUpdate(username));
 			updateUserDocument(currentUser, { username: username });
 		}
 
+		if (codewars) {
+			promises.push(updateUserDocument(currentUser, { codewarsUsername: codewars }));
+		}
+
 		if (email) {
-			if (email === currentUser.email) setEmailError('Please enter a new email address.');
+			if (email === currentUser.email) return setEmailError('Please enter a new email address.');
 			promises.push(onEmailUpdate(email));
 			updateUserDocument(currentUser, { email: email });
 		}
 
 		if (password) {
 			if (password.length < 6) setPasswordError('Passwords must be at least 6 characters.');
-			else if (password !== passwordConfirm) setPasswordError('Passwords do not match.');
+			else if (password !== passwordConfirm) return setPasswordError('Passwords do not match.');
 			promises.push(onPasswordUpdate(password));
 		}
 
@@ -120,17 +130,13 @@ export default function UpdateProfilePage() {
 		}
 	};
 
+	// REDIRECTS TO USER PROFILE AFTER SUCCESSFUL UPDATE
 	useEffect(() => {
-		if (!updateSuccess) return;
-		const timer = setTimeout(() => {
-			navigate('/profile');
-		}, 1500);
-		return () => clearTimeout(timer);
+		if (updateSuccess) {
+			const timer = setTimeout(() => navigate('/profile'), 1500);
+			return () => clearTimeout(timer);
+		}
 	}, [updateSuccess, navigate]);
-
-	useEffect(() => {
-		userData?.location && setUserLocation(`${userData.location.city}, ${userData.location.state}`);
-	}, [userData]);
 
 	return (
 		<Page>
@@ -143,7 +149,7 @@ export default function UpdateProfilePage() {
 				{updateSuccess && <UserAlert variant='success' message={updateSuccess} />}
 			</div>
 
-			<StyledUpdateForm className='body'>
+			<StyledUpdateForm type='submit' onSubmit={handleSubmit} className='body'>
 				<AvatarInput>
 					<div className='avatar-preview'>
 						<UserAvatar size='small' src={imagePreview || currentUser.photoURL} />
@@ -162,21 +168,52 @@ export default function UpdateProfilePage() {
 				<InputField
 					type='text'
 					label='Username'
-					placeholder={currentUser.displayName || 'Update Username'}
+					placeholder={currentUser.displayName || 'No Username Saved'}
 					value={username}
 					icon={<UsernameIcon />}
 					onChange={e => setUsername(e.target.value)}
 				/>
 
+				<LocationInputFields>
+					<InputField
+						type='text'
+						label='City'
+						placeholder={userData?.location.city}
+						value={userCity}
+						// error={...}
+						// helperText={...}
+						onChange={e => setUserCity(e.target.value)}
+						icon={<LocationIcon />}
+					/>
+					<InputField
+						className='break'
+						type='text'
+						label='State Initials'
+						placeholder={userData?.location.state}
+						value={userState}
+						// error={...}
+						// helperText={...}
+						onChange={e => setUserState(e.target.value)}
+					/>
+					<InputField
+						className='break'
+						type='text'
+						label='Zip Code'
+						placeholder={userData?.location.zip}
+						value={userZip}
+						// error={...}
+						// helperText={...}
+						onChange={e => setUserZip(e.target.value)}
+					/>
+				</LocationInputFields>
+
 				<InputField
 					type='text'
-					label='Location'
-					placeholder={userLocaton || 'Update Location'}
-					// value={userLocaton}
-					// error={...}
-					// helperText={...}
-					// onChange={e => setUserLocaton(e.target.value)}
-					icon={<LocationIcon />}
+					label='Codewars Username'
+					placeholder={userData?.codewarsUsername || 'No username saved'}
+					value={codewars}
+					onChange={e => setCodewars(e.target.value)}
+					icon={<CodewarsIcon height='1.5rem' color='#C3C3C3' />}
 				/>
 
 				<InputField
@@ -268,5 +305,22 @@ const AvatarInput = styled.div`
 		grid-template-columns: auto;
 		grid-row-gap: 1rem;
 		place-items: center;
+	}
+`;
+
+const LocationInputFields = styled.div`
+	display: grid;
+	grid-template-columns: 3fr 2fr 3fr;
+	grid-column-gap: 1rem;
+	width: 100%;
+
+	@media only screen and (max-width: 500px) {
+		grid-template-columns: 1fr;
+		grid-template-rows: repeat(3, auto);
+		grid-row-gap: 1rem;
+
+		.break {
+			margin-left: 2.3rem;
+		}
 	}
 `;
