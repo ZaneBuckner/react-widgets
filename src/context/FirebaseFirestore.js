@@ -16,7 +16,7 @@ export const createUserDocument = async currentUser => {
 	try {
 		await setDoc(userDocumentRef, {
 			uid: currentUser.uid,
-			username: '',
+			username: currentUser.email,
 			location: '',
 			codewarsUsername: '',
 			tasks: [
