@@ -17,39 +17,20 @@ import { CodewarsIcon } from 'Assets/WidgetIcons';
 
 export default function ProfilePage() {
 	const { userData, currentUser, onLogout } = useAuthContext();
-	const [userEst, setUserEst] = useState('');
-	const [userEmail, setUserEmail] = useState('');
-	const [userLocation, setUserLocation] = useState('');
-	const [userCodewars, setUserCodewars] = useState('');
-
 	const [fetchedLocation, setFetchedLocation] = useState('');
 	const [fetchLoading, setFetchLoading] = useState(false);
+	const [profileData, setProfileData] = useState({
+		userPhotoURL: '',
+		username: '',
+		userEst: '',
+		userEmail: '',
+		userLocation: '',
+		userCodewars: '',
+	});
 
 	const handleLocationFetch = async () => {
-		setFetchLoading(true);
-		await fetchUserLocation(setFetchedLocation);
+		await fetchUserLocation(setFetchedLocation, setFetchLoading);
 	};
-
-	// UPDATE USER DOCUMENT ON AWAIT FETCHED LOCATION VALUE
-	useEffect(() => {
-		if (fetchedLocation) {
-			updateUserDocument(currentUser, { location: fetchedLocation });
-			setFetchLoading(false);
-		}
-	}, [currentUser, fetchedLocation]);
-
-	// UPDATE INITIAL STATE VALUES TO POPULATE PROFILE ITEMS
-	useEffect(() => {
-		const { day, month, year } = getFormattedDate(parseInt(currentUser.metadata.createdAt));
-
-		if (userData) {
-			const formattedLocation = `${userData?.location.city}, ${userData?.location.state}`;
-			setUserEst(`${month} ${day}, ${year}`);
-			setUserEmail(currentUser.email);
-			setUserCodewars(userData?.codewarsUsername);
-			setUserLocation(userData.location ? formattedLocation : '');
-		}
-	}, [currentUser, userData]);
 
 	const ProfileItem = ({ icon, value, placeholder, endAdornment }) => {
 		return (
@@ -63,29 +44,54 @@ export default function ProfilePage() {
 		);
 	};
 
+	// UPDATE USER DOCUMENT ON AWAIT FETCHED LOCATION VALUE
+	useEffect(() => {
+		fetchedLocation && updateUserDocument(currentUser, { location: fetchedLocation });
+	}, [currentUser, fetchedLocation]);
+
+	// UPDATE INITIAL STATE VALUES TO POPULATE PROFILE ITEMS
+	useEffect(() => {
+		const { day, month, year } = getFormattedDate(parseInt(currentUser.metadata.createdAt));
+		const { city, state } = userData?.location || {};
+
+		const formattedUserEst = `${month} ${day}, ${year}`;
+		const formattedUserLocation = `${city || ''} ${state || ''}`;
+
+		if (userData) {
+			setProfileData({
+				userPhotoURL: currentUser?.photoURL,
+				username: userData?.username,
+				userEst: formattedUserEst,
+				userEmail: currentUser.email,
+				userLocation: userData.location && formattedUserLocation,
+				userCodewars: userData?.codewarsUsername,
+			});
+		}
+	}, [currentUser, userData]);
+
 	return (
 		<Page>
 			<StyledProfileHeader>
-				<UserAvatar size='medium' src={currentUser.photoURL} />
-				<h1 className='title'>{currentUser.displayName}</h1>
+				<UserAvatar size='medium' src={profileData.photoURL} />
+				<h1 className='title'>{profileData.username}</h1>
 				<div className='account-age-wrapper'>
 					<h3>Est.</h3>
-					<p>{userEst}</p>
+					<p>{profileData.userEst}</p>
 				</div>
 			</StyledProfileHeader>
 
 			<StyledBody className='body'>
-				<ProfileItem icon={<EmailIcon />} value={userEmail} />
+				<ProfileItem icon={<EmailIcon />} value={profileData.userEmail} />
 				<ProfileItem
 					icon={<LocationIcon />}
-					value={userLocation}
+					value={profileData.userLocation}
 					placeholder='No Location Saved'
 					endAdornment={
 						fetchLoading ? (
 							<PuffLoader
 								css={{ marginLeft: 'auto' }}
 								loading={fetchLoading}
-								color={'#c3c3c3'}
+								color={'#DAB55D'}
 								size={32}
 							/>
 						) : (
@@ -93,7 +99,11 @@ export default function ProfilePage() {
 						)
 					}
 				/>
-				<ProfileItem icon={<CodewarsIcon />} value={userCodewars} placeholder='No Username Saved' />
+				<ProfileItem
+					icon={<CodewarsIcon />}
+					value={profileData.userCodewars}
+					placeholder='No Username Saved'
+				/>
 			</StyledBody>
 			<div className='links'>
 				<Link
