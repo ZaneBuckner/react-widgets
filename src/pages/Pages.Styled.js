@@ -42,7 +42,7 @@ export const StyledRegisterForm = styled.div`
 	margin: auto 0;
 `;
 
-export const StyledUpdateForm = styled.div`
+export const StyledUpdateForm = styled.form`
 	display: grid;
 	grid-template-columns: auto;
 	grid-template-rows: repeat(6, auto);
