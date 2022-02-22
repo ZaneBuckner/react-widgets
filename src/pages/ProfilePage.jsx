@@ -1,33 +1,58 @@
 import { useState, useEffect } from 'react';
 import { useAuthContext } from 'context/AuthContext';
 import { Link } from 'react-router-dom';
-import { getFormattedDate } from 'utils/util';
+import { getFormattedDate, fetchUserLocation } from 'utils/util';
+import { updateUserDocument } from 'context/FirebaseFirestore';
 import styled from 'styled-components';
 
 import Page from './Page';
 import Button from 'components/shared/Button';
 import { UserAvatar } from 'components/shared/Avatar';
 
-import { MdOutlineEmail as EmailIcon } from 'react-icons/md';
-import { IoFlag as FlagIcon } from 'react-icons/io5';
-import { TiLocationArrow as LocationIcon } from 'react-icons/ti';
-import { BiUserCircle as UserIcon } from 'react-icons/bi';
+import { IoIosMail as EmailIcon } from 'react-icons/io';
+import { IoLocationSharp as LocationIcon } from 'react-icons/io5';
+import { MdMyLocation as GetLocationIcon } from 'react-icons/md';
+import { CodewarsIcon } from 'Assets/WidgetIcons';
 
 export default function ProfilePage() {
 	const { userData, currentUser, onLogout } = useAuthContext();
+	const [userEst, setUserEst] = useState('');
+	const [userEmail, setUserEmail] = useState('');
 	const [userLocation, setUserLocation] = useState('');
+	const [userCodewars, setUserCodewars] = useState('');
 
-	const { day, month, year } = getFormattedDate(parseInt(currentUser.metadata.createdAt));
+	const [fetchedLocation, setFetchedLocation] = useState('');
 
+	const handleLocationFetch = async () => {
+		await fetchUserLocation(setFetchedLocation);
+	};
+
+	// UPDATE USER DOCUMENT ON AWAIT FETCHED LOCATION VALUE
 	useEffect(() => {
-		userData?.location && setUserLocation(`${userData.location.city}, ${userData.location.state}`);
-	}, [userData]);
+		fetchedLocation && updateUserDocument(currentUser, { location: fetchedLocation });
+	}, [currentUser, fetchedLocation]);
 
-	const ProfileItem = ({ icon, value, ...props }) => {
+	// UPDATE INITIAL STATE VALUES TO POPULATE PROFILE ITEMS
+	useEffect(() => {
+		const { day, month, year } = getFormattedDate(parseInt(currentUser.metadata.createdAt));
+
+		if (userData) {
+			const formattedLocation = `${userData?.location.city}, ${userData?.location.state}`;
+			setUserEst(`${month} ${day}, ${year}`);
+			setUserEmail(userData.email);
+			setUserCodewars(userData?.codewarsUsername);
+			setUserLocation(userData.location ? formattedLocation : '');
+		}
+	}, [currentUser, userData]);
+
+	const ProfileItem = ({ icon, value, placeholder, endAdornment }) => {
 		return (
-			<StyledProfileItem {...props}>
-				{icon}
-				<div>{value}</div>
+			<StyledProfileItem placeholder={placeholder}>
+				<div className='icon-wrapper'>{icon}</div>
+				<div className='value-wrapper'>
+					{value ? <p className='value'>{value}</p> : <p className='placeholder'>{placeholder}</p>}
+					{endAdornment}
+				</div>
 			</StyledProfileItem>
 		);
 	};
@@ -38,15 +63,20 @@ export default function ProfilePage() {
 				<UserAvatar size='medium' src={currentUser.photoURL} />
 				<h1 className='title'>{currentUser.displayName}</h1>
 				<div className='account-age-wrapper'>
-					<FlagIcon className='icon' />
-					<p>{`${month} ${day}, ${year}`}</p>
+					<h3>Est.</h3>
+					<p>{userEst}</p>
 				</div>
 			</StyledProfileHeader>
 
 			<StyledBody className='body'>
-				<ProfileItem icon={<EmailIcon />} value={currentUser.email} />
-				<ProfileItem icon={<LocationIcon />} value={userLocation || 'Update Location'} />
-				<ProfileItem icon={<UserIcon />} value={currentUser.uid} />
+				<ProfileItem icon={<EmailIcon />} value={userEmail} />
+				<ProfileItem
+					icon={<LocationIcon />}
+					value={userLocation}
+					placeholder='No Location Saved'
+					endAdornment={<GetLocationIcon className='end-adornment' onClick={handleLocationFetch} />}
+				/>
+				<ProfileItem icon={<CodewarsIcon />} value={userCodewars} placeholder='No Username Saved' />
 			</StyledBody>
 			<div className='links'>
 				<Link
@@ -70,14 +100,17 @@ const StyledProfileHeader = styled.div`
 	align-items: center;
 	width: 100%;
 
-	.icon {
-		margin-right: 0.5rem;
-	}
-
 	.account-age-wrapper {
-		display: flex;
-		align-items: center;
-		justify-content: center;
+		display: grid;
+		grid-template-columns: repeat(2, auto);
+		grid-column-gap: 0.5rem;
+		place-items: center;
+
+		h3 {
+			font-size: 1rem;
+			font-weight: 300;
+			color: #dab55d;
+		}
 	}
 `;
 
@@ -100,15 +133,23 @@ const StyledProfileItem = styled.div`
 	width: 100%;
 	height: 3rem;
 
-	svg {
+	.icon-wrapper {
+		display: flex;
+		align-items: center;
+		justify-content: center;
 		width: 2rem;
-		height: auto;
+		height: 100%;
 		margin-right: 1rem;
 
-		opacity: 60%;
+		svg {
+			width: 100%;
+			height: auto;
+			fill: #c3c3c3;
+			opacity: 60%;
+		}
 	}
 
-	div {
+	.value-wrapper {
 		display: flex;
 		align-items: flex-start;
 		width: 24rem;
@@ -126,6 +167,23 @@ const StyledProfileItem = styled.div`
 		overflow-x: scroll;
 		overflow-y: hidden;
 		white-space: nowrap;
+
+		.placeholder {
+			opacity: 60%;
+		}
+
+		.end-adornment {
+			min-height: 2rem;
+			min-width: 2rem;
+			margin-left: auto;
+
+			opacity: 70%;
+			cursor: pointer;
+
+			&:hover {
+				filter: brightness(1.2) saturate(1.1);
+			}
+		}
 
 		/* HIDE SCROLLBAR | KEEP FUNCTIONALITY */
 		scrollbar-width: none; /* Firefox */
