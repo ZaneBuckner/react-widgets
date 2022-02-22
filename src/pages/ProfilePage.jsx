@@ -8,6 +8,7 @@ import styled from 'styled-components';
 import Page from './Page';
 import Button from 'components/shared/Button';
 import { UserAvatar } from 'components/shared/Avatar';
+import PuffLoader from 'react-spinners/PuffLoader'; // [React Spinners](https://www.davidhu.io/react-spinners/)
 
 import { IoIosMail as EmailIcon } from 'react-icons/io';
 import { IoLocationSharp as LocationIcon } from 'react-icons/io5';
@@ -22,14 +23,19 @@ export default function ProfilePage() {
 	const [userCodewars, setUserCodewars] = useState('');
 
 	const [fetchedLocation, setFetchedLocation] = useState('');
+	const [fetchLoading, setFetchLoading] = useState(false);
 
 	const handleLocationFetch = async () => {
+		setFetchLoading(true);
 		await fetchUserLocation(setFetchedLocation);
 	};
 
 	// UPDATE USER DOCUMENT ON AWAIT FETCHED LOCATION VALUE
 	useEffect(() => {
-		fetchedLocation && updateUserDocument(currentUser, { location: fetchedLocation });
+		if (fetchedLocation) {
+			updateUserDocument(currentUser, { location: fetchedLocation });
+			setFetchLoading(false);
+		}
 	}, [currentUser, fetchedLocation]);
 
 	// UPDATE INITIAL STATE VALUES TO POPULATE PROFILE ITEMS
@@ -39,7 +45,7 @@ export default function ProfilePage() {
 		if (userData) {
 			const formattedLocation = `${userData?.location.city}, ${userData?.location.state}`;
 			setUserEst(`${month} ${day}, ${year}`);
-			setUserEmail(userData.email);
+			setUserEmail(currentUser.email);
 			setUserCodewars(userData?.codewarsUsername);
 			setUserLocation(userData.location ? formattedLocation : '');
 		}
@@ -74,7 +80,18 @@ export default function ProfilePage() {
 					icon={<LocationIcon />}
 					value={userLocation}
 					placeholder='No Location Saved'
-					endAdornment={<GetLocationIcon className='end-adornment' onClick={handleLocationFetch} />}
+					endAdornment={
+						fetchLoading ? (
+							<PuffLoader
+								css={{ marginLeft: 'auto' }}
+								loading={fetchLoading}
+								color={'#c3c3c3'}
+								size={32}
+							/>
+						) : (
+							<GetLocationIcon className='end-adornment' onClick={handleLocationFetch} />
+						)
+					}
 				/>
 				<ProfileItem icon={<CodewarsIcon />} value={userCodewars} placeholder='No Username Saved' />
 			</StyledBody>
