@@ -50,9 +50,11 @@ export default function UpdateProfilePage() {
 	const [error, setError] = useState('');
 	const [emailError, setEmailError] = useState('');
 	const [passwordError, setPasswordError] = useState('');
+	const [locationError, setLocationError] = useState('');
 
 	const resetErrors = () => [
 		setError(''),
+		setLocationError(''),
 		setEmailError(''),
 		setPasswordError(''),
 		setSuccess(''),
@@ -61,6 +63,9 @@ export default function UpdateProfilePage() {
 
 	const resetValues = () => [
 		setPhotoURL(''),
+		setUserCity(''),
+		setUserState(''),
+		setUserZip(''),
 		setUsername(''),
 		setEmail(''),
 		setPassword(''),
@@ -100,6 +105,14 @@ export default function UpdateProfilePage() {
 			updateUserDocument(currentUser, { username: username });
 		}
 
+		if (userCity || userState || userZip) {
+			if (userZip && userZip.length !== 5) return setLocationError('Please enter a 5-digit value.');
+
+			const { city, state, zip } = userData.location;
+			const updatedLocation = { location: { city: userCity || city, state: userState || state, zip: userZip || zip } }; // prettier-ignore
+			promises.push(updateUserDocument(currentUser, updatedLocation));
+		}
+
 		if (codewars) {
 			promises.push(updateUserDocument(currentUser, { codewarsUsername: codewars }));
 		}
@@ -107,7 +120,6 @@ export default function UpdateProfilePage() {
 		if (email) {
 			if (email === currentUser.email) return setEmailError('Please enter a new email address.');
 			promises.push(onEmailUpdate(email));
-			updateUserDocument(currentUser, { email: email });
 		}
 
 		if (password) {
@@ -122,6 +134,7 @@ export default function UpdateProfilePage() {
 			setLoading(true);
 			await Promise.all(promises);
 			setUpdateSuccess('Profile updated!');
+			email && !emailError && updateUserDocument(currentUser, { email: email });
 		} catch (err) {
 			setError(formatErrorCode(err.code));
 		} finally {
@@ -130,7 +143,7 @@ export default function UpdateProfilePage() {
 		}
 	};
 
-	// REDIRECTS TO USER PROFILE AFTER SUCCESSFUL UPDATE
+	// REDIRECTS TO USER PROFILE AFTER SUCCESSFUL UPDATE ON UNMOUNT
 	useEffect(() => {
 		if (updateSuccess) {
 			const timer = setTimeout(() => navigate('/profile'), 1500);
@@ -145,6 +158,7 @@ export default function UpdateProfilePage() {
 				{error && <UserAlert variant='error' message={error} />}
 				{emailError && <UserAlert variant='error' message={emailError} />}
 				{passwordError && <UserAlert variant='error' message={passwordError} />}
+				{locationError && <UserAlert variant='error' message={locationError} />}
 				{success && <UserAlert variant='success' message={success} />}
 				{updateSuccess && <UserAlert variant='success' message={updateSuccess} />}
 			</div>
@@ -168,7 +182,7 @@ export default function UpdateProfilePage() {
 				<InputField
 					type='text'
 					label='Username'
-					placeholder={currentUser.displayName || 'No Username Saved'}
+					placeholder={currentUser?.displayName || 'No Username Saved'}
 					value={username}
 					icon={<UsernameIcon />}
 					onChange={e => setUsername(e.target.value)}
@@ -178,32 +192,28 @@ export default function UpdateProfilePage() {
 					<InputField
 						type='text'
 						label='City'
-						placeholder={userData?.location.city}
+						placeholder={userData?.location?.city || 'No city saved'}
 						value={userCity}
-						// error={...}
-						// helperText={...}
 						onChange={e => setUserCity(e.target.value)}
 						icon={<LocationIcon />}
 					/>
 					<InputField
-						className='break'
 						type='text'
 						label='State Initials'
-						placeholder={userData?.location.state}
+						placeholder={userData?.location?.state || 'No state saved'}
 						value={userState}
-						// error={...}
-						// helperText={...}
 						onChange={e => setUserState(e.target.value)}
+						className='breakpoint-mod'
 					/>
 					<InputField
-						className='break'
-						type='text'
+						type='number'
 						label='Zip Code'
-						placeholder={userData?.location.zip}
+						placeholder={userData?.location?.zip || 'No Zip saved'}
 						value={userZip}
-						// error={...}
-						// helperText={...}
+						error={locationError ? true : false}
+						helperText={locationError}
 						onChange={e => setUserZip(e.target.value)}
+						className='breakpoint-mod'
 					/>
 				</LocationInputFields>
 
@@ -319,7 +329,7 @@ const LocationInputFields = styled.div`
 		grid-template-rows: repeat(3, auto);
 		grid-row-gap: 1rem;
 
-		.break {
+		.breakpoint-mod {
 			margin-left: 2.3rem;
 		}
 	}
