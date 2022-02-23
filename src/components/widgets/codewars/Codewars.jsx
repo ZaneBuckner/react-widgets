@@ -1,37 +1,50 @@
-import { useState } from 'react';
-
-import Card from 'components/shared/Card';
-import CardHeader from 'components/shared/CardHeader';
-
-import WidgetModal from '../WidgetModal';
-import { About } from './CodewarsModal';
-import WidgetSearch from '../WidgetSearch';
+import { useState, useEffect } from 'react';
+import { useAuthContext } from 'context/AuthContext';
 
 import UserProfile from './UserProfile';
 import ChallengesList from './ChallengesList';
 import ChallengeDetails from './ChallengeDetails';
 
-import { StyledCodewars, StyledChallengeDetails } from './Codewars.styled';
-import CodewarsIcon from 'Assets/CodewarsIcon';
-import { SearchIcon } from 'Assets/WidgetIcons';
+import Card from 'components/shared/Card';
+import CardHeader from 'components/shared/CardHeader';
+import WidgetModal from '../WidgetModal';
+import WidgetSearch from '../WidgetSearch';
+import { About } from './CodewarsModal';
+
+import { StyledCodewars } from './Codewars.styled';
+import { CodewarsIcon } from 'Assets/WidgetIcons';
+
+const api = {
+	base: 'https://www.codewars.com/api/v1/',
+};
 
 function Codewars() {
-	const [userInput, setUserInput] = useState('Zaniac');
+	const { userData } = useAuthContext();
+	const [username, setUsername] = useState(userData?.codewarsUsername || 'Zaniac');
 	const [selectedChallenge, setSelectedChallenge] = useState(null);
+	const [profileURL, setProfileURL] = useState('');
+	const [challengesURL, setChallengesURL] = useState('');
+	const [detailsURL, setDetailsURL] = useState('');
+
 	const [isAboutModal, setIsAboutModal] = useState(false);
 	const [isSearch, setIsSearch] = useState(false);
 
 	const handleAboutToggle = () => setIsAboutModal(isAboutModal => !isAboutModal);
-
 	const handleSearchToggle = () => setIsSearch(isSearch => !isSearch);
-	const handleSearchSubmit = e => e.key === 'Enter' && setUserInput(e.target.value);
+	const handleSearchSubmit = e => e.key === 'Enter' && setUsername(e.target.value);
 
-	const challegeDetails = <ChallengeDetails selectedChallenge={selectedChallenge} />;
-	const awaitChallengeDetails = (
-		<StyledChallengeDetails>
-			<p className='user-message'>Select a challenge for details.</p>
-		</StyledChallengeDetails>
-	);
+	// SET FETCH URLS => ON MOUNT & WHEN USERNAME UPDATES
+	useEffect(() => {
+		if (username) {
+			setProfileURL(`${api.base}/users/${username}`);
+			setChallengesURL(`${api.base}/users/${username}/code-challenges/completed/`);
+		}
+	}, [username]);
+
+	// SET CHALLENGE DETAILS URL => WHEN CHALLENGE IS SELECTED
+	useEffect(() => {
+		selectedChallenge && setDetailsURL(`${api.base}/code-challenges/${selectedChallenge.id}`);
+	}, [selectedChallenge]);
 
 	return (
 		<Card>
@@ -54,18 +67,16 @@ function Codewars() {
 			<WidgetModal
 				open={isAboutModal}
 				onClose={handleAboutToggle}
-				element={
-					<About
-						widgetIcon={<CodewarsIcon className='widget-icon' height={'1.5rem'} fill={'#DAB55D'} />}
-					/>
-				}
+				element={<About widgetIcon={<CodewarsIcon height='1.5rem' color='#DAB55D' />} />}
 			/>
 
-			<StyledCodewars>
-				<UserProfile user={userInput} />
-				<ChallengesList user={userInput} setSelectedChallenge={setSelectedChallenge} />
-				{selectedChallenge ? challegeDetails : awaitChallengeDetails}
-			</StyledCodewars>
+			{profileURL && challengesURL && (
+				<StyledCodewars>
+					<UserProfile url={profileURL} username={username} />
+					<ChallengesList url={challengesURL} setSelectedChallenge={setSelectedChallenge} />
+					<ChallengeDetails url={detailsURL} challenge={selectedChallenge} />
+				</StyledCodewars>
+			)}
 		</Card>
 	);
 }

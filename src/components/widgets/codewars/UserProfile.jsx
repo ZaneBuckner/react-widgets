@@ -3,11 +3,10 @@ import useAxios from 'hooks/useAxios';
 import { StyledUserProfile } from './Codewars.styled';
 import DifficultyBadge from './DifficultyBadge';
 
-function UserProfile({ user }) {
-	const url = `https://www.codewars.com/api/v1/users/${user}/`;
+function UserProfile({ url, username }) {
 	const { data, loading, error } = useAxios(url);
 
-	const details = (title, value) => {
+	const ProfileItem = ({ title, value }) => {
 		return (
 			<div className='item'>
 				<h2>{title}</h2>
@@ -16,32 +15,33 @@ function UserProfile({ user }) {
 		);
 	};
 
-	const preRender = {
-		loading: (
+	if (loading) {
+		return (
 			<StyledUserProfile>
 				<p className='user-message'>Loading Profile...</p>
 			</StyledUserProfile>
-		),
-		error: (
+		);
+	}
+
+	if (error) {
+		return (
 			<StyledUserProfile>
 				<p className='user-message'>
-					Unable to find user: <span>{user}</span>
+					Unable to find user: <span>{username}</span>
 				</p>
 			</StyledUserProfile>
-		),
-	};
+		);
+	}
 
-	if (loading) return preRender.loading;
-	if (error) return preRender.error;
 	return (
 		<StyledUserProfile>
 			<div className='user-header'>
 				<h1>{data.username}</h1>
 				<DifficultyBadge rankColor={data.ranks.overall.color} rankName={data.ranks.overall.name} />
 			</div>
-			{details('Honor', data.honor)}
-			{details('Completed', data.codeChallenges.totalCompleted)}
-			{details('Position', data.leaderboardPosition)}
+			<ProfileItem title='Honor' value={data.honor} />
+			<ProfileItem title='Completed' value={data.codeChallenges.totalCompleted} />
+			<ProfileItem title='Position' value={data.leaderboardPosition} />
 		</StyledUserProfile>
 	);
 }

@@ -1,25 +1,26 @@
 import useAxios from 'hooks/useAxios';
+
 import { StyledChallengesList } from './Codewars.styled';
 
-function ChallengesList({ user, setSelectedChallenge }) {
-	const url = `https://www.codewars.com/api/v1/users/${user}/code-challenges/completed/`;
+function ChallengesList({ url, setSelectedChallenge }) {
 	const { data, loading, error } = useAxios(url);
 
-	const preRender = {
-		loading: (
+	if (loading) {
+		return (
 			<StyledChallengesList>
 				<p className='user-message'>Loading Challenges...</p>
 			</StyledChallengesList>
-		),
-		error: (
+		);
+	}
+
+	if (error) {
+		return (
 			<StyledChallengesList>
 				<p className='user-message'>Unable to find completed challenges.</p>
 			</StyledChallengesList>
-		),
-	};
+		);
+	}
 
-	if (loading) return preRender.loading;
-	if (error) return preRender.error;
 	return (
 		<StyledChallengesList>
 			<ul>

@@ -1,39 +1,18 @@
-import useAxios from 'hooks/useAxios';
+import { useState, useEffect } from 'react';
+import { getFormattedDate } from 'utils/util';
 
 import { StyledChallengeDetails } from './Codewars.styled';
 import DifficultyBadge from './DifficultyBadge';
 
-function ChallengeDetails({ selectedChallenge }) {
-	const url = `https://www.codewars.com/api/v1/code-challenges/${selectedChallenge.id}`;
-	const { data, loading, error } = useAxios(url);
+function ChallengeDetails({ url, challenge }) {
+	const [data, setData] = useState('');
+	const [error, setError] = useState(false);
+	const [loading, setLoading] = useState(true);
 
-	const convertDate = jsonDate => {
-		const months = [
-			'Jan',
-			'Feb',
-			'Mar',
-			'Apr',
-			'May',
-			'June',
-			'July',
-			'Aug',
-			'Sept',
-			'Oct',
-			'Nov',
-			'Dec',
-		];
-		const date = new Date(jsonDate);
-		const month = months[date.getMonth()];
-		const year = date.getFullYear();
-		return `${month} ${year}`;
-	};
+	const [completionDate, setCompletionDate] = useState('');
+	const [completionRate, setCompletionRate] = useState('');
 
-	const completionRate = () => {
-		const percentage = ((data.totalCompleted / data.totalAttempts) * 100).toFixed(1);
-		return `${percentage}%`;
-	};
-
-	const details = (title, value) => {
+	const DetailsItem = ({ title, value }) => {
 		return (
 			<div className='item'>
 				<h2>{title}</h2>
@@ -42,21 +21,57 @@ function ChallengeDetails({ selectedChallenge }) {
 		);
 	};
 
-	const preRender = {
-		loading: (
+	// FETCH CHALLENGE DETAILS => WHEN CHALLENGE IS SELECTED
+	useEffect(() => {
+		const fetchChallengeDetails = async url => {
+			try {
+				const response = await fetch(url);
+				const data = await response.json();
+				setData(data);
+			} catch (err) {
+				setError(true);
+				setLoading(false);
+			} finally {
+				setLoading(false);
+			}
+		};
+		url && fetchChallengeDetails(url);
+	}, [url]);
+
+	useEffect(() => {
+		if (data) {
+			const { month, year } = getFormattedDate(challenge.completedAt);
+			const rate = ((data.totalCompleted / data.totalAttempts) * 100).toFixed(0);
+			setCompletionDate(`${month} ${year}`);
+			setCompletionRate(`${rate}%`);
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [data]);
+
+	if (!data) {
+		return (
 			<StyledChallengeDetails>
-				<p className='user-message'>Loading Details...</p>
+				<p className='user-message'>Select a challenge for details.</p>
 			</StyledChallengeDetails>
-		),
-		error: (
+		);
+	}
+
+	if (error) {
+		return (
 			<StyledChallengeDetails>
 				<p className='user-message'>Unable to find challenge details.</p>
 			</StyledChallengeDetails>
-		),
-	};
+		);
+	}
 
-	if (loading) return preRender.loading;
-	if (error) return preRender.error;
+	if (loading) {
+		return (
+			<StyledChallengeDetails>
+				<p className='user-message'>Loading Details...</p>
+			</StyledChallengeDetails>
+		);
+	}
+
 	return (
 		<StyledChallengeDetails>
 			<div className='details-header'>
@@ -65,8 +80,8 @@ function ChallengeDetails({ selectedChallenge }) {
 				</a>
 				<DifficultyBadge rankColor={data.rank.color} rankName={data.rank.name} />
 			</div>
-			{details('Completed', convertDate(selectedChallenge.completedAt))}
-			{details('Pass Rate', completionRate())}
+			<DetailsItem title='Completed' value={completionDate} />
+			<DetailsItem title='Pass Rate' value={completionRate} />
 		</StyledChallengeDetails>
 	);
 }
