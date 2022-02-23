@@ -1,5 +1,6 @@
 import useAxios from 'hooks/useAxios';
 import { v4 as uuidv4 } from 'uuid';
+
 import { StyledWeatherForecast } from './Weather.styled';
 
 function WeatherForecast({ url, units, unitValues }) {
@@ -33,13 +34,14 @@ function WeatherForecast({ url, units, unitValues }) {
 		));
 	};
 
-	const preRender = {
-		loading: <p className='user-message'>Loading Weather Forecast...</p>,
-		error: <p className='user-message'>Unable to find your location's forecast.</p>,
-	};
+	if (loading) {
+		return <p className='user-message'>Loading Weather Forecast...</p>;
+	}
 
-	if (loading) return preRender.loading;
-	if (error) return preRender.error;
+	if (error) {
+		return <p className='user-message'>Unable to find your location's forecast.</p>;
+	}
+
 	return <StyledWeatherForecast>{getDailyForecast()}</StyledWeatherForecast>;
 }
 

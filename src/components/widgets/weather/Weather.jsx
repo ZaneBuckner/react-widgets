@@ -66,6 +66,7 @@ function Weather() {
 	const handleSearchToggle = () => setIsSearch(isSearch => !isSearch);
 	const handleSearchSubmit = e => e.key === 'Enter' && setUserInput(e.target.value);
 
+	// UPDATE URLS => WHEN USER DATA CHANGES
 	useEffect(() => {
 		if (userData) {
 			// QUERIES A DEFAULT VALUE IF USER LOCATION ZIP CODE IS NULL
@@ -75,6 +76,7 @@ function Weather() {
 		}
 	}, [userData, units]);
 
+	// UPDATE URLS => WHEN USER SEARCHES LOCATION
 	useEffect(() => {
 		if (userInput) {
 			// DETERMINES WHETHER TO QUERY A STRING (CITY) OR NUMBER (ZIP CODE)

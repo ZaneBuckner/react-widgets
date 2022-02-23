@@ -15,49 +15,20 @@ import {
 function WeatherCurrent({ url, userInput, units, unitValues, setFetchedTime }) {
 	const { data, loading, error } = useAxios(url);
 	const [weatherLocation, setWeatherLocation] = useState('');
-	const [fetchingLocation, setFetchingLocation] = useState(false);
+	const [description, setDescription] = useState('');
 
-	const getDayLength = (start, end) => {
-		const sunrise = getFormattedTime(start);
-		const sunset = getFormattedTime(end);
+	const DayLength = ({ icon, time }) => {
+		const { hours, minutes, meridian } = getFormattedTime(time);
 
 		return (
-			<>
-				<div className='sunrise'>
-					<SunriseIcon />
-					<p>{`${sunrise.hours}:${sunrise.minutes} ${sunrise.meridian}`}</p>
-				</div>
-				<div className='sunset'>
-					<SunsetIcon />
-					<p>{`${sunset.hours}:${sunset.minutes} ${sunset.meridian}`}</p>
-				</div>
-			</>
+			<div>
+				{icon}
+				<p>{`${hours}:${minutes} ${meridian}`}</p>
+			</div>
 		);
 	};
 
-	const getCurrentConditions = () => {
-		const formatDescritpion = str => {
-			return str
-				.split(' ')
-				.map(word => `${word[0].toUpperCase()}${word.substring(1)}`)
-				.join(' ');
-		};
-
-		return (
-			<>
-				<img
-					src={`http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`}
-					alt='Weather Icon'
-				/>
-				<p>{formatDescritpion(data.weather[0].description)}</p>
-				<p className='temp'>
-					{Math.round(data.main.temp)} <span className='units'>{unitValues[units].temp}</span>
-				</p>
-			</>
-		);
-	};
-
-	const additionalConditions = (type, icon, value, input) => {
+	const Condition = ({ icon, type, value, input }) => {
 		let unit = unitValues[units][input];
 
 		return (
@@ -73,37 +44,69 @@ function WeatherCurrent({ url, userInput, units, unitValues, setFetchedTime }) {
 		);
 	};
 
-	const preRender = {
-		loading: <p className='user-message'>Loading Current Weather...</p>,
-		error: (
-			<p className='user-message'>
-				Unable to find weather data for <span>{userInput}</span>.<br /> Please check your spelling
-				or limit your search to a <span>City Name</span> or a <span>ZIP code</span>.
-			</p>
-		),
-	};
-
+	// SET VALUES => ON MOUNT & WHEN DATA CHANGES
 	useEffect(() => {
 		if (data) {
 			const { lat, lon } = data.coord;
-			fetchLocationFromCoords(lat, lon, setWeatherLocation, setFetchingLocation);
+			const description = data.weather[0].description.split(' ').map(word => {
+				return `${word[0].toUpperCase()}${word.substring(1)}`;
+			});
+
+			fetchLocationFromCoords(lat, lon, setWeatherLocation);
+			setDescription(description.join(' '));
 			setFetchedTime(getFormattedTime(data.dt * 1000));
 		}
 	}, [data, setFetchedTime]);
 
-	if (loading || fetchingLocation) return preRender.loading;
-	if (error) return preRender.error;
+	if (loading) {
+		return <p className='user-message'>Loading Current Weather...</p>;
+	}
+
+	if (error) {
+		return (
+			<p className='user-message'>
+				Unable to find weather data for <span>{userInput}</span>.<br /> Please check your spelling
+				or limit your search to a <span>City Name</span> or a <span>ZIP code</span>.
+			</p>
+		);
+	}
+
 	return (
 		<StyledWeatherCurrent>
 			<h1 className='city'>{`${weatherLocation.city}, ${weatherLocation.state}`}</h1>
-			<div className='current-conditions'>{getCurrentConditions()}</div>
+			<div className='current-conditions'>
+				<img
+					src={`http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`}
+					alt='Weather Icon'
+				/>
+				<p>{description}</p>
+				<p className='temp'>
+					{Math.round(data.main.temp)} <span className='units'>{unitValues[units].temp}</span>
+				</p>
+			</div>
 			<div className='day-length'>
-				{getDayLength(data.sys.sunrise * 1000, data.sys.sunset * 1000)}
+				<DayLength className='sunrise' icon={<SunriseIcon />} time={data.sys.sunrise * 1000} />
+				<DayLength className='sunset' icon={<SunsetIcon />} time={data.sys.sunset * 1000} />
 			</div>
 			<div className='additional-conditions'>
-				{additionalConditions('Wind Speed', <WindSpeedIcon />, data.wind.speed, 'speed')}
-				{additionalConditions('Humidity', <HumidityIcon />, data.main.humidity, 'percent')}
-				{additionalConditions('Visibility', <VisibilityIcon />, data.visibility, 'distance')}
+				<Condition
+					icon={<WindSpeedIcon />}
+					type={'Wind Speed'}
+					value={data.wind.speed}
+					input={'speed'}
+				/>
+				<Condition
+					icon={<HumidityIcon />}
+					type={'Humidity'}
+					value={data.main.humidity}
+					input={'percent'}
+				/>
+				<Condition
+					icon={<VisibilityIcon />}
+					type={'Visibility'}
+					value={data.visibility}
+					input={'distance'}
+				/>
 			</div>
 		</StyledWeatherCurrent>
 	);
