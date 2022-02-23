@@ -13,11 +13,12 @@ import UserAlert from 'components/shared/UserAlerts';
 import { UserAvatar, UserAvatarBrowse } from 'components/shared/Avatar';
 import { StyledUpdateForm } from './Pages.Styled';
 
-// prettier-ignore
-import { MdEmail as EmailIcon, MdLock as PasswordIcon, MdOutlineLocationOn as LocationIcon } from 'react-icons/md';
+import { CodewarsIcon } from 'Assets/WidgetIcons';
+import { IoIosMail as EmailIcon } from 'react-icons/io';
+import { MdLock as PasswordIcon } from 'react-icons/md';
 import { AiOutlineUser as UsernameIcon } from 'react-icons/ai';
 import { CgFileRemove as RemoveFileIcon } from 'react-icons/cg';
-import { CodewarsIcon } from 'Assets/WidgetIcons';
+import { IoLocationSharp as LocationIcon } from 'react-icons/io5';
 
 export default function UpdateProfilePage() {
 	const navigate = useNavigate();
@@ -223,7 +224,7 @@ export default function UpdateProfilePage() {
 					placeholder={userData?.codewarsUsername || 'No username saved'}
 					value={codewars}
 					onChange={e => setCodewars(e.target.value)}
-					icon={<CodewarsIcon height='1.5rem' color='#C3C3C3' />}
+					icon={<CodewarsIcon width='0.9em' height='0.9em' color='#C3C3C3' />}
 				/>
 
 				<InputField
