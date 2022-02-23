@@ -68,24 +68,21 @@ function Weather() {
 
 	useEffect(() => {
 		if (userData) {
-			// DETERMINES QUERY BASED ON THE EXISTENCE OF A USER LOCATION ZIP CODE
+			// QUERIES A DEFAULT VALUE IF USER LOCATION ZIP CODE IS NULL
 			const query = userData?.location?.zip ? `zip=${userData.location.zip}` : `zip=10001`;
 			setCurrentURL(`${api.current}${query}&units=${units}${api.key}`);
 			setForecastURL(`${api.forecast}${query}&units=${units}${api.key}`);
 		}
+	}, [userData, units]);
 
+	useEffect(() => {
 		if (userInput) {
 			// DETERMINES WHETHER TO QUERY A STRING (CITY) OR NUMBER (ZIP CODE)
 			const query = isNaN(userInput) ? `q=${userInput}` : `zip=${userInput}`;
 			setCurrentURL(`${api.current}${query}&units=${units}${api.key}`);
 			setForecastURL(`${api.forecast}${query}&units=${units}${api.key}`);
 		}
-
-		if (!userInput && !userData) {
-			setCurrentURL(`${api.current}zip=10001&units=${units}${api.key}`);
-			setForecastURL(`${api.forecast}zip=10001&units=${units}${api.key}`);
-		}
-	}, [userData, userInput, units]);
+	}, [userInput, units]);
 
 	return (
 		<Card>
