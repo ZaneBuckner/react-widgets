@@ -118,7 +118,7 @@ export const fetchUserLocation = (setUserLocation, setLoading) => {
  * setLocation(fetchLocationFromCoords(40.689247, -74.044502));
  * location => { city: 'New York', state: 'NY' }
  */
-export const fetchLocationFromCoords = async (lat, lon, setState, setLoading) => {
+export const fetchLocationFromCoords = async (lat, lon, setState) => {
 	const api = {
 		base: 'http://api.openweathermap.org/geo/1.0/reverse?',
 		query: `lat=${lat}&lon=${lon}`,
@@ -189,7 +189,7 @@ export const fetchLocationFromCoords = async (lat, lon, setState, setLoading) =>
 	};
 
 	try {
-		setLoading(true);
+		// setLoading(true);
 		const fetchURL = `${api.base}${api.query}${api.limit}${api.key}`;
 		const response = await fetch(fetchURL);
 		const data = await response.json();
@@ -201,6 +201,6 @@ export const fetchLocationFromCoords = async (lat, lon, setState, setLoading) =>
 	} catch (error) {
 		console.log('Unable fetch location from coordinates.', error);
 	} finally {
-		setLoading(false);
+		// setLoading(false);
 	}
 };
