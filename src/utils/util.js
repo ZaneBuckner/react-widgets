@@ -105,3 +105,102 @@ export const fetchUserLocation = (setUserLocation, setLoading) => {
 		}
 	};
 };
+
+/**
+ * Fetches city name and state code from coordinates (using [OpenWeather](https://openweathermap.org/api/geocoding-api)).
+ * @param {number} lat Latitude
+ * @param {number} lon Longitude
+ * @param {function} setState Updates component state.
+ * @param {function} setLoading To update component on the loading state of this function.
+ * @returns {Promise<object>} Returns object containing a city and state code.
+ * @example
+ * const [location, setLocation] = useState('');
+ * setLocation(fetchLocationFromCoords(40.689247, -74.044502));
+ * location => { city: 'New York', state: 'NY' }
+ */
+export const fetchLocationFromCoords = async (lat, lon, setState, setLoading) => {
+	const api = {
+		base: 'http://api.openweathermap.org/geo/1.0/reverse?',
+		query: `lat=${lat}&lon=${lon}`,
+		limit: `&limit=${1}`,
+		key: `&appid=${process.env.REACT_APP_WIDGET_WEATHER_API_KEY}`,
+	};
+
+	const stateCodesRef = {
+		Alabama: 'AL',
+		Alaska: 'AK',
+		'American Samoa': 'AS',
+		Arizona: 'AZ',
+		Arkansas: 'AR',
+		California: 'CA',
+		Colorado: 'CO',
+		Connecticut: 'CT',
+		Delaware: 'DE',
+		'District Of Columbia': 'DC',
+		'Federated States Of Micronesia': 'FM',
+		Florida: 'FL',
+		Georgia: 'GA',
+		Guam: 'GU',
+		Hawaii: 'HI',
+		Idaho: 'ID',
+		Illinois: 'IL',
+		Indiana: 'IN',
+		Iowa: 'IA',
+		Kansas: 'KS',
+		Kentucky: 'KY',
+		Louisiana: 'LA',
+		Maine: 'ME',
+		'Marshall Islands': 'MH',
+		Maryland: 'MD',
+		Massachusetts: 'MA',
+		Michigan: 'MI',
+		Minnesota: 'MN',
+		Mississippi: 'MS',
+		Missouri: 'MO',
+		Montana: 'MT',
+		Nebraska: 'NE',
+		Nevada: 'NV',
+		'New Hampshire': 'NH',
+		'New Jersey': 'NJ',
+		'New Mexico': 'NM',
+		'New York': 'NY',
+		'North Carolina': 'NC',
+		'North Dakota': 'ND',
+		'Northern Mariana Islands': 'MP',
+		Ohio: 'OH',
+		Oklahoma: 'OK',
+		Oregon: 'OR',
+		Palau: 'PW',
+		Pennsylvania: 'PA',
+		'Puerto Rico': 'PR',
+		'Rhode Island': 'RI',
+		'South Carolina': 'SC',
+		'South Dakota': 'SD',
+		Tennessee: 'TN',
+		Texas: 'TX',
+		Utah: 'UT',
+		Vermont: 'VT',
+		'Virgin Islands': 'VI',
+		Virginia: 'VA',
+		Washington: 'WA',
+		'West Virginia': 'WV',
+		Wisconsin: 'WI',
+		Wyoming: 'WY',
+	};
+
+	try {
+		setLoading(true);
+		const fetchURL = `${api.base}${api.query}${api.limit}${api.key}`;
+		const response = await fetch(fetchURL);
+		const data = await response.json();
+
+		setState({
+			city: data[0].name,
+			state: stateCodesRef[data[0].state],
+		});
+	} catch (error) {
+		console.log('Unable fetch location from coordinates.', error);
+	} finally {
+		setLoading(false);
+	}
+};
