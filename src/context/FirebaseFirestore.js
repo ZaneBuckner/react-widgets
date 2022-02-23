@@ -3,8 +3,6 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { doc, setDoc, updateDoc, deleteDoc } from 'firebase/firestore';
 
-export const userDocumentRef = currentUser => doc(db, `users/${currentUser.uid}`);
-
 /**
  * Initializes user document with initial data on signup.
  * @param {object} currentUser Firebase User
