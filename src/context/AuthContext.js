@@ -41,7 +41,7 @@ export const AuthContextProvider = ({ children }) => {
 	const handleUsernameUpdate = newName => updateProfile(currentUser, { displayName: newName });
 	const handleAccountDelete = () => deleteUser(currentUser);
 
-	// FIREBASE AUTH OBSERVER => WHEN USER STATE CHANGES (LOGIN & LOGOUT)
+	// AUTH OBSERVER => WHEN USER STATE CHANGES (LOGIN & LOGOUT)
 	useEffect(() => {
 		const unsubscribe = onAuthStateChanged(auth, user => {
 			setCurrentUser(user);
@@ -50,15 +50,16 @@ export const AuthContextProvider = ({ children }) => {
 		return unsubscribe;
 	}, []);
 
-	// FIREBASE FIRESTORE DB OBSERVER => WHEN USER DATA CHANGES
+	// FIRESTORE DB OBSERVER => WHEN USER DATA CHANGES
 	useEffect(() => {
-		if (!currentUser) return;
-		const userDocumentRef = doc(db, `users/${currentUser.uid}`);
-		const unsubscribe = onSnapshot(userDocumentRef, doc => setCurrentUserData(doc.data()));
-		return unsubscribe;
+		if (currentUser) {
+			const userDocumentRef = doc(db, `users/${currentUser.uid}`);
+			const unsubscribe = onSnapshot(userDocumentRef, doc => setCurrentUserData(doc.data()));
+			return unsubscribe;
+		}
 	}, [currentUser]);
 
-	// UPDATE USER LOCATION DATA ON SIGNUP & ON CHANGE => RUNS WHEN DATA IS FETCHED
+	// NEW USER LOCATION LISTENER => AWAITS FETCHED DATA
 	useEffect(() => {
 		userLocation && updateUserDocument(currentUser, { location: userLocation });
 	}, [userLocation, currentUser]);
