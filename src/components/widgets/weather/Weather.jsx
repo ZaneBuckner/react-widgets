@@ -51,7 +51,7 @@ function Weather() {
 	const { userData } = useAuthContext();
 	const [currentURL, setCurrentURL] = useState('');
 	const [forecastURL, setForecastURL] = useState('');
-	const [userInput, setUserInput] = useState(userData.location?.zip || 70401);
+	const [userInput, setUserInput] = useState('');
 	const [fetchedTime, setFetchedTime] = useState('');
 	const [units, setUnits] = useState('imperial');
 
@@ -67,18 +67,25 @@ function Weather() {
 	const handleSearchSubmit = e => e.key === 'Enter' && setUserInput(e.target.value);
 
 	useEffect(() => {
-		if (isNaN(userInput)) {
-			const currentURL = `${api.current}q=${userInput}&units=${units}${api.key}`;
-			const forecastURL = `${api.forecast}q=${userInput}&units=${units}${api.key}`;
-			setCurrentURL(currentURL);
-			setForecastURL(forecastURL);
-		} else {
-			const currentURL = `${api.current}zip=${userInput}&units=${units}${api.key}`;
-			const forecastURL = `${api.forecast}zip=${userInput}&units=${units}${api.key}`;
-			setCurrentURL(currentURL);
-			setForecastURL(forecastURL);
+		if (userData) {
+			// DETERMINES QUERY BASED ON THE EXISTENCE OF A USER LOCATION ZIP CODE
+			const query = userData?.location?.zip ? `zip=${userData.location.zip}` : `zip=10001`;
+			setCurrentURL(`${api.current}${query}&units=${units}${api.key}`);
+			setForecastURL(`${api.forecast}${query}&units=${units}${api.key}`);
 		}
-	}, [userInput, units]);
+
+		if (userInput) {
+			// DETERMINES WHETHER TO QUERY A STRING (CITY) OR NUMBER (ZIP CODE)
+			const query = isNaN(userInput) ? `q=${userInput}` : `zip=${userInput}`;
+			setCurrentURL(`${api.current}${query}&units=${units}${api.key}`);
+			setForecastURL(`${api.forecast}${query}&units=${units}${api.key}`);
+		}
+
+		if (!userInput && !userData) {
+			setCurrentURL(`${api.current}zip=10001&units=${units}${api.key}`);
+			setForecastURL(`${api.forecast}zip=10001&units=${units}${api.key}`);
+		}
+	}, [userData, userInput, units]);
 
 	return (
 		<Card>
@@ -99,8 +106,8 @@ function Weather() {
 				onUtilityToggle={<SettingsIcon onClick={handleUtilityToggle} />}
 			/>
 
-			<StyledWeather>
-				{currentURL && (
+			{currentURL && forecastURL && (
+				<StyledWeather>
 					<WeatherCurrent
 						url={currentURL}
 						userInput={userInput}
@@ -108,9 +115,9 @@ function Weather() {
 						unitValues={unitValues}
 						setFetchedTime={setFetchedTime}
 					/>
-				)}
-				{forecastURL && <WeatherForecast url={forecastURL} units={units} unitValues={unitValues} />}
-			</StyledWeather>
+					<WeatherForecast url={forecastURL} units={units} unitValues={unitValues} />
+				</StyledWeather>
+			)}
 
 			<WidgetModal
 				open={isAboutModal}
