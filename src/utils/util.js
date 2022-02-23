@@ -120,7 +120,7 @@ export const fetchUserLocation = (setUserLocation, setLoading) => {
  */
 export const fetchLocationFromCoords = async (lat, lon, setState) => {
 	const api = {
-		base: 'http://api.openweathermap.org/geo/1.0/reverse?',
+		base: 'https://api.openweathermap.org/geo/1.0/reverse?',
 		query: `lat=${lat}&lon=${lon}`,
 		limit: `&limit=${1}`,
 		key: `&appid=${process.env.REACT_APP_WIDGET_WEATHER_API_KEY}`,
