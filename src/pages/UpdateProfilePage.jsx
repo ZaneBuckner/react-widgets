@@ -7,10 +7,10 @@ import { formatErrorCode } from 'utils/util';
 import styled from 'styled-components';
 
 import Page from './Page';
-import Button from 'components/shared/Button';
+import Button, { FileInputButton } from 'components/shared/Button';
 import InputField from 'components/shared/InputField';
 import UserAlert from 'components/shared/UserAlerts';
-import { UserAvatar, UserAvatarBrowse } from 'components/shared/Avatar';
+import { UserAvatar } from 'components/shared/Avatar';
 import { StyledUpdateForm } from './Pages.Styled';
 
 import { CodewarsIcon } from 'Assets/WidgetIcons';
@@ -19,6 +19,8 @@ import { MdLock as PasswordIcon } from 'react-icons/md';
 import { AiOutlineUser as UsernameIcon } from 'react-icons/ai';
 import { CgFileRemove as RemoveFileIcon } from 'react-icons/cg';
 import { IoLocationSharp as LocationIcon } from 'react-icons/io5';
+
+import { FaImages as ImageFileIcon } from 'react-icons/fa';
 
 export default function UpdateProfilePage() {
 	const navigate = useNavigate();
@@ -177,7 +179,12 @@ export default function UpdateProfilePage() {
 							/>
 						)}
 					</div>
-					<UserAvatarBrowse onImageSelect={handleSelectedImage} />
+					<FileInputButton
+						size='large'
+						icon={<ImageFileIcon />}
+						text='Browse...'
+						onImageSelect={handleSelectedImage}
+					/>
 				</AvatarInput>
 
 				<InputField

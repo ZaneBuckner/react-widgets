@@ -11,6 +11,41 @@ const AnimatedWrapper = styled(motion.div)`
 	background-color: #333333;
 `;
 
+const StyledLabel = styled.label`
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 10px;
+
+	font-family: 'Roboto', serif;
+	font-size: 1rem;
+	font-weight: 300;
+	color: #c3c3c3;
+	white-space: nowrap;
+
+	cursor: pointer;
+	transition: 250ms ease-in-out;
+
+	svg {
+		width: auto;
+		height: 100%;
+		color: #dab55d;
+		margin-right: 0.5rem;
+	}
+
+	&:hover {
+		filter: brightness(1.2) saturate(1.1);
+	}
+
+	${({ size }) =>
+		size &&
+		buttonSizes[size] &&
+		`
+    width: ${buttonSizes[size].width};
+    height: 3rem;
+  `}
+`;
+
 const StyledButton = styled.button`
 	display: flex;
 	justify-content: center;
@@ -166,4 +201,28 @@ export default function Button({
 	if (buttonState) return StatefulButton;
 	else if (animate) return AnimatedButton;
 	else return StaticButton;
+}
+
+export function FileInputButton({ disabled, icon, text, onImageSelect, ...props }) {
+	return (
+		<AnimatedWrapper
+			key={disabled}
+			variants={buttonStates}
+			initial={disabled ? 'clicked' : 'clickable'}
+			whileTap='whileTap'
+			transition='transition'
+		>
+			<input
+				id='file'
+				type='file'
+				accept='image/png, image/jpeg, image/svg+xml'
+				onChange={onImageSelect}
+				style={{ display: 'none' }}
+			/>
+			<StyledLabel htmlFor='file' {...props}>
+				{icon}
+				{text}
+			</StyledLabel>
+		</AnimatedWrapper>
+	);
 }
