@@ -5,7 +5,7 @@ function CardAnimation({ children }) {
 		<motion.div
 			initial={{ opacity: 0, borderRadius: '10px' }}
 			animate={{ opacity: 1 }}
-			transition={{ ease: 'easeOut', duration: 0.5 }}
+			transition={{ ease: 'easeInOut', duration: 0.8 }}
 			whileHover={{ boxShadow: '4px 8px 13px -4px rgba(0, 0, 0, 0.30)' }}
 		>
 			{children}

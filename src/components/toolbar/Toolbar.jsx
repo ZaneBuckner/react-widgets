@@ -13,9 +13,12 @@ function Toolbar() {
 			<StyledToolbar>
 				{widgets.map(widget => (
 					<StyledWidgetWrapper key={widget.id}>
-						<Button animate buttonState={widget.display} onClick={() => toggleDisplay(widget.ref)}>
-							{widget.icon}
-						</Button>
+						<Button
+							animate
+							buttonState={widget.display}
+							icon={widget.icon}
+							onClick={() => toggleDisplay(widget.widgetRef)}
+						/>
 						<h1>{widget.name}</h1>
 					</StyledWidgetWrapper>
 				))}
