@@ -174,15 +174,9 @@ export default function Button({
 			initial={disabled ? 'clicked' : 'clickable'}
 			whileTap='whileTap'
 			transition='transition'
+			className={className}
 		>
-			<StyledButton
-				variant={variant}
-				icon={icon}
-				text={text}
-				disabled={disabled}
-				className={className}
-				{...props}
-			>
+			<StyledButton variant={variant} icon={icon} text={text} disabled={disabled} {...props}>
 				{icon}
 				{text}
 				{children}
