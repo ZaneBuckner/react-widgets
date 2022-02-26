@@ -20,7 +20,7 @@ export default function PasswordResetPage() {
 	const [loading, setLoading] = useState(false);
 	const [successMessage, setSuccessMessage] = useState('');
 
-	const handleSubmitClick = async e => {
+	const handleSubmit = async e => {
 		e.preventDefault();
 
 		setEmailError(false);
@@ -49,7 +49,12 @@ export default function PasswordResetPage() {
 			{successMessage && (
 				<UserAlert className='user-message' variant='success' message={successMessage} />
 			)}
-			<StyledResetPasswordForm className='body' autoComplete='off'>
+			<StyledResetPasswordForm
+				type='submit'
+				onSubmit={handleSubmit}
+				className='body'
+				autoComplete='off'
+			>
 				<InputField
 					required
 					type='email'
@@ -65,7 +70,7 @@ export default function PasswordResetPage() {
 					type='submit'
 					size='large'
 					text='Reset'
-					onClick={handleSubmitClick}
+					onClick={handleSubmit}
 					disabled={loading}
 				/>
 			</StyledResetPasswordForm>

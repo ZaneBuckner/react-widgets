@@ -61,7 +61,7 @@ export default function LoginPage() {
 		<Page>
 			<h1 className='title'>Welcome Back</h1>
 			{error && <UserAlert className='user-message' variant='error' message={error} />}
-			<StyledLoginForm className='body' autoComplete='off'>
+			<StyledLoginForm type='submit' onSubmit={handleSubmit} className='body' autoComplete='off'>
 				<InputField
 					required
 					type='email'

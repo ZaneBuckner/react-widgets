@@ -70,7 +70,7 @@ export default function RegisterPage() {
 		<Page>
 			<h1 className='title'>Create Account</h1>
 			<div className='user-messages'>{error && <UserAlert variant='error' message={error} />}</div>
-			<StyledRegisterForm className='body'>
+			<StyledRegisterForm type='submit' onSubmit={handleSubmit} className='body'>
 				<InputField
 					required
 					type='email'

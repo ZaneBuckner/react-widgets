@@ -21,7 +21,7 @@ export const StyledSuccessMessage = styled.div`
 	}
 `;
 
-export const StyledLoginForm = styled.div`
+export const StyledLoginForm = styled.form`
 	grid-area: 3 / 1 / 4 / 2;
 	display: grid;
 	grid-template-columns: 1fr;
@@ -31,7 +31,7 @@ export const StyledLoginForm = styled.div`
 	width: 100%;
 `;
 
-export const StyledRegisterForm = styled.div`
+export const StyledRegisterForm = styled.form`
 	grid-area: 3 / 1 / 5 / 2;
 	display: grid;
 	grid-template-columns: 1fr;
@@ -52,7 +52,7 @@ export const StyledUpdateForm = styled.form`
 	margin: auto 0;
 `;
 
-export const StyledResetPasswordForm = styled.div`
+export const StyledResetPasswordForm = styled.form`
 	grid-area: 3 / 1 / 5 / 2;
 	display: grid;
 	grid-template-columns: 1fr;
