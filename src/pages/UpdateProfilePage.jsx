@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuthContext } from 'context/AuthContext';
 import { storeUserImage } from 'context/FirebaseStorage';
-import { updateUserDocument, deleteUserDocument } from 'context/FirebaseFirestore';
 import { formatErrorCode } from 'utils/util';
 import styled from 'styled-components';
 
@@ -31,6 +30,8 @@ export default function UpdateProfilePage() {
 		onAccountDelete,
 		onPasswordUpdate,
 		onUsernameUpdate,
+		onDocumentUpdate,
+		onDocumentDelete,
 	} = useAuthContext();
 	const [loading, setLoading] = useState(false);
 	const [success, setSuccess] = useState('');
@@ -88,7 +89,7 @@ export default function UpdateProfilePage() {
 			const message = 'Are you sure you wish to delete your account?';
 			if (!window.confirm(message)) return;
 			await onAccountDelete();
-			deleteUserDocument(currentUser);
+			await onDocumentDelete();
 		} catch (err) {
 			setError(formatErrorCode(err.code));
 		}
@@ -105,7 +106,7 @@ export default function UpdateProfilePage() {
 
 		if (username) {
 			promises.push(onUsernameUpdate(username));
-			updateUserDocument(currentUser, { username: username });
+			onDocumentUpdate({ username: username });
 		}
 
 		if (userCity || userState || userZip) {
@@ -113,11 +114,11 @@ export default function UpdateProfilePage() {
 
 			const { city, state, zip } = userData.location;
 			const updatedLocation = { location: { city: userCity || city, state: userState || state, zip: userZip || zip } }; // prettier-ignore
-			promises.push(updateUserDocument(currentUser, updatedLocation));
+			promises.push(onDocumentUpdate(updatedLocation));
 		}
 
 		if (codewars) {
-			promises.push(updateUserDocument(currentUser, { codewarsUsername: codewars }));
+			promises.push(onDocumentUpdate({ codewarsUsername: codewars }));
 		}
 
 		if (email) {
@@ -137,7 +138,7 @@ export default function UpdateProfilePage() {
 			setLoading(true);
 			await Promise.all(promises);
 			setUpdateSuccess('Profile updated!');
-			email && !emailError && updateUserDocument(currentUser, { email: email });
+			email && !emailError && onDocumentUpdate({ email: email });
 		} catch (err) {
 			setError(formatErrorCode(err.code));
 		} finally {

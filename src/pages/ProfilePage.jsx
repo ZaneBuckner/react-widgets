@@ -2,13 +2,12 @@ import { useState, useEffect } from 'react';
 import { useAuthContext } from 'context/AuthContext';
 import { Link } from 'react-router-dom';
 import { getFormattedDate, fetchUserLocation } from 'utils/util';
-import { updateUserDocument } from 'context/FirebaseFirestore';
 import styled from 'styled-components';
 
 import Page from './Page';
 import Button from 'components/shared/Button';
 import { UserAvatar } from 'components/shared/Avatar';
-import PuffLoader from 'react-spinners/PuffLoader'; // [React Spinners](https://www.davidhu.io/react-spinners/)
+import PuffLoader from 'react-spinners/PuffLoader';
 
 import { IoIosMail as EmailIcon } from 'react-icons/io';
 import { IoLocationSharp as LocationIcon } from 'react-icons/io5';
@@ -16,7 +15,7 @@ import { MdMyLocation as GetLocationIcon } from 'react-icons/md';
 import { CodewarsIcon } from 'Assets/WidgetIcons';
 
 export default function ProfilePage() {
-	const { userData, currentUser, onLogout } = useAuthContext();
+	const { userData, currentUser, onLogout, onDocumentUpdate } = useAuthContext();
 	const [fetchedLocation, setFetchedLocation] = useState('');
 	const [fetchLoading, setFetchLoading] = useState(false);
 	const [profileData, setProfileData] = useState({
@@ -46,8 +45,9 @@ export default function ProfilePage() {
 
 	// UPDATE USER DOCUMENT ON AWAIT FETCHED LOCATION VALUE
 	useEffect(() => {
-		fetchedLocation && updateUserDocument(currentUser, { location: fetchedLocation });
-	}, [currentUser, fetchedLocation]);
+		fetchedLocation && onDocumentUpdate({ location: fetchedLocation });
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [fetchedLocation]);
 
 	// UPDATE INITIAL STATE VALUES TO POPULATE PROFILE ITEMS
 	useEffect(() => {
