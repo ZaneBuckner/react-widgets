@@ -6,7 +6,7 @@ import {
 	BiCheckShield as SuccessIcon,
 } from 'react-icons/bi';
 
-export default function UserAlert({ variant, message }) {
+export default function UserAlert({ variant, message, ...props }) {
 	const variantIcon = {
 		error: <ErrorIcon />,
 		warning: <WarningIcon />,
@@ -14,7 +14,7 @@ export default function UserAlert({ variant, message }) {
 	};
 
 	return (
-		<StyledAlert variant={variant}>
+		<StyledAlert variant={variant} {...props}>
 			{variantIcon[variant]}
 			<div className='message-wrapper'>
 				<h3>{message}</h3>
