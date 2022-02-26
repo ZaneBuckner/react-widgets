@@ -1,29 +1,32 @@
 import styled from 'styled-components';
 
 export const StyledCounter = styled.div`
-	display: flex;
-	justify-content: space-between;
+	position: relative;
+	display: grid;
+	grid-template-rows: repeat(2, auto);
+	justify-items: center;
 	align-items: center;
-	margin: auto;
+	width: 100%;
 	height: 20rem;
 
-	button {
-		width: 3rem;
-		height: 3rem;
+	.count-display {
+		display: grid;
+		grid-template-columns: repeat(3, auto);
+		justify-items: center;
+		align-items: center;
+		width: 100%;
+		margin-top: auto;
+	}
 
-		svg {
-			width: 100%;
-			height: 100%;
-			fill: #c3c3c3;
-		}
+	.count-reset {
+		margin-top: auto;
 	}
 `;
 
 export const CountDisplay = styled.h1`
-	width: 8rem;
-
+	width: 100%;
 	font-family: 'Lato', serif;
-	font-size: 3rem;
+	font-size: 4rem;
 	text-align: center;
 
 	/* TEXT SHADOW EFFECT */
