@@ -1,7 +1,6 @@
 import { StyledTask } from './TaskTracker.Styled';
 
 import { RiDeleteBinLine as DeleteIcon } from 'react-icons/ri';
-import { GoThreeBars as DragIcon } from 'react-icons/go';
 
 function Task({ task, onDelete, onToggle }) {
 	return (
@@ -12,7 +11,6 @@ function Task({ task, onDelete, onToggle }) {
 			</div>
 			<div className='actions-wrapper'>
 				<DeleteIcon onClick={() => onDelete(task.id)} />
-				<DragIcon />
 			</div>
 		</StyledTask>
 	);
