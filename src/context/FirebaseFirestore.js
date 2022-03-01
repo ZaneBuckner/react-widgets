@@ -2,6 +2,61 @@ import { db } from '../firebase'; // FIREBASE FIRESTORE INSTANCE
 import { doc, setDoc } from 'firebase/firestore';
 import { v4 as uuidv4 } from 'uuid';
 
+export const getInitialData = currentUser => {
+	return {
+		uid: currentUser.uid,
+		username: currentUser.email,
+		location: '',
+		codewarsUsername: '',
+		tasks: [
+			{
+				date: 'mmm dd | hh:mm',
+				important: true,
+				id: uuidv4(),
+				title: 'Task Name',
+			},
+		],
+		widgets: [
+			{
+				id: uuidv4(),
+				display: true,
+				title: 'Clock',
+				widgetRef: 'clock',
+			},
+			{
+				id: uuidv4(),
+				display: true,
+				title: 'Bob Ross',
+				widgetRef: 'bobross',
+			},
+			{
+				id: uuidv4(),
+				display: true,
+				title: 'Weather',
+				widgetRef: 'weather',
+			},
+			{
+				id: uuidv4(),
+				display: true,
+				title: 'Task Tracker',
+				widgetRef: 'tasktracker',
+			},
+			{
+				id: uuidv4(),
+				display: true,
+				title: 'CodeWars',
+				widgetRef: 'codewars',
+			},
+			{
+				id: uuidv4(),
+				display: true,
+				title: 'Counter',
+				widgetRef: 'counter',
+			},
+		],
+	};
+};
+
 /**
  * Initializes user document with initial data on signup.
  * @param {object} currentUser Firebase User
@@ -11,58 +66,8 @@ export const createUserDocument = async currentUser => {
 	const userDocumentRef = doc(db, `users/${currentUser.uid}`);
 
 	try {
-		await setDoc(userDocumentRef, {
-			uid: currentUser.uid,
-			username: currentUser.email,
-			location: '',
-			codewarsUsername: '',
-			tasks: [
-				{
-					date: 'mmm dd @ hh:mm',
-					important: true,
-					id: uuidv4(),
-					title: 'Task Name',
-				},
-			],
-			widgets: [
-				{
-					id: uuidv4(),
-					display: true,
-					title: 'Clock',
-					widgetRef: 'clock',
-				},
-				{
-					id: uuidv4(),
-					display: true,
-					title: 'Bob Ross',
-					widgetRef: 'bobross',
-				},
-				{
-					id: uuidv4(),
-					display: true,
-					title: 'Weather',
-					widgetRef: 'weather',
-				},
-				{
-					id: uuidv4(),
-					display: true,
-					title: 'Task Tracker',
-					widgetRef: 'tasktracker',
-				},
-				{
-					id: uuidv4(),
-					display: true,
-					title: 'CodeWars',
-					widgetRef: 'codewars',
-				},
-				{
-					id: uuidv4(),
-					display: true,
-					title: 'Counter',
-					widgetRef: 'counter',
-				},
-			],
-		});
+		const initialData = getInitialData(currentUser);
+		await setDoc(userDocumentRef, initialData);
 	} catch (error) {
 		console.log('Error setting signed up user data', error);
 	}
