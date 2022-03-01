@@ -18,6 +18,8 @@ import { MdLock as PasswordIcon } from 'react-icons/md';
 import { AiOutlineUser as UsernameIcon } from 'react-icons/ai';
 import { CgFileRemove as RemoveFileIcon } from 'react-icons/cg';
 import { IoLocationSharp as LocationIcon } from 'react-icons/io5';
+import { IoPersonRemove as DeleteAccountIcon } from 'react-icons/io5';
+import { BiReset as ResetAccountIcon } from 'react-icons/bi';
 
 import { FaImages as ImageFileIcon } from 'react-icons/fa';
 
@@ -32,6 +34,7 @@ export default function UpdateProfilePage() {
 		onUsernameUpdate,
 		onDocumentUpdate,
 		onDocumentDelete,
+		onDocumentReset,
 	} = useAuthContext();
 	const [loading, setLoading] = useState(false);
 	const [success, setSuccess] = useState('');
@@ -90,6 +93,16 @@ export default function UpdateProfilePage() {
 			if (!window.confirm(message)) return;
 			await onAccountDelete();
 			await onDocumentDelete();
+		} catch (err) {
+			setError(formatErrorCode(err.code));
+		}
+	};
+
+	const handleAccountReset = async () => {
+		try {
+			const message = 'Are you sure you wish to reset account data?';
+			if (!window.confirm(message)) return;
+			await onDocumentReset();
 		} catch (err) {
 			setError(formatErrorCode(err.code));
 		}
@@ -278,10 +291,29 @@ export default function UpdateProfilePage() {
 					disabled={loading}
 				/>
 			</StyledUpdateForm>
-			<Button animate size='large' text='Delete Account' onClick={handleAccountDelete} />
-			<div className='footer'>
+			<div className='links'>
 				<Link className='link' to='/profile' children='CANCEL' />
 			</div>
+			<StyledFooter>
+				<Button
+					animate
+					size='auto'
+					variant='combo'
+					icon={<DeleteAccountIcon />}
+					children='Delete Account'
+					onClick={handleAccountDelete}
+					className='btn'
+				/>
+				<Button
+					animate
+					size='auto'
+					variant='combo'
+					icon={<ResetAccountIcon />}
+					children='Reset Account'
+					onClick={handleAccountReset}
+					className='btn'
+				/>
+			</StyledFooter>
 		</Page>
 	);
 }
@@ -341,5 +373,28 @@ const LocationInputFields = styled.div`
 		.breakpoint-mod {
 			margin-left: 2.3rem;
 		}
+	}
+`;
+
+const StyledFooter = styled.div`
+	display: grid;
+	grid-template-columns: repeat(2, auto);
+	place-items: center;
+	align-items: center;
+	width: 100%;
+	height: auto;
+	margin-top: 4rem;
+
+	div {
+		button {
+			color: #d92626;
+			font-weight: 400;
+		}
+	}
+
+	@media only screen and (max-width: 500px) {
+		grid-template-columns: 1fr;
+		grid-template-rows: repeat(2, auto);
+		grid-row-gap: 1rem;
 	}
 `;
