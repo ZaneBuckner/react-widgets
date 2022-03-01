@@ -9,31 +9,24 @@ import { BsCheck as CheckmarkIcon } from 'react-icons/bs';
 function AddTask({ onAddTask }) {
 	const [title, setTitle] = useState('');
 	const [date, setDate] = useState('');
-	const [reminder, setReminder] = useState(false);
+	const [important, setImportant] = useState(false);
 	const [errorMessage, setErrorMessage] = useState('');
 
-	const toggleReminder = () => setReminder(reminder => !reminder);
-	const getDefaultDate = () => {
-		const d = getFormattedDate();
-		const t = getFormattedTime();
-		const formattedDate = `${d.day} ${d.month} ${d.year}`;
-		const formattedTime = `${t.hours}:${t.minutes} ${t.meridian}`;
-
-		return `${formattedDate} @ ${formattedTime}`;
-	};
+	const toggleImportance = () => setImportant(important => !important);
+	const resetValues = () => [setTitle(''), setImportant(false), setErrorMessage('')];
 
 	const handleSubmit = e => {
 		e.preventDefault();
-
-		if (!title) return setErrorMessage('Please provide a title.');
-		onAddTask({ title, date, reminder });
-		setTitle('');
-		setReminder(false);
-		setErrorMessage('');
+		if (!title) return setErrorMessage('Please provide a name');
+		onAddTask({ title, date, important });
+		resetValues();
 	};
 
+	// SET DATE AS CURRENT DATE => ON WIDGET MOUNT
 	useEffect(() => {
-		setDate(getDefaultDate);
+		const { day, month } = getFormattedDate();
+		const { hours, minutes, meridian } = getFormattedTime();
+		setDate(`${day} ${month} | ${hours}:${minutes} ${meridian}`);
 	}, []);
 
 	return (
@@ -57,11 +50,11 @@ function AddTask({ onAddTask }) {
 				<div className='form-checkbox-wrapper'>
 					<label>Mark as important:</label>
 					<div className='checkbox-wrapper'>
-						<StyledCheckbox type='checkbox' value={reminder} onChange={toggleReminder} />
-						{reminder && <CheckmarkIcon onClick={toggleReminder} />}
+						<StyledCheckbox type='checkbox' value={important} onChange={toggleImportance} />
+						{important && <CheckmarkIcon onClick={toggleImportance} />}
 					</div>
 				</div>
-				<Button animate type='submit' children='Save Task' />
+				<Button animate type='submit' size='large' text='Save Task' />
 			</form>
 		</>
 	);
