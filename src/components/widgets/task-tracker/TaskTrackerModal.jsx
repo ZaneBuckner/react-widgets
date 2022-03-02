@@ -58,11 +58,11 @@ export function About({ widgetIcon, addTaskIcon, clickIcon }) {
 	);
 }
 
-export function Utility({ widgetIcon, onAddTask }) {
+export function Utility({ widgetIcon, onAddTask, tasks }) {
 	return (
 		<StyledAddTask>
 			{widgetIcon}
-			<AddTask onAddTask={onAddTask} />
+			<AddTask onAddTask={onAddTask} tasks={tasks} />
 		</StyledAddTask>
 	);
 }

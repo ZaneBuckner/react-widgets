@@ -6,7 +6,7 @@ import UserAlert from 'components/shared/UserAlerts';
 import { StyledInput, StyledCheckbox } from './TaskTracker.Styled';
 import { BsCheck as CheckmarkIcon } from 'react-icons/bs';
 
-function AddTask({ onAddTask }) {
+function AddTask({ tasks, onAddTask }) {
 	const [title, setTitle] = useState('');
 	const [date, setDate] = useState('');
 	const [important, setImportant] = useState(false);
@@ -17,6 +17,7 @@ function AddTask({ onAddTask }) {
 
 	const handleSubmit = e => {
 		e.preventDefault();
+		if (tasks.length === 10) return setErrorMessage('Ambitious! Max limit reached!');
 		if (!title) return setErrorMessage('Please provide a name');
 		onAddTask({ title, date, important });
 		resetValues();
