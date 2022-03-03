@@ -28,6 +28,7 @@ export const CountDisplay = styled.h1`
 	font-family: 'Lato', serif;
 	font-size: 4rem;
 	text-align: center;
+	user-select: none;
 
 	/* TEXT SHADOW EFFECT */
 	background-color: #161616;

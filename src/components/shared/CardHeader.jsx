@@ -62,6 +62,7 @@ const StyledCardHeader = styled.div`
 		font-size: 0.8rem;
 		font-weight: 400;
 		color: #dab55d;
+		user-select: none;
 	}
 
 	@media (max-width: 500px) {
