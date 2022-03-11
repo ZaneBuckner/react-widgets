@@ -3,12 +3,13 @@ import styled from 'styled-components';
 
 import { CloseIcon } from 'Assets/WidgetIcons';
 
-export default function WidgetModal({ open, onClose, element }) {
+export default function WidgetModal({ open, onClose, element, children }) {
 	return (
 		open && (
 			<StyledWidgetModal>
 				<StyledCloseIcon onClick={onClose} />
 				{element}
+				{children}
 			</StyledWidgetModal>
 		)
 	);
@@ -17,7 +18,7 @@ export default function WidgetModal({ open, onClose, element }) {
 WidgetModal.propTypes = {
 	open: PropTypes.bool.isRequired, // CURRENT DISPLAY STATE
 	onClose: PropTypes.func.isRequired, // TOGGLE DISPLAY STATE
-	element: PropTypes.node.isRequired, // MODAL ELEMENT
+	element: PropTypes.node, // MODAL ELEMENT
 };
 
 const StyledWidgetModal = styled.div`
