@@ -17,24 +17,24 @@ export default function Widgets() {
 	return (
 		<StyledMuiContainer>
 			<Grid container spacing={3}>
+				{currentDisplay('weather') && (
+					<Grid item xs={12} sm={12} md={12}>
+						<CardAnimation children={<Weather />} />
+					</Grid>
+				)}
 				{currentDisplay('clock') && (
 					<Grid item xs={12} sm={6} md={4}>
 						<CardAnimation children={<Clock />} />
 					</Grid>
 				)}
-				{currentDisplay('weather') && (
+				{currentDisplay('bobross') && (
 					<Grid item xs={12} sm={6} md={4}>
-						<CardAnimation children={<Weather />} />
+						<CardAnimation children={<BobRossPaintings />} />
 					</Grid>
 				)}
 				{currentDisplay('task') && (
 					<Grid item xs={12} sm={6} md={4}>
 						<CardAnimation children={<TaskTracker />} />
-					</Grid>
-				)}
-				{currentDisplay('bobross') && (
-					<Grid item xs={12} sm={6} md={4}>
-						<CardAnimation children={<BobRossPaintings />} />
 					</Grid>
 				)}
 				{currentDisplay('counter') && (
