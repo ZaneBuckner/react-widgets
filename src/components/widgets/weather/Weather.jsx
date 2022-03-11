@@ -12,6 +12,8 @@ import ScaleLoader from 'react-spinners/ScaleLoader';
 
 import { TiWeatherPartlySunny as WeatherIcon } from 'react-icons/ti';
 import { SettingsIcon } from 'Assets/WidgetIcons';
+import 'weather-icons/css/weather-icons.min.css';
+import 'weather-icons/css/weather-icons-wind.min.css';
 
 const defaultLocation = {
 	city: 'New York',

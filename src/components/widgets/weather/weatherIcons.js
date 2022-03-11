@@ -1,5 +1,5 @@
-import 'weather-icons/css/weather-icons.min.css';
-import 'weather-icons/css/weather-icons-wind.min.css';
+// import 'weather-icons/css/weather-icons.min.css';
+// import 'weather-icons/css/weather-icons-wind.min.css';
 
 // WEATHER ICONS INTEGRATION REFERENCE OBJECT
 const weatherIconsRef = {
