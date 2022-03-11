@@ -42,6 +42,46 @@ export const getFormattedDate = (timestamp = Date.now()) => {
 };
 
 /**
+ * Formats timestamp into readable time components according to UTC (Local Time At Location).
+ * @param {number} timestamp Time adjusted with timezone offset (milliseconds).
+ * @returns {object} Returns formatted time object.
+ */
+export const getFormattedUTCTime = timestamp => {
+	const date = new Date(timestamp);
+
+	return {
+		hours: (date.getUTCHours() + 24) % 12 || 12,
+		minutes: String(date.getUTCMinutes()).padStart(2, '0'),
+		meridian: date.getUTCHours() < 12 ? 'AM' : 'PM',
+	};
+};
+
+/**
+ * Returns a location's time of day according to UTC. Each timestamp's date instance is converted to a value in terms of hours (eg. 3:30pm => 15.5) and compared to determine the time of day. The resulting value is used to retrieve a day or night variant Weather Icon when referenced to OpenWeather's API weather codes.
+ * @param {number} current Comparison time value (timestamp: seconds).
+ * @param {number} sunrise Start of the day (timestamp: seconds).
+ * @param {number} sunset End of the day (timestamp: seconds).
+ * @param {number} timezoneOffset Shift in UTC (timestamp: seconds).
+ * @returns Returns 'day' || 'night'
+ * @example
+ * const [current, sunrise, sunset, timezoneOffset] = [1646873089, 1646835087, 1646877343, -28800];
+ * getLocationTimeOfDay(current, sunrise, sunset, timezoneOffset)
+ * => {now: 16.73, start: 6.18, end: 17.92}
+ * => 'day'
+ */
+export const getLocationTimeOfDay = (current, sunrise, sunset, timezoneOffset) => {
+	const times = {};
+
+	[current, sunrise, sunset].forEach((timestamp, i) => {
+		const keysRef = ['now', 'start', 'end'];
+		const date = new Date((timestamp + timezoneOffset) * 1000);
+		times[keysRef[i]] = date.getUTCHours() + +(date.getUTCMinutes() / 60).toFixed(2);
+	});
+
+	return times.now > times.start && times.now < times.end ? 'day' : 'night';
+};
+
+/**
  * Formats firebase error code into a more readable format for users.
  * @param {string} Firebase Firebase error code.
  * @returns {string} Returns formatted error code.
@@ -97,6 +137,8 @@ export const fetchUserLocation = (setUserLocation, setLoading) => {
 				city: data.results[0].city,
 				state: data.results[0].state_code,
 				zip: data.results[0].postcode,
+				lat: data.results[0].lat,
+				lon: data.results[0].lon,
 			});
 		} catch (error) {
 			console.log('Unable fetch location address.', error);
@@ -104,103 +146,4 @@ export const fetchUserLocation = (setUserLocation, setLoading) => {
 			setLoading(false);
 		}
 	};
-};
-
-/**
- * Fetches city name and state code from coordinates (using [OpenWeather](https://openweathermap.org/api/geocoding-api)).
- * @param {number} lat Latitude
- * @param {number} lon Longitude
- * @param {function} setState Updates component state.
- * @param {function} setLoading To update component on the loading state of this function.
- * @returns {Promise<object>} Returns object containing a city and state code.
- * @example
- * const [location, setLocation] = useState('');
- * setLocation(fetchLocationFromCoords(40.689247, -74.044502));
- * location => { city: 'New York', state: 'NY' }
- */
-export const fetchLocationFromCoords = async (lat, lon, setState) => {
-	const api = {
-		base: 'https://api.openweathermap.org/geo/1.0/reverse?',
-		query: `lat=${lat}&lon=${lon}`,
-		limit: `&limit=${1}`,
-		key: `&appid=${process.env.REACT_APP_WIDGET_WEATHER_API_KEY}`,
-	};
-
-	const stateCodesRef = {
-		Alabama: 'AL',
-		Alaska: 'AK',
-		'American Samoa': 'AS',
-		Arizona: 'AZ',
-		Arkansas: 'AR',
-		California: 'CA',
-		Colorado: 'CO',
-		Connecticut: 'CT',
-		Delaware: 'DE',
-		'District Of Columbia': 'DC',
-		'Federated States Of Micronesia': 'FM',
-		Florida: 'FL',
-		Georgia: 'GA',
-		Guam: 'GU',
-		Hawaii: 'HI',
-		Idaho: 'ID',
-		Illinois: 'IL',
-		Indiana: 'IN',
-		Iowa: 'IA',
-		Kansas: 'KS',
-		Kentucky: 'KY',
-		Louisiana: 'LA',
-		Maine: 'ME',
-		'Marshall Islands': 'MH',
-		Maryland: 'MD',
-		Massachusetts: 'MA',
-		Michigan: 'MI',
-		Minnesota: 'MN',
-		Mississippi: 'MS',
-		Missouri: 'MO',
-		Montana: 'MT',
-		Nebraska: 'NE',
-		Nevada: 'NV',
-		'New Hampshire': 'NH',
-		'New Jersey': 'NJ',
-		'New Mexico': 'NM',
-		'New York': 'NY',
-		'North Carolina': 'NC',
-		'North Dakota': 'ND',
-		'Northern Mariana Islands': 'MP',
-		Ohio: 'OH',
-		Oklahoma: 'OK',
-		Oregon: 'OR',
-		Palau: 'PW',
-		Pennsylvania: 'PA',
-		'Puerto Rico': 'PR',
-		'Rhode Island': 'RI',
-		'South Carolina': 'SC',
-		'South Dakota': 'SD',
-		Tennessee: 'TN',
-		Texas: 'TX',
-		Utah: 'UT',
-		Vermont: 'VT',
-		'Virgin Islands': 'VI',
-		Virginia: 'VA',
-		Washington: 'WA',
-		'West Virginia': 'WV',
-		Wisconsin: 'WI',
-		Wyoming: 'WY',
-	};
-
-	try {
-		// setLoading(true);
-		const fetchURL = `${api.base}${api.query}${api.limit}${api.key}`;
-		const response = await fetch(fetchURL);
-		const data = await response.json();
-
-		setState({
-			city: data[0].name,
-			state: stateCodesRef[data[0].state],
-		});
-	} catch (error) {
-		console.log('Unable fetch location from coordinates.', error);
-	} finally {
-		// setLoading(false);
-	}
 };

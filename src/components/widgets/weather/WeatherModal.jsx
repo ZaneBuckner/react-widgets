@@ -1,80 +1,114 @@
 import styled from 'styled-components';
 
+import WidgetModal from '../WidgetModal';
 import Button from 'components/shared/Button';
 
-export function About({ widgetIcon, settingsIcon, fetchedTime }) {
+import { IoTodayOutline as DailyIcon } from 'react-icons/io5';
+import { BsClockHistory as HourlyIcon } from 'react-icons/bs';
+
+import { SettingsIcon } from 'Assets/WidgetIcons';
+
+export function AboutModal({ open, onClose, handleModalSwitch, widgetIcon, fetchedTime }) {
+	const FormattedSettingsIcon = <SettingsIcon removeBG width='1rem' height='1rem' color='#DAB55D' style={{ cursor: 'pointer' }} onClick={handleModalSwitch} />; // prettier-ignore
+
+	// prettier-ignore
+	const hyperLink = (
+    <a className='hyperlink' href='https://openweathermap.org/' target='_blank' rel='noopener noreferrer'>
+      OpenWeather APIs
+    </a>
+  );
+
 	return (
-		<>
+		<WidgetModal open={open} onClose={onClose}>
 			{widgetIcon}
 			<h1 className='header'>Weather Dashboard</h1>
 			<h2 className='subheader'>Rainy Weather && Hacking</h2>
 			<div className='body'>
-				<p>Select {settingsIcon} to change the units.</p>
+				<p>Select {FormattedSettingsIcon} to change the units.</p>
 			</div>
 			<div className='footer'>
-				Last Updated: {`${fetchedTime.hours}:${fetchedTime.minutes} ${fetchedTime.meridian}`}
+				Last Updated: {fetchedTime}
 				{hyperLink}
 			</div>
-		</>
+		</WidgetModal>
 	);
 }
 
-export function Utility({ widgetIcon, units, setUnits }) {
+// prettier-ignore
+export function UtilityModal({ open, onClose, widgetIcon, weatherUnits, setWeatherUnits, forecastUnits, setForecastUnits }) {
 	return (
-		<>
+		<WidgetModal open={open} onClose={onClose}>
 			{widgetIcon}
 			<h1 className='header'>Units</h1>
-			<StyledButtonGroup>
+      <StyledButtonGroup>
+      <div className='weather-units'>
 				<Button
 					animate
 					size='medium'
-					className={`${units !== 'imperial' && 'clickable'}`}
-					buttonState={units === 'imperial' && true}
-					onClick={() => setUnits('imperial')}
-					text='&deg;F'
+					buttonState={weatherUnits === 'imperial' && true}
+					onClick={() => setWeatherUnits('imperial')}
+					text='°F'
 				/>
 				<Button
 					animate
 					size='medium'
-					className={`${units !== 'metric' && 'clickable'}`}
-					buttonState={units === 'metric' && true}
-					onClick={() => setUnits('metric')}
-					text='&deg;C'
+					buttonState={weatherUnits === 'metric' && true}
+					onClick={() => setWeatherUnits('metric')}
+					text='°C'
 				/>
 				<Button
 					animate
 					size='medium'
-					className={`${units !== 'standard' && 'clickable'}`}
-					buttonState={units === 'standard' && true}
-					onClick={() => setUnits('standard')}
+					buttonState={weatherUnits === 'standard' && true}
+					onClick={() => setWeatherUnits('standard')}
 					text='SI Units'
 				/>
-			</StyledButtonGroup>
-		</>
+			</div>
+			<div className='forecast-units'>
+				<Button
+					animate
+					size='medium'
+					variant='combo'
+					icon={<DailyIcon />}
+					children='Daily'
+					buttonState={forecastUnits === 'daily' && true}
+					onClick={() => setForecastUnits('daily')}
+				/>
+				<Button
+					animate
+					size='medium'
+					variant='combo'
+					icon={<HourlyIcon />}
+					children='Hourly'
+					buttonState={forecastUnits === 'hourly' && true}
+					onClick={() => setForecastUnits('hourly')}
+				/>
+			</div>
+      </StyledButtonGroup>
+		</WidgetModal>
 	);
 }
 
 const StyledButtonGroup = styled.div`
 	display: grid;
-	grid-template-columns: 1fr;
-	grid-template-rows: 1fr 1fr 1fr;
-	grid-row-gap: 1rem;
-	grid-area: 2 / 1 / 5 / 2;
+	grid-template-columns: repeat(2, auto);
+	justify-items: center;
+	width: 100%;
+	height: 100%;
 
-	font-weight: 500;
+	.weather-units {
+		display: grid;
+		grid-template-rows: repeat(3, auto);
+		grid-row-gap: 1rem;
+		justify-items: center;
+		align-items: center;
+	}
 
-	.clickable {
-		color: #c3c3c3;
+	.forecast-units {
+		display: grid;
+		grid-template-rows: repeat(2, auto);
+		grid-row-gap: 1rem;
+		justify-items: center;
+		align-items: center;
 	}
 `;
-
-const hyperLink = (
-	<a
-		className='hyperlink'
-		href='https://openweathermap.org/'
-		target='_blank'
-		rel='noopener noreferrer'
-	>
-		OpenWeather APIs
-	</a>
-);
