@@ -1,8 +1,8 @@
-import { useState, useEffect, useContext, createContext } from 'react';
+import { useState, useEffect, useRef, useContext, createContext } from 'react';
 import { auth, db } from '../firebase'; // FIREBASE AUTH & CLOUD FIRESTORE INSTANCE
-import { createUserDocument } from './FirebaseFirestore';
+import { getInitialData, createUserDocument } from './FirebaseFirestore';
 
-import { doc, onSnapshot, updateDoc, deleteDoc } from 'firebase/firestore';
+import { doc, onSnapshot, updateDoc, deleteDoc, arrayUnion, arrayRemove } from 'firebase/firestore';
 
 import {
 	signOut,
@@ -25,6 +25,7 @@ export const useAuthContext = () => useContext(AuthContext);
 export const AuthContextProvider = ({ children }) => {
 	const [currentUser, setCurrentUser] = useState(null);
 	const [currentUserData, setCurrentUserData] = useState(null);
+	const userDocRef = useRef(null);
 	const [loading, setLoading] = useState(true);
 
 	// FIREBASE AUTHENTICATION METHODS
@@ -41,14 +42,17 @@ export const AuthContextProvider = ({ children }) => {
 	const handleAccountDelete = () => deleteUser(currentUser);
 
 	// FIREBASE FIRESTORE METHODS
-	const updateUserDocument = data => {
-		const userDocumentRef = doc(db, `users/${currentUser.uid}`);
-		updateDoc(userDocumentRef, data);
+	const updateUserDocument = data => updateDoc(userDocRef.current, data);
+	const deleteUserDocument = () => deleteDoc(userDocRef.current);
+	const resetUserDocument = () => {
+		const initialData = getInitialData(currentUser);
+		updateDoc(userDocRef.current, initialData);
 	};
-	const deleteUserDocument = () => {
-		const userDocumentRef = doc(db, `users/${currentUser.uid}`);
-		deleteDoc(userDocumentRef);
-	};
+
+	// TASK-TRACKER WIDGET METHODS
+	const addUserTask = task => updateDoc(userDocRef.current, { tasks: arrayUnion(task) });
+	const deleteUserTask = task => updateDoc(userDocRef.current, { tasks: arrayRemove(task) });
+	const updateUserTask = updatedTasks => updateDoc(userDocRef.current, { tasks: updatedTasks });
 
 	// AUTH OBSERVER => WHEN USER STATE CHANGES (LOGIN & LOGOUT)
 	useEffect(() => {
@@ -61,14 +65,14 @@ export const AuthContextProvider = ({ children }) => {
 
 	// FIRESTORE DB OBSERVER => WHEN USER DATA CHANGES
 	useEffect(() => {
-		if (currentUser) {
-			const userDocument = doc(db, `users/${currentUser.uid}`);
-			const unsubscribe = onSnapshot(userDocument, doc => {
-				setCurrentUserData(doc.data());
-				console.log('CURRENT USER DATA', doc.data());
-			});
-			return unsubscribe;
-		}
+		if (!currentUser) return;
+		const documentRef = doc(db, `users/${currentUser.uid}`);
+		const unsubscribe = onSnapshot(documentRef, doc => {
+			setCurrentUserData(doc.data());
+			userDocRef.current = documentRef;
+			// console.log('CURRENT USER DATA', doc.data());
+		});
+		return () => unsubscribe;
 	}, [currentUser]);
 
 	return (
@@ -84,8 +88,14 @@ export const AuthContextProvider = ({ children }) => {
 				onPasswordUpdate: handlePasswordUpdate,
 				onUsernameUpdate: handleUsernameUpdate,
 				onAccountDelete: handleAccountDelete,
+
 				onDocumentUpdate: updateUserDocument,
 				onDocumentDelete: deleteUserDocument,
+				onDocumentReset: resetUserDocument,
+
+				onUserTaskAdd: addUserTask,
+				onUserTaskDelete: deleteUserTask,
+				onUserTaskUpdate: updateUserTask,
 			}}
 		>
 			{!loading && children}
