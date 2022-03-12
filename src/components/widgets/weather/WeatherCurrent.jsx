@@ -4,6 +4,7 @@ import styled from 'styled-components';
 
 import { getFormattedTime, getFormattedUTCTime, getLocationTimeOfDay } from 'utils/util';
 import { getWeatherIcon } from './weatherIcons';
+import 'weather-icons/css/weather-icons-wind.min.css';
 
 // prettier-ignore
 export default function WeatherCurrent({ location, fetchURL, unitsRef, weatherUnits, loader, setFetchedAt, setLocationTimeValues }) {

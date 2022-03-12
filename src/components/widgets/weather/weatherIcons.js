@@ -1,5 +1,4 @@
 import 'weather-icons/css/weather-icons.min.css';
-import 'weather-icons/css/weather-icons-wind.min.css';
 
 // WEATHER ICONS INTEGRATION REFERENCE OBJECT
 const weatherIconsRef = {
@@ -395,5 +394,3 @@ export const getWeatherIcon = (timeOfDay, weatherCode) => {
 
 	return <i className={`wi-gold wi wi-${timeOfDay}-${iconRef}`} />;
 };
-
-// http://openweathermap.org/img/w/800.png
