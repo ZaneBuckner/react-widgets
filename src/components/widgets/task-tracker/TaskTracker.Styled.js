@@ -30,7 +30,7 @@ export const StyledTaskTracker = styled.div`
 
 export const StyledTaskList = styled.div`
 	display: grid;
-	grid-template-rows: auto;
+	grid-auto-rows: 4rem;
 	grid-row-gap: 1rem;
 	width: 100%;
 	height: 100%;
