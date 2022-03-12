@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import styled from 'styled-components';
 import { getFormattedDate, getFormattedTime } from 'utils/util';
 
 import Button from 'components/shared/Button';
@@ -6,7 +7,7 @@ import UserAlert from 'components/shared/UserAlerts';
 import { StyledInput, StyledCheckbox } from './TaskTracker.Styled';
 import { BsCheck as CheckmarkIcon } from 'react-icons/bs';
 
-function AddTask({ tasks, onAddTask }) {
+export default function AddTask({ tasks, onAddTask, onClose }) {
 	const [title, setTitle] = useState('');
 	const [date, setDate] = useState('');
 	const [important, setImportant] = useState(false);
@@ -21,6 +22,7 @@ function AddTask({ tasks, onAddTask }) {
 		if (!title) return setErrorMessage('Please provide a name');
 		onAddTask({ title, date, important });
 		resetValues();
+		onClose();
 	};
 
 	// SET DATE AS CURRENT DATE => ON WIDGET MOUNT
@@ -31,7 +33,7 @@ function AddTask({ tasks, onAddTask }) {
 	}, []);
 
 	return (
-		<>
+		<StyledAddTask>
 			{errorMessage && <UserAlert variant='error' message={errorMessage} />}
 			<form onSubmit={handleSubmit}>
 				<StyledInput
@@ -57,8 +59,48 @@ function AddTask({ tasks, onAddTask }) {
 				</div>
 				<Button animate type='submit' size='large' text='Save Task' />
 			</form>
-		</>
+		</StyledAddTask>
 	);
 }
 
-export default AddTask;
+const StyledAddTask = styled.div`
+	grid-area: 1 / 1 / 5 / 2;
+	width: 100%;
+
+	form {
+		width: 100%;
+		height: 100%;
+		margin: auto 0;
+
+		.form-input {
+			width: 100%;
+			height: 3rem;
+			margin: 1rem 0;
+			font-size: 1rem;
+		}
+
+		.form-checkbox-wrapper {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			width: 100%;
+			padding: 0 0.5rem;
+			margin-bottom: 2rem;
+
+			font-size: 0.9rem;
+
+			.checkbox-wrapper {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+
+				svg {
+					position: absolute;
+					font-size: 1.5rem;
+					color: #363636;
+					cursor: pointer;
+				}
+			}
+		}
+	}
+`;
