@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuthContext } from 'context/AuthContext';
+import { v4 as uuidv4 } from 'uuid';
 import { storeUserImage } from 'context/FirebaseStorage';
-import { formatErrorCode } from 'utils/util';
+import { formatErrorCode, fetchSearchLocation, getCountryFlagEmoji } from 'utils/util';
 import styled from 'styled-components';
 
 import Page from './Page';
@@ -20,7 +21,7 @@ import { CgFileRemove as RemoveFileIcon } from 'react-icons/cg';
 import { IoLocationSharp as LocationIcon } from 'react-icons/io5';
 import { IoPersonRemove as DeleteAccountIcon } from 'react-icons/io5';
 import { BiReset as ResetAccountIcon } from 'react-icons/bi';
-
+import { AiFillCloseCircle as CloseIcon } from 'react-icons/ai';
 import { FaImages as ImageFileIcon } from 'react-icons/fa';
 
 export default function UpdateProfilePage() {
@@ -49,35 +50,28 @@ export default function UpdateProfilePage() {
 	const [password, setPassword] = useState('');
 	const [passwordConfirm, setPasswordConfirm] = useState('');
 
-	const [userCity, setUserCity] = useState('');
-	const [userState, setUserState] = useState('');
-	const [userZip, setUserZip] = useState('');
+	// LOCATION SEARCH VALUES
+	const [locationSearch, setLocationSearch] = useState('');
+	const [locationSearchResults, setLocationSearchResults] = useState([]);
+	const [selectedLocation, setSelectedLocation] = useState('');
+	const regionNames = new Intl.DisplayNames(['en'], { type: 'region' });
 
 	// ERROR VALUES
 	const [error, setError] = useState('');
 	const [emailError, setEmailError] = useState('');
 	const [passwordError, setPasswordError] = useState('');
-	const [locationError, setLocationError] = useState('');
 
-	const resetErrors = () => [
-		setError(''),
-		setLocationError(''),
-		setEmailError(''),
-		setPasswordError(''),
-		setSuccess(''),
-		setUpdateSuccess(''),
-	];
+	// METHODS
 
-	const resetValues = () => [
-		setPhotoURL(''),
-		setUserCity(''),
-		setUserState(''),
-		setUserZip(''),
-		setUsername(''),
-		setEmail(''),
-		setPassword(''),
-		setPasswordConfirm(''),
-	];
+	const handleSelectedResult = result => {
+		setSelectedLocation(result);
+		handleSearchClose();
+	};
+
+	const handleSearchClose = () => {
+		setLocationSearchResults([]);
+		setLocationSearch('');
+	};
 
 	const handleSelectedImage = e => {
 		const selectedImage = e.target.files[0];
@@ -108,6 +102,24 @@ export default function UpdateProfilePage() {
 		}
 	};
 
+	// FORM VALIDATION
+
+	const resetErrors = () => [
+		setError(''),
+		setEmailError(''),
+		setPasswordError(''),
+		setSuccess(''),
+		setUpdateSuccess(''),
+	];
+
+	const resetValues = () => [
+		setPhotoURL(''),
+		setUsername(''),
+		setEmail(''),
+		setPassword(''),
+		setPasswordConfirm(''),
+	];
+
 	const handleSubmit = async e => {
 		e.preventDefault();
 		resetErrors();
@@ -122,12 +134,16 @@ export default function UpdateProfilePage() {
 			onDocumentUpdate({ username: username });
 		}
 
-		if (userCity || userState || userZip) {
-			if (userZip && userZip.length !== 5) return setLocationError('Please enter a 5-digit value.');
-
-			const { city, state, zip } = userData.location;
-			const updatedLocation = { location: { city: userCity || city, state: userState || state, zip: userZip || zip } }; // prettier-ignore
-			promises.push(onDocumentUpdate(updatedLocation));
+		if (selectedLocation) {
+			const updatedLocation = {
+				city: selectedLocation.name,
+				state: selectedLocation?.state || '',
+				country: regionNames.of(selectedLocation.country),
+				flag: getCountryFlagEmoji(selectedLocation.country),
+				lat: selectedLocation.lat,
+				lon: selectedLocation.lon,
+			};
+			promises.push(onDocumentUpdate({ location: updatedLocation }));
 		}
 
 		if (codewars) {
@@ -160,6 +176,11 @@ export default function UpdateProfilePage() {
 		}
 	};
 
+	// WHEN USER SEARCHES LOCATION => FETCH RESULTS
+	useEffect(() => {
+		locationSearch && fetchSearchLocation(locationSearch, setLocationSearchResults);
+	}, [locationSearch]);
+
 	// REDIRECTS TO USER PROFILE AFTER SUCCESSFUL UPDATE ON UNMOUNT
 	useEffect(() => {
 		if (updateSuccess) {
@@ -175,12 +196,11 @@ export default function UpdateProfilePage() {
 				{error && <UserAlert variant='error' message={error} />}
 				{emailError && <UserAlert variant='error' message={emailError} />}
 				{passwordError && <UserAlert variant='error' message={passwordError} />}
-				{locationError && <UserAlert variant='error' message={locationError} />}
 				{success && <UserAlert variant='success' message={success} />}
 				{updateSuccess && <UserAlert variant='success' message={updateSuccess} />}
 			</div>
 
-			<StyledUpdateForm type='submit' onSubmit={handleSubmit} className='body'>
+			<StyledUpdateForm type='submit' autoComplete='off' onSubmit={handleSubmit} className='body'>
 				<AvatarInput>
 					<div className='avatar-preview'>
 						<UserAvatar size='small' src={imagePreview || currentUser.photoURL} />
@@ -210,34 +230,38 @@ export default function UpdateProfilePage() {
 					onChange={e => setUsername(e.target.value)}
 				/>
 
-				<LocationInputFields>
+				<LocationSearchWrapper>
 					<InputField
 						type='text'
-						label='City'
-						placeholder={userData?.location?.city || 'No city saved'}
-						value={userCity}
-						onChange={e => setUserCity(e.target.value)}
+						label='User Location'
+						placeholder={
+							selectedLocation
+								? `${selectedLocation.name}, ${selectedLocation?.state || selectedLocation.country}`
+								: 'User Location'
+						}
+						value={locationSearch}
+						onChange={e => setLocationSearch(e.target.value)}
 						icon={<LocationIcon />}
 					/>
-					<InputField
-						type='text'
-						label='State Initials'
-						placeholder={userData?.location?.state || 'No state saved'}
-						value={userState}
-						onChange={e => setUserState(e.target.value)}
-						className='breakpoint-mod'
-					/>
-					<InputField
-						type='number'
-						label='Zip Code'
-						placeholder={userData?.location?.zip || 'No Zip saved'}
-						value={userZip}
-						error={locationError ? true : false}
-						helperText={locationError}
-						onChange={e => setUserZip(e.target.value)}
-						className='breakpoint-mod'
-					/>
-				</LocationInputFields>
+
+					{locationSearchResults.length > 0 && (
+						<div className='search-results'>
+							<CloseIcon className='close-icon' onClick={handleSearchClose} />
+							{locationSearchResults.map(result => (
+								<div
+									key={uuidv4()}
+									value={result}
+									onClick={() => handleSelectedResult(result)}
+									className='result'
+								>
+									{result.state
+										? `${result.name}, ${result.state} (${regionNames.of(result.country)})`
+										: `${result.name} (${regionNames.of(result.country)})`}
+								</div>
+							))}
+						</div>
+					)}
+				</LocationSearchWrapper>
 
 				<InputField
 					type='text'
@@ -280,6 +304,7 @@ export default function UpdateProfilePage() {
 					helperText={passwordError}
 					onChange={e => setPasswordConfirm(e.target.value)}
 					icon={<PasswordIcon />}
+					autoComplete='new-password'
 				/>
 
 				<Button
@@ -359,19 +384,50 @@ const AvatarInput = styled.div`
 	}
 `;
 
-const LocationInputFields = styled.div`
-	display: grid;
-	grid-template-columns: 3fr 2fr 3fr;
-	grid-column-gap: 1rem;
+const LocationSearchWrapper = styled.div`
+	position: relative;
 	width: 100%;
 
-	@media only screen and (max-width: 500px) {
-		grid-template-columns: 1fr;
-		grid-template-rows: repeat(3, auto);
-		grid-row-gap: 1rem;
+	.search-results {
+		position: absolute;
+		z-index: 2;
+		top: 4rem;
+		left: 0;
 
-		.breakpoint-mod {
-			margin-left: 2.3rem;
+		display: grid;
+		grid-template-rows: auto;
+		grid-row-gap: 0.2rem;
+		width: clamp(10rem, 68vw, 37.5rem);
+		padding: 0.2rem;
+		margin-left: 2.3rem;
+
+		border: 1px solid #c3c3c3;
+		border-radius: 10px;
+		background-color: rgb(45 45 45 / 30%);
+		backdrop-filter: blur(5px) saturate(10%);
+
+		.close-icon {
+			margin-left: auto;
+			font-size: 1.7rem;
+			cursor: pointer;
+		}
+
+		.result {
+			padding: 0.2rem;
+
+			font-family: 'Montserrat', serif;
+			font-size: clamp(8px, 2.5vw, 13px);
+			font-weight: 500;
+			color: #c3c3c3;
+
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			cursor: pointer;
+
+			&:hover {
+				color: #dab55d;
+			}
 		}
 	}
 `;

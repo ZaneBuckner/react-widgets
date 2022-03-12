@@ -1,31 +1,15 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
 import styled from 'styled-components';
 
 import WidgetSearch from '../WidgetSearch';
+import { fetchSearchLocation, getCountryFlagEmoji } from 'utils/util';
 
 export default function WeatherSearch({ open, onToggle, onSelect, placeholder }) {
 	const [search, setSearch] = useState('');
 	const [results, setResults] = useState([]);
 
 	const regionNames = new Intl.DisplayNames(['en'], { type: 'region' });
-
-	/**
-	 * [Country Code To Flag Emoji](https://dev.to/jorik/country-code-to-flag-emoji-a21)
-	 *
-	 * Takes a country code and determines each letter's [Regional Indicator Symbol](https://unicode-table.com/en/search/?q=Regional+Indicator+Symbol+Letter).
-	 * Calculated by adding two UTF-16 codes, a reference offset (127397) and a letter (A), (127397 + A => 127397 + 65 => [Regional Indicator Symbol Letter A](https://unicode-table.com/en/1F1E6/).
-	 * When ran twice for both letters, String.fromCodePoint( 🇺 + 🇸 ) => 🇺🇸
-	 * @param {string} countryCode Two digit country code (eg. 'US').
-	 * @returns Returns flag emoji.
-	 * @example getCountryFlagEmoji('US') => 🇺🇸
-	 */
-	const getCountryFlagEmoji = countryCode => {
-		const indexOffsetRef = 127397;
-		const codePoints = countryCode.toUpperCase().split('').map(char => indexOffsetRef + char.charCodeAt()); // prettier-ignore
-		return String.fromCodePoint(...codePoints);
-	};
 
 	const handleSelectedResult = result => {
 		onSelect({
@@ -39,26 +23,8 @@ export default function WeatherSearch({ open, onToggle, onSelect, placeholder })
 		onToggle();
 	};
 
-	// RETRIEVES LOCATION COORDINATES (City, State) => GEO COORDS (LAT & LON)
-	const fetchSearchResults = async query => {
-		const api = {
-			directGeocoding: `https://api.openweathermap.org/geo/1.0/direct?`,
-			query: `q=${query}`,
-			param: `&limit=5`,
-			key: `&appid=${process.env.REACT_APP_WIDGET_WEATHER_API_KEY}`,
-		};
-
-		try {
-			const fetchURL = `${api.directGeocoding}${api.query}${api.param}${api.key}`;
-			const data = await axios.get(fetchURL);
-			setResults(data.data);
-		} catch (err) {
-			console.log(err);
-		}
-	};
-
 	// WHEN SEARCH INPUT CHANGES => FETCH RESULTS
-	useEffect(() => search && fetchSearchResults(search), [search]);
+	useEffect(() => search && fetchSearchLocation(search, setResults), [search]);
 
 	return (
 		<WidgetSearch

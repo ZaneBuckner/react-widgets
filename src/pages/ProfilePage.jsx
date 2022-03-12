@@ -52,10 +52,10 @@ export default function ProfilePage() {
 	// UPDATE INITIAL STATE VALUES TO POPULATE PROFILE ITEMS
 	useEffect(() => {
 		const { day, month, year } = getFormattedDate(parseInt(currentUser.metadata.createdAt));
-		const { city, state } = userData?.location || {};
+		const { city, state, flag } = userData?.location || {};
 
 		const formattedUserEst = `${month} ${day}, ${year}`;
-		const formattedUserLocation = `${city || ''} ${state || ''}`;
+		const formattedUserLocation = `${city || ''} ${state || ''} ${flag}`;
 
 		if (userData) {
 			setProfileData({

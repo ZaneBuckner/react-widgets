@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 /**
  * Formats timestamp into readable time components.
  * @param {number} timestamp Time in milliseconds.
@@ -99,13 +101,14 @@ export const formatErrorCode = errorCode => {
 
 /**
  * Reverse geocodes user coordinates (using [Geoapify](https://apidocs.geoapify.com/docs/geocoding/reverse-geocoding/#about)) retrieved from HTML5 Geolocation API.
- * @param {object} setUserLocation Method to set user location state.
+ * @param {object} setState To set component state.
+ * @param {object} setLoading To set component loading state.
  * @returns {Promise<object>} Returns location data object.
  * @example
  * const userLocation = await getUserLocation();
  * userLocation => { zip: 70401, state: 'LA', city: 'Hammond' }
  */
-export const fetchUserLocation = (setUserLocation, setLoading) => {
+export const fetchUserLocation = (setState, setLoading) => {
 	setLoading(true);
 
 	if (!navigator.geolocation) {
@@ -133,10 +136,11 @@ export const fetchUserLocation = (setUserLocation, setLoading) => {
 			const response = await fetch(fetchURL);
 			const data = await response.json();
 
-			setUserLocation({
+			setState({
 				city: data.results[0].city,
-				state: data.results[0].state_code,
-				zip: data.results[0].postcode,
+				state: data.results[0].state,
+				country: data.results[0].country,
+				flag: getCountryFlagEmoji(data.results[0].country_code),
 				lat: data.results[0].lat,
 				lon: data.results[0].lon,
 			});
@@ -146,4 +150,46 @@ export const fetchUserLocation = (setUserLocation, setLoading) => {
 			setLoading(false);
 		}
 	};
+};
+
+/**
+ * Retrieves an array of location matches to a queried input.
+ * @param {string} query The user's search input.
+ * @param {object} setState To set component state.
+ * @returns {array} Returns an array of location objects.
+ * @example
+ * fetchSearchLocation('new york')
+ * => [{city, state, country, coords}, {...}, {...}, {...}, {...}]
+ */
+export const fetchSearchLocation = async (query, setState) => {
+	const api = {
+		directGeocoding: `https://api.openweathermap.org/geo/1.0/direct?`,
+		query: `q=${query}`,
+		param: `&limit=5`,
+		key: `&appid=${process.env.REACT_APP_WIDGET_WEATHER_API_KEY}`,
+	};
+
+	try {
+		const fetchURL = `${api.directGeocoding}${api.query}${api.param}${api.key}`;
+		const data = await axios.get(fetchURL);
+		setState(data.data);
+	} catch (err) {
+		console.log(err);
+	}
+};
+
+/**
+ * [Country Code To Flag Emoji](https://dev.to/jorik/country-code-to-flag-emoji-a21)
+ *
+ * Takes a country code and determines each letter's [Regional Indicator Symbol](https://unicode-table.com/en/search/?q=Regional+Indicator+Symbol+Letter).
+ * Calculated by adding two UTF-16 codes, a reference offset (127397) and a letter (A), (127397 + A => 127397 + 65 => [Regional Indicator Symbol Letter A](https://unicode-table.com/en/1F1E6/).
+ * When ran twice for both letters, String.fromCodePoint( 🇺 + 🇸 ) => 🇺🇸
+ * @param {string} countryCode Two digit country code (eg. 'US').
+ * @returns Returns flag emoji.
+ * @example getCountryFlagEmoji('US') => 🇺🇸
+ */
+export const getCountryFlagEmoji = countryCode => {
+	const indexOffsetRef = 127397;
+	const codePoints = countryCode.toUpperCase().split('').map(char => indexOffsetRef + char.charCodeAt()); // prettier-ignore
+	return String.fromCodePoint(...codePoints);
 };
