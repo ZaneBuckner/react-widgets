@@ -4,6 +4,7 @@ import styled from 'styled-components';
 
 import { getFormattedTime, getFormattedUTCTime, getLocationTimeOfDay } from 'utils/util';
 import { getWeatherIcon } from './weatherIcons';
+import 'weather-icons/css/weather-icons.min.css';
 import 'weather-icons/css/weather-icons-wind.min.css';
 
 // prettier-ignore
@@ -88,7 +89,7 @@ export default function WeatherCurrent({ location, fetchURL, unitsRef, weatherUn
 			sunset: getFormattedUTCTime((data.current.sunset + data.timezone_offset) * 1000),
       temp: Math.round(data.current.temp),
       uvi: {
-        value: data.current.uvi, 
+        value: data.current.uvi,
         icon: <i className={`wi-gold wi wi-barometer`} style={{ fontSize: '1.1rem' }} />,
       },
 			wind: {
