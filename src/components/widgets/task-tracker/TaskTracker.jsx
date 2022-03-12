@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useAuthContext } from 'context/AuthContext';
 import { v4 as uuidv4 } from 'uuid';
 
 import Card from 'components/shared/Card';
@@ -13,58 +14,48 @@ import { MdOutlineChecklistRtl as TaskIcon } from 'react-icons/md';
 import { HiCursorClick as ClickIcon } from 'react-icons/hi';
 import { AddTaskIcon } from 'Assets/WidgetIcons';
 
+const defaultTask = [
+	{
+		id: uuidv4(),
+		important: true,
+		title: 'Task Name',
+		date: 'mmm dd | hh:mm',
+	},
+];
+
 function TaskTracker() {
+	const { currentUser, userData, onUserTaskAdd, onUserTaskDelete, onUserTaskUpdate } = useAuthContext(); // prettier-ignore
+	const [tasks, setTasks] = useState([]);
 	const [isAboutModal, setIsAboutModal] = useState(false);
 	const [isUtilityModal, setIsUtilityModal] = useState(false);
-	const [tasks, setTasks] = useState([
-		{
-			id: uuidv4(),
-			title: 'Task 1',
-			date: 'MMM DDth @ 9:30am',
-			reminder: false,
-		},
-		{
-			id: uuidv4(),
-			title: 'Task 2',
-			date: 'MMM DDth @ 4:20pm',
-			reminder: false,
-		},
-		{
-			id: uuidv4(),
-			title: 'Task 3',
-			date: 'MMM DDth @ 1:30pm',
-			reminder: false,
-		},
-	]);
 
 	const handleAboutToggle = () => setIsAboutModal(isAboutModal => !isAboutModal);
 	const handleUtilityToggle = () => setIsUtilityModal(isUtilityModal => !isUtilityModal);
 	const handleModalSwitch = () => [handleAboutToggle(), handleUtilityToggle()];
 
-	// ADD TASK
-	const handleAddTask = newTask => {
-		const addNewTask = { ...newTask, id: uuidv4() };
-		setTasks([...tasks, addNewTask]);
+	const handleAddTask = addTask => {
+		const newTask = { ...addTask, id: uuidv4() };
+		currentUser ? onUserTaskAdd(newTask) : setTasks([...tasks, newTask]);
 	};
 
-	// DELETE TASK
-	const handleDeleteTask = id => {
-		const filteredTasks = tasks.filter(task => task.id !== id);
-		setTasks(filteredTasks);
+	const handleDeleteTask = deleteTask => {
+		const updatedTasks = tasks.filter(task => task.id !== [deleteTask.id]);
+		currentUser ? onUserTaskDelete(deleteTask) : setTasks(updatedTasks);
 	};
 
-	// SET TASK REMINDER
-	const handleReminder = id => {
+	const handleImportanceToggle = editTask => {
 		const updatedTasks = tasks.map(task => {
-			if (task.id !== id) return task;
-			return { ...task, reminder: !task.reminder };
+			if (task.id !== editTask.id) return task;
+			return { ...task, important: !task.important };
 		});
-
-		setTasks(updatedTasks);
+		currentUser ? onUserTaskUpdate(updatedTasks) : setTasks(updatedTasks);
 	};
 
-	const taskList = <TaskList tasks={tasks} onDelete={handleDeleteTask} onToggle={handleReminder} />;
-	const emptyList = <h1 className='user-message'>All Tasks Completed</h1>;
+	// SET AUTH USER'S TASKS => ON MOUNT & WHEN DATA UPDATES
+	useEffect(() => userData && setTasks(userData?.tasks || defaultTask), [userData]);
+
+	// SET NON-AUTH USER'S TASKS => WHEN USER STATE CHANGES
+	useEffect(() => !currentUser && setTasks(defaultTask), [currentUser]);
 
 	return (
 		<Card>
@@ -76,7 +67,13 @@ function TaskTracker() {
 				onUtilityToggle={<AddTaskIcon onClick={handleUtilityToggle} />}
 			/>
 
-			<StyledTaskTracker>{tasks.length > 0 ? taskList : emptyList}</StyledTaskTracker>
+			<StyledTaskTracker>
+				{tasks.length > 0 ? (
+					<TaskList tasks={tasks} onDelete={handleDeleteTask} onToggle={handleImportanceToggle} />
+				) : (
+					<h1 className='user-message'>All Tasks Completed</h1>
+				)}
+			</StyledTaskTracker>
 
 			<WidgetModal
 				open={isAboutModal}
@@ -104,6 +101,7 @@ function TaskTracker() {
 				onClose={handleUtilityToggle}
 				element={
 					<Utility
+						tasks={tasks}
 						widgetIcon={<TaskIcon className='widget-icon' />}
 						addTaskIcon={<AddTaskIcon />}
 						onAddTask={handleAddTask}
@@ -113,13 +111,5 @@ function TaskTracker() {
 		</Card>
 	);
 }
-
-// const StyledSettingsIcon = styled(AddTaskIcon)`
-// 	width: 1rem;
-// 	height: 1rem;
-// 	fill: #000;
-// 	stroke: #000;
-// 	cursor: pointer;
-// `;
 
 export default TaskTracker;

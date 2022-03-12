@@ -29,6 +29,9 @@ export const StyledTaskTracker = styled.div`
 `;
 
 export const StyledTaskList = styled.div`
+	display: grid;
+	grid-template-rows: auto;
+	grid-row-gap: 1rem;
 	width: 100%;
 	height: 100%;
 
@@ -36,48 +39,69 @@ export const StyledTaskList = styled.div`
 `;
 
 export const StyledTask = styled.div`
-	display: flex;
-	align-items: center;
+	display: grid;
+	grid-template-columns: 8fr auto;
+	grid-template-rows: repeat(2, auto);
 	width: 100%;
-	margin: 1rem 0;
-	padding: 0.5rem;
+	padding: 0.5rem 0 0.5rem 0.5rem;
 
-	border-left: ${({ isReminder }) => isReminder && '5px solid #dab55d;'};
+	border-left: ${({ isImportant }) => (isImportant ? '6px solid #dab55d' : '0px solid')};
 	border-radius: 5px;
-	background-color: rgba(255, 255, 255, 0.1);
+	background-color: rgb(65 65 65);
+	transition: 150ms cubic-bezier(0.4, 0, 0.4, 1.8);
 
-	cursor: pointer;
+	.title,
+	.date-wrapper {
+		overflow-x: auto;
+		white-space: nowrap;
+		padding-right: 2rem;
 
-	.info-wrapper {
-		display: flex;
-		flex-direction: column;
+		/* TRANSPARENT TEXT FADES RIGHT WHEN SCROLL */
+		-webkit-mask-image: linear-gradient(to right, black 80%, transparent 95%);
+		mask-image: linear-gradient(to right, black 80%, transparent 95%);
+	}
 
-		line-height: 1.1rem;
+	.title {
+		grid-area: 1 / 1 / 2 / 2;
+		width: 100%;
+		height: 1.6rem;
+
+		font-size: 1rem;
+		font-weight: 400;
 		user-select: none;
+	}
 
-		.title {
-			font-size: 1rem;
-			font-weight: 400;
+	.date-wrapper {
+		grid-area: 2 / 1 / 3 / 2;
+		display: grid;
+		grid-template-columns: auto 10fr;
+		grid-column-gap: 0.5rem;
+		align-items: center;
+
+		svg {
+			width: 1.1rem;
+			height: 1.1rem;
+			fill: #c3c3c3;
 		}
 
-		.date {
-			font-size: 0.8rem;
-			font-weight: 400;
+		p {
+			font-weight: 300;
+			white-space: nowrap;
+			user-select: none;
 		}
 	}
 
-	.actions-wrapper {
+	.options-wrapper {
+		grid-area: 1 / 2 / 3 / 3;
 		display: flex;
-		margin-left: auto;
+		align-items: center;
+		justify-content: center;
+		width: 100%;
+		height: 100%;
 
 		svg {
-			height: 100%;
-			margin-left: 0.8rem;
+			font-size: 2rem;
 			cursor: pointer;
-
-			@media only screen and (max-width: 500px) {
-				font-size: 1.8rem;
-			}
 		}
 	}
 `;
@@ -99,10 +123,6 @@ export const StyledInput = styled.input`
 		color: #c3c3c3;
 		opacity: 50%;
 		font-size: 0.9rem;
-	}
-
-	svg {
-		color: #c3c3c3;
 	}
 
 	@media only screen and (max-width: 500px) {

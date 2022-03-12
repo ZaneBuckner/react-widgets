@@ -1,16 +1,21 @@
 import { StyledTask } from './TaskTracker.Styled';
 
-import { RiDeleteBinLine as DeleteIcon } from 'react-icons/ri';
+import { CgPlayListRemove as DeleteIcon } from 'react-icons/cg';
+import { MdAccessTimeFilled as ClockIcon } from 'react-icons/md';
 
 function Task({ task, onDelete, onToggle }) {
+	const handleImportanceToggle = () => onToggle(task);
+	const handleTaskDelete = () => onDelete(task);
+
 	return (
-		<StyledTask isReminder={task.reminder} onDoubleClick={() => onToggle(task.id)}>
-			<div className='info-wrapper'>
-				<h1 className='title'>{task.title}</h1>
-				<h2 className='date'>{task.date}</h2>
+		<StyledTask isImportant={task.important} onDoubleClick={handleImportanceToggle}>
+			<h1 className='title'>{task.title}</h1>
+			<div className='date-wrapper'>
+				<ClockIcon />
+				<p>{task.date}</p>
 			</div>
-			<div className='actions-wrapper'>
-				<DeleteIcon onClick={() => onDelete(task.id)} />
+			<div className='options-wrapper'>
+				<DeleteIcon title='Delete Task' onClick={handleTaskDelete} />
 			</div>
 		</StyledTask>
 	);
