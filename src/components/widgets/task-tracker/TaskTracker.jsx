@@ -39,7 +39,7 @@ function TaskTracker() {
 	};
 
 	const handleDeleteTask = deleteTask => {
-		const updatedTasks = tasks.filter(task => task.id !== [deleteTask.id]);
+		const updatedTasks = tasks.filter(task => task.id !== deleteTask.id);
 		currentUser ? onUserTaskDelete(deleteTask) : setTasks(updatedTasks);
 	};
 
