@@ -50,7 +50,7 @@ export default function WeatherForecast({ fetchURL, unitsRef, weatherUnits, fore
 	if (loading) return loader;
   if (error) return console.log(error);
 
-	return (
+	if (forecast) return (
 		<StyledWeatherForecast>
 			{!loading && forecast && forecast.map(item => (
 					<StyledForecastDay key={uuidv4()}>

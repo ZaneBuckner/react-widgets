@@ -108,7 +108,7 @@ export default function WeatherCurrent({ location, fetchURL, unitsRef, weatherUn
 	if (loading) return loader;
 	if (error) return console.log(error);
 
-	return (
+	if (weather) return (
 		<StyledWeatherCurrent>
 			<StyledOverview>
         <div className='location-wrapper'>
