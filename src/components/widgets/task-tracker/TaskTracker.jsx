@@ -4,14 +4,11 @@ import { v4 as uuidv4 } from 'uuid';
 
 import Card from 'components/shared/Card';
 import CardHeader from 'components/shared/CardHeader';
-import WidgetModal from 'components/widgets/WidgetModal';
-
 import TaskList from './TaskList';
-import { About, Utility } from './TaskTrackerModal';
+import { AboutModal, UtilityModal } from './TaskTrackerModal';
 
 import { StyledTaskTracker } from './TaskTracker.Styled';
 import { MdOutlineChecklistRtl as TaskIcon } from 'react-icons/md';
-import { HiCursorClick as ClickIcon } from 'react-icons/hi';
 import { AddTaskIcon } from 'Assets/WidgetIcons';
 
 const defaultTask = [
@@ -75,38 +72,19 @@ function TaskTracker() {
 				)}
 			</StyledTaskTracker>
 
-			<WidgetModal
+			<AboutModal
 				open={isAboutModal}
 				onClose={handleAboutToggle}
-				element={
-					<About
-						widgetIcon={<TaskIcon className='widget-icon' />}
-						addTaskIcon={
-							<AddTaskIcon
-								removeBG
-								width='1rem'
-								height='1rem'
-								color='#DAB55D'
-								style={{ cursor: 'pointer' }}
-								onClick={handleModalSwitch}
-							/>
-						}
-						clickIcon={<ClickIcon className='icon' onClick={handleAboutToggle} />}
-					/>
-				}
+				onModalSwitch={handleModalSwitch}
+				widgetIcon={<TaskIcon className='widget-icon' />}
 			/>
 
-			<WidgetModal
+			<UtilityModal
 				open={isUtilityModal}
 				onClose={handleUtilityToggle}
-				element={
-					<Utility
-						tasks={tasks}
-						widgetIcon={<TaskIcon className='widget-icon' />}
-						addTaskIcon={<AddTaskIcon />}
-						onAddTask={handleAddTask}
-					/>
-				}
+				tasks={tasks}
+				onAddTask={handleAddTask}
+				widgetIcon={<TaskIcon className='widget-icon' />}
 			/>
 		</Card>
 	);
