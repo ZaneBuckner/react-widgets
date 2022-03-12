@@ -42,7 +42,7 @@ export default function WeatherSearch({ open, onToggle, onSelect, placeholder })
 	// RETRIEVES LOCATION COORDINATES (City, State) => GEO COORDS (LAT & LON)
 	const fetchSearchResults = async query => {
 		const api = {
-			directGeocoding: `http://api.openweathermap.org/geo/1.0/direct?`,
+			directGeocoding: `https://api.openweathermap.org/geo/1.0/direct?`,
 			query: `q=${query}`,
 			param: `&limit=5`,
 			key: `&appid=${process.env.REACT_APP_WIDGET_WEATHER_API_KEY}`,
