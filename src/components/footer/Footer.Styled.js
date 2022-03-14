@@ -26,7 +26,8 @@ export const StyledWrapper = styled.div`
 		height: 100%;
 
 		h1 {
-			font-family: 'Montserrat', serif;
+			font-family: 'Roboto', serif;
+			font-weight: 300;
 			font-size: 1rem;
 			color: #dab55d;
 			white-space: nowrap;
