@@ -21,7 +21,7 @@ function Footer() {
 			},
 			{
 				title: 'LinkedIn Profile',
-				href: 'https://www.linkedin.com/in/ZaneBuckner/',
+				href: 'https://www.linkedin.com/in/zanebuckner?trk=public_profile_browsemap',
 				icon: <FaLinkedin />,
 			},
 		];
