@@ -1,67 +1,50 @@
 import { useState, createContext, useContext } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
-// WIDGET ICONS
-import { BsClock as ClockIcon } from 'react-icons/bs';
-import { TiWeatherPartlySunny as WeatherIcon } from 'react-icons/ti';
-import { MdOutlineChecklistRtl as TaskIcon } from 'react-icons/md';
-import CounterIcon from 'Assets/CounterIcon';
-import { CodewarsIcon } from 'Assets/WidgetIcons';
-import BobRossIcon from 'Assets/BobRossIcon';
+const WidgetContext = createContext({}); // WIDGET CONTEXT INSTANCE
+export const useWidgetContext = () => useContext(WidgetContext); // WIDGET CONTEXT "HOOK"
 
-// WIDGET CONTEXT INSTANCE
-const WidgetContext = createContext({});
-
-// WIDGET CONTEXT "HOOK"
-export const useWidgetContext = () => useContext(WidgetContext);
+const defaultWidgets = [
+	{
+		id: uuidv4(),
+		title: 'Weather',
+		widgetRef: 'weather',
+		display: true,
+	},
+	{
+		id: uuidv4(),
+		title: 'Clock',
+		widgetRef: 'clock',
+		display: true,
+	},
+	{
+		id: uuidv4(),
+		title: 'Bob Ross',
+		widgetRef: 'bobross',
+		display: true,
+	},
+	{
+		id: uuidv4(),
+		title: 'Task Tracker',
+		widgetRef: 'tasktracker',
+		display: true,
+	},
+	{
+		id: uuidv4(),
+		title: 'Counter',
+		widgetRef: 'counter',
+		display: true,
+	},
+	{
+		id: uuidv4(),
+		title: 'Codewars',
+		widgetRef: 'codewars',
+		display: true,
+	},
+];
 
 export const WidgetContextProvider = ({ children }) => {
-	// const { userData } = useAuthContext();
-
-	const [widgets, setWidgets] = useState([
-		{
-			id: uuidv4(),
-			name: 'Bob Ross',
-			icon: <BobRossIcon />,
-			widgetRef: 'bobross',
-			display: true,
-		},
-		{
-			id: uuidv4(),
-			name: 'Clock',
-			icon: <ClockIcon />,
-			widgetRef: 'clock',
-			display: true,
-		},
-		{
-			id: uuidv4(),
-			name: 'CodeWars',
-			icon: <CodewarsIcon />,
-			widgetRef: 'codewars',
-			display: true,
-		},
-		{
-			id: uuidv4(),
-			name: 'Counter',
-			icon: <CounterIcon />,
-			widgetRef: 'counter',
-			display: true,
-		},
-		{
-			id: uuidv4(),
-			name: 'Weather',
-			icon: <WeatherIcon />,
-			widgetRef: 'weather',
-			display: true,
-		},
-		{
-			id: uuidv4(),
-			name: 'Task Tracker',
-			icon: <TaskIcon />,
-			widgetRef: 'task',
-			display: true,
-		},
-	]);
+	const [widgets, setWidgets] = useState(defaultWidgets);
 
 	const toggleDisplay = widgetRef => {
 		// Create shallow copy. Define target widget index. Toggle widget display property. Set new widgets object.
@@ -71,6 +54,7 @@ export const WidgetContextProvider = ({ children }) => {
 		setWidgets(updatedWidgets);
 	};
 
+	// RETURNS CURRENT WIDGET DISPLAY VALUE
 	const currentDisplay = widgetRef => {
 		return widgets.filter(widget => widget.widgetRef === widgetRef)[0].display;
 	};

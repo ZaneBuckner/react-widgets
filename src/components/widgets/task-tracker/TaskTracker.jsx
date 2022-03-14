@@ -59,7 +59,7 @@ function TaskTracker() {
 			<CardHeader
 				name='Task Tracker'
 				icon={<TaskIcon />}
-				widgetRef='task'
+				widgetRef='tasktracker'
 				onAboutToggle={handleAboutToggle}
 				onUtilityToggle={<AddTaskIcon onClick={handleUtilityToggle} />}
 			/>

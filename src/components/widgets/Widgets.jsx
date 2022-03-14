@@ -32,7 +32,7 @@ export default function Widgets() {
 						<CardAnimation children={<BobRossPaintings />} />
 					</Grid>
 				)}
-				{currentDisplay('task') && (
+				{currentDisplay('tasktracker') && (
 					<Grid item xs={12} sm={6} md={4}>
 						<CardAnimation children={<TaskTracker />} />
 					</Grid>
