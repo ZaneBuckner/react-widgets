@@ -2,7 +2,15 @@ import { useState, useEffect, useRef, useContext, createContext } from 'react';
 import { auth, db } from '../firebase'; // FIREBASE AUTH & CLOUD FIRESTORE INSTANCE
 import { getInitialData, createUserDocument } from './FirebaseFirestore';
 
-import { doc, onSnapshot, updateDoc, deleteDoc, arrayUnion, arrayRemove } from 'firebase/firestore';
+import {
+	doc,
+	onSnapshot,
+	updateDoc,
+	deleteDoc,
+	arrayUnion,
+	arrayRemove,
+	increment,
+} from 'firebase/firestore';
 
 import {
 	signOut,
@@ -54,6 +62,9 @@ export const AuthContextProvider = ({ children }) => {
 	const deleteUserTask = task => updateDoc(userDocRef.current, { tasks: arrayRemove(task) });
 	const updateUserTask = updatedTasks => updateDoc(userDocRef.current, { tasks: updatedTasks });
 
+	// COUNTER WIDGET METHODS
+	const updateUserCount = value => updateDoc(userDocRef.current, { counter: increment(value) });
+
 	// AUTH OBSERVER => WHEN USER STATE CHANGES (LOGIN & LOGOUT)
 	useEffect(() => {
 		const unsubscribe = onAuthStateChanged(auth, user => {
@@ -96,6 +107,8 @@ export const AuthContextProvider = ({ children }) => {
 				onUserTaskAdd: addUserTask,
 				onUserTaskDelete: deleteUserTask,
 				onUserTaskUpdate: updateUserTask,
+
+				onUserCountUpdate: updateUserCount,
 			}}
 		>
 			{!loading && children}

@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { useAuthContext } from 'context/AuthContext';
 
 import Card from 'components/shared/Card';
@@ -15,35 +15,22 @@ import { FiPlus as AddIcon, FiMinus as RemoveIcon } from 'react-icons/fi';
 import confusedTravoltaGif from 'Assets/Images/confusedTravoltaGif.gif';
 
 function Counter() {
-	const { currentUser, userData, onDocumentUpdate } = useAuthContext();
+	const { currentUser, userData, onDocumentUpdate, onUserCountUpdate } = useAuthContext();
 	const [isAboutModal, setIsAboutModal] = useState(false);
 	const [count, setCount] = useState(0);
-	const countRef = useRef(0);
 
-	const decrement = () => setCount(count => count - 1);
-	const increment = () => setCount(count => count + 1);
 	const handleAboutToggle = () => setIsAboutModal(isAboutModal => !isAboutModal);
+
+	const decrement = () => (currentUser ? onUserCountUpdate(-1) : setCount(count => count - 1));
+	const increment = () => (currentUser ? onUserCountUpdate(1) : setCount(count => count + 1));
 	const handleCountReset = () => {
 		if (!currentUser) return setCount(0);
-		const message = 'Are you sure you want to reset your current count?';
-		if (!window.confirm(message)) return;
+		if (!window.confirm('Reset counter to zero ?')) return;
 		onDocumentUpdate({ counter: 0 });
 	};
 
 	// SET INITIAL COUNT VALUE => IF USER IS SIGNED IN
-	useEffect(() => {
-		if (currentUser) return setCount(userData?.counter || 0);
-	}, [currentUser, userData]);
-
-	// UPDATE COUNT REFERENCE => WHEN COUNT UPDATES
-	useEffect(() => (countRef.current = count), [count]);
-
-	// UPDATE USER DOCUMENT => ON UNMOUNT
-	useEffect(() => {
-		if (!currentUser) return;
-		return () => onDocumentUpdate({ counter: countRef.current });
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+	useEffect(() => currentUser && setCount(userData?.counter || 0), [currentUser, userData]);
 
 	return (
 		<Card>
