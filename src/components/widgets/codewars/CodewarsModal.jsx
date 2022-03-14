@@ -1,6 +1,33 @@
 import styled from 'styled-components';
 
+import WidgetModal from '../WidgetModal';
 import DifficultyBadge from './DifficultyBadge';
+
+export function AboutModal({ open, onClose, widgetIcon }) {
+	const hyperlink = <a href='https://www.codewars.com/dashboard' target='_blank' rel='noopener noreferrer' className='hyperlink' children='Codewars' /> // prettier-ignore
+
+	return (
+		<WidgetModal open={open} onClose={onClose}>
+			<StyledIcon>{widgetIcon}</StyledIcon>
+			<StyledHeader className='header'>Codewars Dashboard</StyledHeader>
+			<h2 className='subheader'>
+				{hyperlink} is a platform where developers can improve their coding prowess by solving
+				challenges at various difficulty levels.
+			</h2>
+			<StyledBadges className='body'>
+				<DifficultyBadges />
+			</StyledBadges>
+			<StyledKey>
+				<ul>
+					<li className='hardest'>Hardest</li>
+					<li className='hard'>Hard</li>
+					<li className='medium'>Medium</li>
+					<li className='easy'>Easy</li>
+				</ul>
+			</StyledKey>
+		</WidgetModal>
+	);
+}
 
 const StyledIcon = styled.div`
 	position: absolute;
@@ -71,37 +98,3 @@ const DifficultyBadges = () => {
 		<DifficultyBadge key={level.id} rankColor={level.color} rankName={level.name} />
 	));
 };
-
-const hyperlink = (
-	<a
-		href='https://www.codewars.com/dashboard'
-		target='_blank'
-		rel='noopener noreferrer'
-		className='hyperlink'
-		children='Codewars'
-	/>
-);
-
-export function About({ widgetIcon }) {
-	return (
-		<>
-			<StyledIcon>{widgetIcon}</StyledIcon>
-			<StyledHeader className='header'>Codewars Dashboard</StyledHeader>
-			<h2 className='subheader'>
-				{hyperlink} is a platform where developers can improve their coding prowess by solving
-				challenges at various difficulty levels.
-			</h2>
-			<StyledBadges className='body'>
-				<DifficultyBadges />
-			</StyledBadges>
-			<StyledKey>
-				<ul>
-					<li className='hardest'>Hardest</li>
-					<li className='hard'>Hard</li>
-					<li className='medium'>Medium</li>
-					<li className='easy'>Easy</li>
-				</ul>
-			</StyledKey>
-		</>
-	);
-}

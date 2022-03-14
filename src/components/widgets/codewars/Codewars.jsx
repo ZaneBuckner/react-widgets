@@ -7,9 +7,8 @@ import ChallengeDetails from './ChallengeDetails';
 
 import Card from 'components/shared/Card';
 import CardHeader from 'components/shared/CardHeader';
-import WidgetModal from '../WidgetModal';
 import WidgetSearch from '../WidgetSearch';
-import { About } from './CodewarsModal';
+import { AboutModal } from './CodewarsModal';
 
 import { StyledCodewars } from './Codewars.styled';
 import { CodewarsIcon } from 'Assets/WidgetIcons';
@@ -64,12 +63,6 @@ function Codewars() {
 				onAboutToggle={handleAboutToggle}
 			/>
 
-			<WidgetModal
-				open={isAboutModal}
-				onClose={handleAboutToggle}
-				element={<About widgetIcon={<CodewarsIcon height='1.5rem' color='#DAB55D' />} />}
-			/>
-
 			{profileURL && challengesURL && (
 				<StyledCodewars>
 					<UserProfile url={profileURL} username={username} />
@@ -77,6 +70,12 @@ function Codewars() {
 					<ChallengeDetails url={detailsURL} challenge={selectedChallenge} />
 				</StyledCodewars>
 			)}
+
+			<AboutModal
+				open={isAboutModal}
+				onClose={handleAboutToggle}
+				widgetIcon={<CodewarsIcon height='1.5rem' color='#DAB55D' />}
+			/>
 		</Card>
 	);
 }

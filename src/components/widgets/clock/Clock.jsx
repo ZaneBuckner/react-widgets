@@ -4,8 +4,7 @@ import ClockFace from './ClockFace';
 
 import Card from 'components/shared/Card';
 import CardHeader from 'components/shared/CardHeader';
-import WidgetModal from 'components/widgets/WidgetModal';
-import { About } from './ClockModal';
+import { AboutModal } from './ClockModal';
 
 import { StyledClock } from './Clock.styled';
 import { BsClock as ClockIcon } from 'react-icons/bs';
@@ -49,21 +48,19 @@ function Clock() {
 				widgetRef='clock'
 				onAboutToggle={handleAboutToggle}
 			/>
-			<WidgetModal
-				open={isAboutModal}
-				onClose={handleAboutToggle}
-				element={
-					<About
-						widgetIcon={<ClockIcon className='widget-icon' />}
-						javaScriptTime={Math.floor(Date.now())}
-						unixTime={Math.floor(Date.now() / 1000)}
-					/>
-				}
-			/>
+
 			<StyledClock>
 				<ClockProgressWheel seconds={seconds} />
 				<ClockFace time={clockData.time} date={clockData.date} />
 			</StyledClock>
+
+			<AboutModal
+				open={isAboutModal}
+				onClose={handleAboutToggle}
+				widgetIcon={<ClockIcon className='widget-icon' />}
+				javaScriptTime={Math.floor(Date.now())}
+				unixTime={Math.floor(Date.now() / 1000)}
+			/>
 		</Card>
 	);
 }

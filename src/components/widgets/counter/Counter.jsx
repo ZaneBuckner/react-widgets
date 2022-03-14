@@ -3,8 +3,7 @@ import { useAuthContext } from 'context/AuthContext';
 
 import Card from 'components/shared/Card';
 import CardHeader from 'components/shared/CardHeader';
-import WidgetModal from '../WidgetModal';
-import { About } from './CounterModal';
+import { AboutModal } from './CounterModal';
 
 import Button from 'components/shared/Button';
 import { StyledCounter, CountDisplay } from './Counter.styled';
@@ -12,7 +11,6 @@ import { StyledCounter, CountDisplay } from './Counter.styled';
 import CounterIcon from 'Assets/CounterIcon';
 import { BiReset as ResetIcon } from 'react-icons/bi';
 import { FiPlus as AddIcon, FiMinus as RemoveIcon } from 'react-icons/fi';
-import confusedTravoltaGif from 'Assets/Images/confusedTravoltaGif.gif';
 
 function Counter() {
 	const { currentUser, userData, onDocumentUpdate, onUserCountUpdate } = useAuthContext();
@@ -58,15 +56,10 @@ function Counter() {
 				/>
 			</StyledCounter>
 
-			<WidgetModal
+			<AboutModal
 				open={isAboutModal}
 				onClose={handleAboutToggle}
-				element={
-					<About
-						widgetIcon={<CounterIcon className='widget-icon' height={'1.5rem'} fill={'#DAB55D'} />}
-						gif={<img src={confusedTravoltaGif} alt='Confused Travolta Gif' />}
-					/>
-				}
+				widgetIcon={<CounterIcon height='1.5rem' fill='#DAB55D' />}
 			/>
 		</Card>
 	);

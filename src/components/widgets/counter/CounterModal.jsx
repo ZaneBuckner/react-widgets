@@ -1,5 +1,20 @@
 import styled from 'styled-components';
 
+import WidgetModal from '../WidgetModal';
+
+import confusedTravoltaGif from 'Assets/Images/confusedTravoltaGif.gif';
+
+export function AboutModal({ open, onClose, widgetIcon }) {
+	return (
+		<WidgetModal open={open} onClose={onClose}>
+			<StyledIcon>{widgetIcon}</StyledIcon>
+			<StyledWrapper>
+				<img src={confusedTravoltaGif} alt='Confused Travolta Gif' />
+			</StyledWrapper>
+		</WidgetModal>
+	);
+}
+
 const StyledIcon = styled.div`
 	position: absolute;
 	top: 0;
@@ -17,12 +32,3 @@ const StyledWrapper = styled.div`
 		height: 100%;
 	}
 `;
-
-export function About({ widgetIcon, gif }) {
-	return (
-		<>
-			<StyledIcon>{widgetIcon}</StyledIcon>
-			<StyledWrapper>{gif}</StyledWrapper>
-		</>
-	);
-}

@@ -3,16 +3,13 @@ import BobRossPaintingsData from 'components/widgets/bobross/BobRossPaintingsDat
 
 import Card from 'components/shared/Card';
 import CardHeader from 'components/shared/CardHeader';
-import WidgetModal from '../WidgetModal';
-import { About } from './BobRossModal';
+import { AboutModal } from './BobRossModal';
 import Painting from './Painting';
 
 import { StyledBobRossPaintings } from './BobRossPaintings.Styed';
 
 import BobRossIcon from 'Assets/BobRossIcon';
 import { RefreshIcon } from 'Assets/WidgetIcons';
-import { BsYoutube as YoutubeIcon } from 'react-icons/bs';
-import { HiCursorClick as ClickIcon } from 'react-icons/hi';
 
 function BobRossPaintings() {
 	const [painting, setPainting] = useState([]);
@@ -27,16 +24,11 @@ function BobRossPaintings() {
 		}
 	};
 
-	useEffect(() => {
-		fetchPainting();
-	}, []);
+	// FETCH INITIAL PAINTING => ON MOUNT
+	useEffect(() => fetchPainting(), []);
 
-	const hyperLink = (
-		<a className='hyperlink' href={painting.youtube_src} target='_blank' rel='noopener noreferrer'>
-			Season {painting.season} Episode {painting.episode}
-			<YoutubeIcon className='icon' />
-		</a>
-	);
+	// prettier-ignore
+	const StyledRefreshIcon = <RefreshIcon removeBG width='1rem' height='1rem' color='#DAB55D' style={{ cursor: 'pointer' }} onClick={fetchPainting} />
 
 	return (
 		<Card>
@@ -48,31 +40,17 @@ function BobRossPaintings() {
 				onUtilityToggle={<RefreshIcon onClick={fetchPainting} />}
 			/>
 
-			<WidgetModal
-				open={isAboutModal}
-				onClose={handleAboutToggle}
-				element={
-					<About
-						widgetIcon={<BobRossIcon className='widget-icon' height={'1.5rem'} fill={'#DAB55D'} />}
-						refreshIcon={
-							<RefreshIcon
-								removeBG
-								width='1rem'
-								height='1rem'
-								color='#DAB55D'
-								style={{ cursor: 'pointer' }}
-								onClick={fetchPainting}
-							/>
-						}
-						clickIcon={<ClickIcon className='icon' onClick={handleAboutToggle} />}
-						youtubeLink={hyperLink}
-					/>
-				}
-			/>
-
 			<StyledBobRossPaintings onDoubleClick={() => fetchPainting()}>
 				<Painting painting={painting} icon={<BobRossIcon />} />
 			</StyledBobRossPaintings>
+
+			<AboutModal
+				open={isAboutModal}
+				onClose={handleAboutToggle}
+				widgetIcon={<BobRossIcon className='widget-icon' height='1.5rem' fill='#DAB55D' />}
+				data={painting}
+				refreshIcon={StyledRefreshIcon}
+			/>
 		</Card>
 	);
 }
