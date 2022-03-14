@@ -19,39 +19,39 @@ export const getInitialData = currentUser => {
 		widgets: [
 			{
 				id: uuidv4(),
-				display: true,
-				title: 'Clock',
-				widgetRef: 'clock',
-			},
-			{
-				id: uuidv4(),
-				display: true,
-				title: 'Bob Ross',
-				widgetRef: 'bobross',
-			},
-			{
-				id: uuidv4(),
-				display: true,
 				title: 'Weather',
 				widgetRef: 'weather',
+				display: true,
 			},
 			{
 				id: uuidv4(),
+				title: 'Clock',
+				widgetRef: 'clock',
 				display: true,
+			},
+			{
+				id: uuidv4(),
+				title: 'Bob Ross',
+				widgetRef: 'bobross',
+				display: true,
+			},
+			{
+				id: uuidv4(),
 				title: 'Task Tracker',
 				widgetRef: 'tasktracker',
+				display: true,
 			},
 			{
 				id: uuidv4(),
-				display: true,
-				title: 'CodeWars',
-				widgetRef: 'codewars',
-			},
-			{
-				id: uuidv4(),
-				display: true,
 				title: 'Counter',
 				widgetRef: 'counter',
+				display: true,
+			},
+			{
+				id: uuidv4(),
+				title: 'Codewars',
+				widgetRef: 'codewars',
+				display: true,
 			},
 		],
 	};
