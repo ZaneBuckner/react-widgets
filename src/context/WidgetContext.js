@@ -46,7 +46,7 @@ const defaultWidgets = [
 
 export const WidgetContextProvider = ({ children }) => {
 	const { currentUser, userData, onDocumentUpdate } = useAuthContext();
-	const [widgets, setWidgets] = useState(defaultWidgets);
+	const [widgets, setWidgets] = useState(null);
 
 	// UPDATE WIDGET DISPLAY STATE
 	const toggleDisplay = widgetRef => {
@@ -61,11 +61,11 @@ export const WidgetContextProvider = ({ children }) => {
 		return widgets.filter(widget => widget.widgetRef === widgetRef)[0].display;
 	};
 
-	// SET AUTH USER WIDGETS => ON MOUNT & WHEN DATA UPDATES
-	useEffect(() => userData && setWidgets(userData?.widgets || defaultWidgets), [userData]);
-
-	// SET NON-AUTH USER WIDGETS AS DEFAULT => WHEN USER STATE CHANGES
-	useEffect(() => !currentUser && setWidgets(defaultWidgets), [currentUser]);
+	// SET INITIAL WIDGETS DATA => ON MOUNT & WHEN USER STATE CHANGES
+	useEffect(() => {
+		if (!currentUser) return setWidgets(defaultWidgets);
+		userData && setWidgets(userData.widgets);
+	}, [currentUser, userData]);
 
 	return (
 		<WidgetContext.Provider
@@ -75,7 +75,7 @@ export const WidgetContextProvider = ({ children }) => {
 				currentDisplay,
 			}}
 		>
-			{children}
+			{widgets && children}
 		</WidgetContext.Provider>
 	);
 };
