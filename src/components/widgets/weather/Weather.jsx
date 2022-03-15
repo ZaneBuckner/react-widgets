@@ -82,7 +82,7 @@ export default function Weather() {
 	// SET LOCATION OBJECT => ON MOUNT || WHEN USER AUTH CHANGES
 	useEffect(() => {
 		if (!currentUser) return setLocation(defaultLocation);
-		userData && setLocation(userData.location);
+		userData?.location ? setLocation(userData.location) : setLocation(defaultLocation);
 	}, [currentUser, userData]);
 
 	// BUILD FETCH URLS (WEATHER & FORECAST) => WHEN LOCATION || UNITS UPDATE
