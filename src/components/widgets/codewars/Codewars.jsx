@@ -107,7 +107,7 @@ const StyledCodewars = styled.div`
 	width: 100%;
 	height: 15rem;
 
-	font-size: clamp(7px, 2vw, 13px);
+	font-size: clamp(7px, 2.5vw, 13px);
 	font-family: 'Roboto', serif;
 	color: #c3c3c3;
 
