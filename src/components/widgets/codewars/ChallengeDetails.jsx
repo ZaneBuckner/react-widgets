@@ -118,7 +118,6 @@ const StyledChallengeDetails = styled.div`
 
 			&:hover {
 				cursor: pointer;
-				color: #dab55d;
 			}
 		}
 	}
