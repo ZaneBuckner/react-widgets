@@ -1,7 +1,21 @@
 import styled from 'styled-components';
 
-const handleDifficulty = difficulty => {
-	switch (difficulty) {
+export default function DifficultyBadge({ rank, color, height, fontSize }) {
+	return (
+		<StyledDifficultBadge
+			className='rank-badge'
+			rank={rank}
+			color={color}
+			height={height}
+			fontSize={fontSize}
+		>
+			<span>{rank}</span>
+		</StyledDifficultBadge>
+	);
+}
+
+const handleDifficultyColor = color => {
+	switch (color) {
 		case 'white':
 			return '#E6E6E6';
 		case 'yellow':
@@ -15,14 +29,14 @@ const handleDifficulty = difficulty => {
 	}
 };
 
-export const StyledDifficultyBadge = styled.div`
+const StyledDifficultBadge = styled.div`
 	position: relative;
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	width: 3rem;
-	height: 1.5rem;
-	background: ${({ difficulty }) => handleDifficulty(difficulty)};
+	height: ${({ height }) => height || '1.6em'};
+	aspect-ratio: 2 / 1;
+	background: ${({ color }) => handleDifficultyColor(color)};
 	clip-path: polygon(15% 0, 85% 0, 100% 50%, 85% 100%, 15% 100%, 0 50%);
 
 	::before {
@@ -34,21 +48,11 @@ export const StyledDifficultyBadge = styled.div`
 		clip-path: polygon(15% 0, 85% 0, 100% 50%, 85% 100%, 15% 100%, 0 50%);
 	}
 
-	p {
+	span {
 		position: absolute;
 		font-family: 'Lato';
-		font-size: 0.8rem;
+		font-size: ${({ fontSize }) => fontSize || '0.8em'};
 		font-weight: 500;
-		color: ${({ difficulty }) => handleDifficulty(difficulty)};
+		color: ${({ color }) => handleDifficultyColor(color)};
 	}
 `;
-
-function DifficultyBadge({ rankColor, rankName }) {
-	return (
-		<StyledDifficultyBadge difficulty={rankColor}>
-			<p>{rankName}</p>
-		</StyledDifficultyBadge>
-	);
-}
-
-export default DifficultyBadge;
