@@ -1,100 +1,82 @@
+import { v4 as uuidv4 } from 'uuid';
 import styled from 'styled-components';
 
 import WidgetModal from '../WidgetModal';
 import DifficultyBadge from './DifficultyBadge';
 
+const badgesRef = [
+	{ rank: '1 kyu', color: 'purple' },
+	{ rank: '3 kyu', color: 'blue' },
+	{ rank: '5 kyu', color: 'yellow' },
+	{ rank: '7 kyu', color: 'white' },
+
+	{ rank: '2 kyu', color: 'purple' },
+	{ rank: '4 kyu', color: 'blue' },
+	{ rank: '6 kyu', color: 'yellow' },
+	{ rank: '8 kyu', color: 'white' },
+
+	{ rank: String.fromCodePoint('0x1F92F'), color: 'purple', height: '2em', fontSize: '1.4em' },
+	{ rank: String.fromCodePoint('0x1F928'), color: 'blue', height: '2em', fontSize: '1.4em' },
+	{ rank: String.fromCodePoint('0x1F610'), color: 'yellow', height: '2em', fontSize: '1.4em' },
+	{ rank: String.fromCodePoint('0x1F642'), color: 'white', height: '2em', fontSize: '1.4em' },
+];
+
 export function AboutModal({ open, onClose, widgetIcon }) {
-	const hyperlink = <a href='https://www.codewars.com/dashboard' target='_blank' rel='noopener noreferrer' className='hyperlink' children='Codewars' /> // prettier-ignore
+	const codewarsLink = <a href='https://www.codewars.com/dashboard' target='_blank' rel='noopener noreferrer' className='hyperlink' children='Codewars' /> // prettier-ignore
 
 	return (
 		<WidgetModal open={open} onClose={onClose}>
-			<StyledIcon>{widgetIcon}</StyledIcon>
-			<StyledHeader className='header'>Codewars Dashboard</StyledHeader>
-			<h2 className='subheader'>
-				{hyperlink} is a platform where developers can improve their coding prowess by solving
-				challenges at various difficulty levels.
-			</h2>
-			<StyledBadges className='body'>
-				<DifficultyBadges />
-			</StyledBadges>
-			<StyledKey>
-				<ul>
-					<li className='hardest'>Hardest</li>
-					<li className='hard'>Hard</li>
-					<li className='medium'>Medium</li>
-					<li className='easy'>Easy</li>
-				</ul>
-			</StyledKey>
+			<StyledAboutModal>
+				{widgetIcon}
+				<h1 className='header'>Codewars Dashboard</h1>
+				<h2 className='subheader'>
+					{codewarsLink} is a platform where developers can improve their coding prowess by solving
+					challenges at various difficulty levels.
+				</h2>
+				<div className='badges-wrapper'>
+					{badgesRef.map(badge => (
+						<DifficultyBadge
+							key={uuidv4()}
+							rank={badge.rank}
+							color={badge.color}
+							height={badge.height}
+							fontSize={badge.fontSize}
+						/>
+					))}
+				</div>
+			</StyledAboutModal>
 		</WidgetModal>
 	);
 }
 
-const StyledIcon = styled.div`
-	position: absolute;
-	top: 0;
-	left: 0;
-	margin: 1rem;
-`;
+const StyledAboutModal = styled.div`
+	font-size: clamp(15px, 3.5vw, 19px);
 
-const StyledHeader = styled.h1`
-	margin-top: 1.5rem !important;
-`;
-
-const StyledBadges = styled.div`
 	display: grid;
-	grid-template-columns: repeat(4, 1fr);
-	grid-template-rows: repeat(2, 1fr);
-	grid-column-gap: 1rem;
-	grid-row-gap: 1rem;
-	place-items: center;
+	grid-template-rows: repeat(3, auto);
+	grid-row-gap: 1em;
+	align-items: center;
+	justify-content: center;
 	width: 100%;
-`;
+	height: 100%;
 
-const StyledKey = styled.div`
-	width: 100%;
-
-	ul {
-		display: flex;
-		justify-content: space-around;
-		align-items: center;
-
-		li {
-			font-size: 0.8rem;
-			font-weight: 400;
-			text-transform: uppercase;
-		}
+	.header {
+		margin-top: 1.5rem;
+		font-size: 1.2em;
 	}
 
-	.hardest {
-		color: #866cc7;
+	.subheader {
+		font-size: 0.8em;
+		max-width: 45rem;
 	}
 
-	.hard {
-		color: #3c7ebb;
-	}
-
-	.medium {
-		color: #ecb613;
-	}
-
-	.easy {
-		color: #e6e6e6;
+	.badges-wrapper {
+		display: grid;
+		grid-template-columns: repeat(4, auto);
+		grid-template-rows: repeat(3, auto);
+		grid-row-gap: 0.5em;
+		justify-items: center;
+		width: 100%;
+		margin: auto 0;
 	}
 `;
-
-const DifficultyBadges = () => {
-	const levels = [
-		{ id: 1, color: 'purple', name: '1 kyu' },
-		{ id: 2, color: 'purple', name: '2 kyu' },
-		{ id: 3, color: 'blue', name: '3 kyu' },
-		{ id: 4, color: 'blue', name: '4 kyu' },
-		{ id: 5, color: 'yellow', name: '5 kyu' },
-		{ id: 6, color: 'yellow', name: '6 kyu' },
-		{ id: 7, color: 'white', name: '7 kyu' },
-		{ id: 8, color: 'white', name: '8 kyu' },
-	];
-
-	return levels.map(level => (
-		<DifficultyBadge key={level.id} rankColor={level.color} rankName={level.name} />
-	));
-};
