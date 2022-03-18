@@ -6,32 +6,26 @@ Application full of small, independent, and reusable applications - widgets.
 
 ### Featured Widgets
 
-- Calendar
+- Weather
 - Clock
-- CodeWars UI Dashboard
+- Bob Ross Paintings
+- Task Tracker
 - Counter
-- Timer
-- Weather UI
-- To-Do List
-- Color Editor
-- Font Editor
+- Codewars Profile Dashboard
   <br>
-
-<em>Subject to change.</em>
 
 ### Concepts Covered
 
 ```
 JSX
-Handling Props
-Managing Component State
-  useState() & useEffect() Hooks
-Managing global state
-  Creating, using, & providing state with the Context API
-Managing Data
-  Asynchronous HTTP GET Requests with Axios
-  Custom hook to fetch data and handle loading/error states
-Building Reusable Components
-Styling With Styled-Components Library
-Responsive UI With Material UI Grid Layout
+Handling props
+Managing component state
+  useState(), useEffect(), useRef() Hooks
+Managing global state with React's Context API
+Asynchronous HTTP GET Requests
+Page routing (React Router)
+User authentication & persisting application state (Firebase Auth, Firestore, and Cloud Storage)
+Styling with Styled-Components Library
+Emphasis on component reusability
+Responsive & fluid UI (CSS Grid & CSS Clamp)
 ```
